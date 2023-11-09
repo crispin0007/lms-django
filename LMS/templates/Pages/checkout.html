@@ -1,0 +1,206 @@
+{% extends "Pages/base.html" %} {% load static %} {% block content%}
+<div
+    class="page-header align-items-start min-height-300 m-3 border-radius-xl"
+    style="
+      background-image: url('https://images.unsplash.com/photo-1491466424936-e304919aada7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1949&q=80');
+    ">
+    <span class="mask bg-gradient-dark opacity-6"></span>
+  </div>
+  <div class="wrapper">
+    <div class="upper">
+      <div class="container my-5">
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="container">
+              <h3 class="title text-white mt-3">Order summary</h3>
+              <div class="row">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="media align-items-center mb-3">
+                      <div class="col-md-5 col-6">
+                        <img
+                          src="../assets/img/pages/gucci.png"
+                          alt="Rounded image"
+                          class="img-fluid" />
+                      </div>
+                      <div class="media-body">
+                        <h2 class="h6">Shorts</h2>
+                        <small class="d-block opacity-8">Small</small>
+                      </div>
+                      <div class="media-body text-right">
+                        <span>$29</span>
+                      </div>
+                    </div>
+                    <div class="media align-items-center">
+                      <div class="col-md-5 col-6">
+                        <img
+                          src="../assets/img/pages/jacket.png"
+                          alt="Rounded image"
+                          class="img-fluid" />
+                      </div>
+                      <div class="media-body">
+                        <h2 class="h6 mb-0">Jacket</h2>
+                      </div>
+                      <div class="media-body text-right">
+                        <span>$999</span>
+                      </div>
+                    </div>
+                    <hr class="line-info mb-3" />
+                    <form class="code-validate">
+                      <label>Discount</label>
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="name"
+                          placeholder="Discount Code"
+                          aria-label="Discount" />
+                        <div class="input-group-append">
+                          <button type="submit" class="btn btn-info">
+                            Apply
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                    <hr class="line-info mb-3" />
+                    <div class="media align-items-center">
+                      <h3 class="h6 opacity-8 mr-3">Subtotal</h3>
+                      <div class="media-body text-right">
+                        <span>$1038</span>
+                      </div>
+                    </div>
+                    <div class="media align-items-center">
+                      <h3 class="h6 opacity-8 mr-3">Shipping</h3>
+                      <div class="media-body text-right">
+                        <span>$5.8</span>
+                      </div>
+                    </div>
+                    <hr class="line-info mb-3" />
+                    <div class="media align-items-center">
+                      <h3 class="h6">Total</h3>
+                      <div class="media-body text-right">
+                        <span class="font-weight-semi-bold">$1045.8</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-8">
+            <div class="card px-4">
+              <form class="js-validate">
+                <div class="container">
+                  <h3 class="title mt-3">Billing address</h3>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label class="labels">
+                        First name
+                        <span class="text-danger">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="firstName"
+                        placeholder="Cristopher"
+                        aria-label="Cristopher"
+                        required />
+                    </div>
+                    <div class="col-md-6">
+                      <label class="labels">
+                        Last name
+                        <span class="text-danger">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="lastName"
+                        placeholder="Thompson"
+                        aria-label="Thompson"
+                        required />
+                    </div>
+                  </div>
+                  <br />
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="js-form-message">
+                        <label class="labels">
+                          Email address
+                          <span class="text-danger">*</span>
+                        </label>
+                        <input
+                          type="email"
+                          class="form-control"
+                          name="emailAddress"
+                          placeholder="thompson@gmail.com"
+                          aria-label="thompson@gmail.com"
+                          required />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="js-form-message">
+                        <label class="labels"> Phone </label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="+4 (0762) 230991"
+                          aria-label="+4 (0762) 230991" />
+                      </div>
+                    </div>
+                  </div>
+                  <br />
+                  
+                  </div>
+                  <h4 class="title">Payment method</h4>
+                    <a
+                      class="btn btn-lg text-white"
+                      data-toggle="tab"
+                      href="#link1"
+                      role="tablist" style="background-color:#5d2e8e;">
+
+                      Khalti
+                    </a>
+                    <a
+                      class="btn btn-lg btn-success"
+                      data-toggle="tab"
+                      href="#link2"
+                      role="tablist">
+                      Esewa
+                    </a>
+                 
+                  <div class="tab-content tab-space">
+                    <div id="link1" class="tab-pane active">
+                      
+                      
+                      <div
+                        class="d-flex justify-content-between align-items-center p-5">
+                        <a href="{% url 'mycart' %}"
+                          ><span class="fas fa-angle-left mr-2"></span> Return
+                          to cart</a
+                        >
+                      </div>
+                    </div>
+                    <div id="link2" class="tab-pane">
+                      <h5 class="text-white">Send payment to:</h5>
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Name or email"
+                        required />
+                      <br />
+                      <button type="submit" class="btn btn-info btn-sm">
+                        Pay with PayPal
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% endblock %}
+  </div>
+</main>

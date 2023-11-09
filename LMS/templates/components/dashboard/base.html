@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link
+      rel="apple-touch-icon"
+      sizes="76x76"
+      href="{% static 'img/apple-icon.png' %}" />
+    <link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}" />
+    <title>Dashboard | SkyLearner</title>
+
+    {% include 'components/css.html'%}
+  </head>
+  <body class="g-sidenav-show bg-gray-200">
+    {%if user.is_manager %}
+      {% include 'components/dashboard/manager_sidebar.html' %}
+
+    {% elif user.is_instructor %}
+      {% include 'components/dashboard/instructor_sidebar.html' %}
+    
+    {% elif user.is_student %}
+      {% include 'components/dashboard/student_sidebar.html' %}
+    {% endif %}
+    <main
+      class="main-content position-relative max-height-vh-100 h-100 border-radius-lg">
+      {% include 'components/dashboard/top_nav.html'%}
+
+      <div class="container-fluid py-4">
+        {%block content%} {% endblock %} 
+        {% comment %} Footer {% endcomment %}
+      </div>
+    </main>
+
+    {% include 'components/dashboard/configuration.html'%} 
+    {% include 'components/js.html'%}
+  </body>
+</html>

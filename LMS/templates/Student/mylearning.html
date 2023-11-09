@@ -1,0 +1,170 @@
+
+{% extends 'components/dashboard/base.html'%}
+{% load static %}
+{%block content%}
+<div class="row">
+  <div class="col-lg-12 position-relative z-index-2">
+    <div class="row mt-5">
+        <div class="col-lg-4 col-md-6">
+          <div class="card" data-animation="true">
+            <div
+              class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+              <a class="d-block blur-shadow-image">
+                <img
+                  src="{% static 'img/products/product-1-min.jpg' %}"
+                  alt="img-blur-shadow"
+                  class="img-fluid shadow border-radius-lg" />
+              </a>
+              <div
+                class="colored-shadow"
+                style="
+                  background-image: url('{% static 'img/products/product-1-min.jpg' %}
+                "></div>
+            </div>
+            <div class="card-body text-center">
+              <div class="d-flex mt-n6 mx-auto">
+                <a
+                  class="btn btn-link text-primary ms-auto border-0"
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="bottom"
+                  title="Refresh">
+                  <i class="material-icons text-lg">refresh</i>
+                </a>
+                <button
+                  class="btn btn-link text-info me-auto border-0"
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="bottom"
+                  title="Edit">
+                  <i class="material-icons text-lg">edit</i>
+                </button>
+              </div>
+              <h5 class="font-weight-normal mt-3">
+                <a href="javascript:;">Cozy 5 Stars Apartment</a>
+              </h5>
+              <p class="mb-0">
+                The place is close to Barceloneta Beach and bus stop just
+                2 min by walk and near to "Naviglio" where you can enjoy
+                the main night life in Barcelona.
+              </p>
+            </div>
+            <hr class="dark horizontal my-0" />
+            <div class="card-footer d-flex">
+              <p class="font-weight-normal my-auto">$899/night</p>
+              <i
+                class="material-icons position-relative ms-auto text-lg me-1 my-auto"
+                >place</i
+              >
+              <p class="text-sm my-auto">Barcelona, Spain</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6 mt-5 mt-md-0">
+          <div class="card" data-animation="true">
+            <div
+              class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+              <a class="d-block blur-shadow-image">
+                <img
+                  src="{% static 'img/products/product-2-min.jpg' %}"
+                  alt="img-blur-shadow"
+                  class="img-fluid shadow border-radius-lg" />
+              </a>
+              <div
+                class="colored-shadow"
+                style="
+                  background-image: url('{% static 'img/products/product-2-min.jpg' %}
+                "></div>
+            </div>
+            <div class="card-body text-center">
+              <div class="d-flex mt-n6 mx-auto">
+                <a
+                  class="btn btn-link text-primary ms-auto border-0"
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="bottom"
+                  title="Refresh">
+                  <i class="material-icons text-lg">refresh</i>
+                </a>
+                <button
+                  class="btn btn-link text-info me-auto border-0"
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="bottom"
+                  title="Edit">
+                  <i class="material-icons text-lg">edit</i>
+                </button>
+              </div>
+              <h5 class="font-weight-normal mt-3">
+                <a href="javascript:;">Office Studio</a>
+              </h5>
+              <p class="mb-0">
+                The place is close to Metro Station and bus stop just 2
+                min by walk and near to "Naviglio" where you can enjoy the
+                night life in London, UK.
+              </p>
+            </div>
+            <hr class="dark horizontal my-0" />
+            <div class="card-footer d-flex">
+              <p class="font-weight-normal my-auto">$1.119/night</p>
+              <i
+                class="material-icons position-relative ms-auto text-lg me-1 my-auto"
+                >place</i
+              >
+              <p class="text-sm my-auto">London, UK</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 mt-5 mt-lg-0">
+          <div class="card" data-animation="true">
+            <div
+              class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+              <a class="d-block blur-shadow-image">
+                <img
+                  src="{% static 'img/products/product-3-min.jpg' %}"
+                  alt="img-blur-shadow"
+                  class="img-fluid shadow border-radius-lg" />
+              </a>
+              <div
+                class="colored-shadow"
+                style="
+                  background-image: url('{% static 'img/products/product-3-min.jpg' %}
+                "></div>
+            </div>
+            <div class="card-body text-center">
+              <div class="d-flex mt-n6 mx-auto">
+                <a
+                  class="btn btn-link text-primary ms-auto border-0"
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="bottom"
+                  title="Refresh">
+                  <i class="material-icons text-lg">refresh</i>
+                </a>
+                <button
+                  class="btn btn-link text-info me-auto border-0"
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="bottom"
+                  title="Edit">
+                  <i class="material-icons text-lg">edit</i>
+                </button>
+              </div>
+              <h5 class="font-weight-normal mt-3">
+                <a href="javascript:;">Beautiful Castle</a>
+              </h5>
+              <p class="mb-0">
+                The place is close to Metro Station and bus stop just 2
+                min by walk and near to "Naviglio" where you can enjoy the
+                main night life in Milan.
+              </p>
+            </div>
+            <hr class="dark horizontal my-0" />
+            <div class="card-footer d-flex">
+              <p class="font-weight-normal my-auto">$459/night</p>
+              <i
+                class="material-icons position-relative ms-auto text-lg me-1 my-auto"
+                >place</i
+              >
+              <p class="text-sm my-auto">Milan, Italy</p>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+{% endblock %}
