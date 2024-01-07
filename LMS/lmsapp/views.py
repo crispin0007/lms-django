@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponse, render, redirect, HttpResponseRedirect
+from django.shortcuts import render, HttpResponse, redirect, HttpResponseRedirect
 from .forms import LoginForm, SignUpForm
 from django.contrib.auth import authenticate, login 
 from django.contrib import messages
@@ -13,11 +13,16 @@ def home(request):
 def dashboard(request):         
     user = request.user
     if user.is_manager:
-        return render (request, 'Manager/dashboards/dashboard.html')
+        return render (request, 'Manager/dashboard.html')
     elif user.is_instructor:
         return render (request, 'Instructor/dashboard.html')
     else:
         return render (request, 'Student/dashboard.html')
+
+@login_required
+def profile(request):
+    user = request.user
+    return render (request, 'required_login_pages/profile.html')
 
 @login_required
 def mylearning(request):
@@ -30,7 +35,7 @@ def mycart(request):
     return render (request, 'Student/mycart.html')
 @login_required
 def settings(request):
-    return render (request, 'Student/settings.html')
+    return render (request, 'required_login_pages/settings.html')
 @login_required
 def wishlists(request):
     return render (request, 'Student/wishlists.html')
@@ -61,18 +66,21 @@ def login_view(request):
     return render(request,'Pages/login.html', {'form': form, 'msg': msg})
 
 def register(request):
-    msg= None
+    success_msg = "User created successfully. You will be redirected to the login page shortly."
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
             user = form.save()
-            msg = 'user created'
-            messages.success(request, 'User created successfully. You will be redirected to the login page shortly.')
-            
+            # messages.success(request, 'User created successfully. You will be redirected to the login page shortly.')
             return HttpResponseRedirect('?registered=True')
         else:
-            msg = "Form is not Valid"
+           print(form.errors)
     else:
         form = SignUpForm()
-    return render(request, 'Pages/register.html', {'form': form, 'msg': msg})
+    return render(request, 'Pages/register.html', {'form': form, 'success_msg': success_msg})
+
+
+
+
+
 

@@ -23,47 +23,51 @@ SkyLearner{%endblock %} {% endcomment %} {% block content%}
               </p>
             </div>
           </div>
-          <span class="mb-0 text-muted" style="position: fixed; top:2px; right: 0; z-index: 1000; margin-top: 10px; margin-right: 10px;">
-            {% if messages %}
-              <ul class="messages" style="list-style-type: none; padding: 0; margin: 0;">
-                {% for message in messages %}
-                  <li>
-                    <div {% if message.tags %} class="{{ message.tags }} alert alert-success text-white" role="alert" {% endif %}>
-                       {{ message.message }}
-                    </div>
-                  </li>
-                {% endfor %}
-              </ul>
-              
-              {% if 'registered=True' in request.get_full_path %}
-                <script type="text/javascript">
-                  setTimeout(function() {
-                    window.location.href = "{% url 'login' %}";
-                  }, 5000);
-                </script>
-              {% endif %}
-            {% endif %}
-          </span>
-          {% comment %} <button class="btn bg-gradient-primary mb-0" onclick="material.showSwal('success-message')">Try me!</button> {% endcomment %}
+          <span class="mb-0 text-muted" style="position: fixed; top: 2px; right: 0; z-index: 1000; margin-top: 10px; margin-right: 10px;">
+            {% if 'registered=True' in request.get_full_path %}
+            {% comment %} {% if messages %} {% endcomment %}
+                {% comment %} {% if message.tags %} {% endcomment %}
+                    <ul class="messages" style="list-style-type: none; padding: 0; margin: 0;">
+                        {% comment %} {% for message in messages %} {% endcomment %}
+                            <li>
+                                <div class="alert alert-success text-white" role="alert">
+                                {% comment %} <div class="{{ message.tags }} alert alert-success text-white" role="alert"> {% endcomment %}
+                                    {{ success_msg }}
+                                </div>
+                            </li>
+                        {% comment %} {% endfor %} {% endcomment %}
+                    </ul>
+                {% comment %} {% endif %} {% endcomment %}
+        
+                {% comment %} {% if 'registered=True' in request.get_full_path %} {% endcomment %}
+                    <script type="text/javascript">
+                        setTimeout(function() {
+                            window.location.href = "{% url 'login' %}";
+                        }, 5000);
+                    </script>
+                {% endif %}
+            {% comment %} {% endif %} {% endcomment %}
+        </span>
+        
           <div class="card-body pb-3">
             <form method="post">
-              {% csrf_token %}              
-              <div class="input-group input-group-outline mb-3">   
-                        
+              {% csrf_token %} 
+                         
+              <div class="input-group input-group-outline mb-3">         
                 {{ form.username }}
-                <small class="text-muted text-primar">  {{ form.username.errors }}</small>
+                <small class="text-muted text-primary">{{ form.username.errors }}</small>
               </div>
               <div class="input-group input-group-outline mb-3">
-                {{ form.email}}
-                <small class="text-muted text-primar">  {{ form.email.errors }}</small>
+                {{ form.email }}
+                <div class="text-muted text-primary">{{ form.email.errors }}</div>
               </div>
               <div class="input-group input-group-outline mb-3">
-                {{ form.password1}}
-                <small class="text-muted text-primar">  {{ form.password1.errors }}</small>
+                {{ form.password1 }}
+                <small class="text-muted text-primary">{{ form.password1.errors }}</small>
               </div>
               <div class="input-group input-group-outline mb-3">
-                {{ form.password2}}
-                <small class="text-muted text-primar">  {{ form.password2.errors }}</small>
+                {{ form.password2 }}
+                <small class="text-muted text-primary">{{ form.password2.errors }}</small>
               </div>
               <div id="password-conditions">
                 <h4>Password Conditions:</h4>

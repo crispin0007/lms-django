@@ -17,13 +17,13 @@
   </head>
   <body class="g-sidenav-show bg-gray-200">
     {%if user.is_manager %}
-      {% include 'components/dashboard/manager_sidebar.html' %}
+      {% include '../../Manager/manager_sidebar.html' %}
 
     {% elif user.is_instructor %}
-      {% include 'components/dashboard/instructor_sidebar.html' %}
+      {% include '../../Instructor/instructor_sidebar.html' %}
     
     {% elif user.is_student %}
-      {% include 'components/dashboard/student_sidebar.html' %}
+      {% include '../../Student/student_sidebar.html' %}
     {% endif %}
     <main
       class="main-content position-relative max-height-vh-100 h-100 border-radius-lg">

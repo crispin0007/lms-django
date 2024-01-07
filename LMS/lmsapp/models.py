@@ -25,16 +25,13 @@ class Course(models.Model):
     lectures = models.PositiveIntegerField()
     total_students_enrolled = models.PositiveIntegerField()
     rating = models.DecimalField(max_digits=3, decimal_places=2)
-    thumbnail = models.ImageField(upload_to='course_thumbnails/')
+    thumbnail = models.ImageField(upload_to='static/course_thumbnails/')
     syllabus = models.TextField()
     requirements = models.TextField()
     target_audience = models.TextField()
     publish_date = models.DateField()
     last_updated_date = models.DateField()
-    video_url = models.URLField()
-    # course_materials = models.ManyToManyField('CourseMaterial', blank=True)
     promotional_video = models.URLField()
-    certificate = models.ImageField(upload_to='course_certificates/', blank=True, null=True)
 
     def __str__(self):
         return self.title

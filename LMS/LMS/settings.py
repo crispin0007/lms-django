@@ -128,3 +128,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'lmsapp.User'
 LOGOUT_REDIRECT_URL = 'login'
 SESSION_COOKIE_AGE = 60 * 60 * 24 * 14
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
