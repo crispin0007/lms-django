@@ -36,6 +36,11 @@ def mylearning(request):
 @login_required
 def messages(request):
     return render (request, 'Student/messages.html')
+
+@login_required
+def notifications(request):
+    return render (request, 'Student/notifications.html')
+
 @login_required
 def mycart(request):
     return render (request, 'Student/mycart.html')

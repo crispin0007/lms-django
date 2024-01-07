@@ -19,8 +19,8 @@ urlpatterns = [
     # ==========students urls========
     path('mylearning', views.mylearning , name="mylearning"),
     path('messages', views.messages , name="messages"),
+    path('notifications', views.notifications , name="notifications"),
     path('update_profile', views.update_profile, name='update_profile'),
-    # path('notifications', views.notifications , name="notifications"),
     path('mycart', views.mycart , name="mycart"),
     path('settings', views.settings , name="settings"),
     path('wishlists', views.wishlists , name="wishlists"),
