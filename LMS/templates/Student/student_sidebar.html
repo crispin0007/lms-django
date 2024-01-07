@@ -30,7 +30,7 @@
           aria-controls="ProfileNav"
           role="button"
           aria-expanded="false">
-          <img src="{% static 'img/team-3.jpg' %}" class="avatar" />
+          <img src="{{ MEDIA_URL }}{{user.profile_image.url}}" class="avatar" />
           <span class="nav-link-text ms-2 ps-1">{{ user.username }}</span>
         </a>
         <div class="collapse" id="ProfileNav" style>

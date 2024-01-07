@@ -8,7 +8,7 @@
       <div class="col-auto">
         <div class="avatar avatar-xl position-relative">
           <img
-            src="{% static 'img/team-1.jpg' %}"
+            src="{{ MEDIA_URL }}{{user.profile_image.url}}"
             alt="profile_image"
             class="w-100 border-radius-lg shadow-sm" />
         </div>
@@ -135,7 +135,7 @@
             <div class="mt-n4 mt-lg-n6 mb-4 mb-lg-0">
               <a href="javascript:;">
                 <img
-                  src="{% static 'img/team-1.jpg' %}"
+                  src="{{ MEDIA_URL }}{{user.profile_image.url}}"
                   class="rounded-circle img-fluid border border-2 border-white" />
               </a>
             </div>
