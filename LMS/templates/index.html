@@ -974,6 +974,32 @@
     </div>
   </div>
 
+  {% comment %} =================================trending topics =========================== {% endcomment %}
+  <hr>
+  <div class="container my-5">
+    <h3 class="my-4">Trending Categories</h3>
+    <div class="row">
+      {% for i in category%}
+      <div class="col-lg-3 col-md-4 col-sm-6 mb-4 mt-3 mb-3">
+        <div class="card p-5" data-animation="true">
+          <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 text-center">
+              <i class="material-icons" style="font-size: 3rem;">{{i.icon}}</i>
+          </div>
+          <div class="card-body text-center">
+            
+            <h5 class="font-weight-normal mt-3">
+              <a href="#">{{i.name}}</a>
+            </h5>
+            
+          </div>
+          
+          
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
   {% comment %} ==============================testomonials================== {%  endcomment %}
   <!-- START Testimonials w/ 3 cards & dark background -->
   <section class="py-3 bg-gradient-dark position-relative overflow-hidden">

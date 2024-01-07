@@ -3,10 +3,15 @@ from .forms import LoginForm, SignUpForm
 from django.contrib.auth import authenticate, login 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from lmsapp.models import Categories
 # Create your views here.
 
 def home(request):
-    return render (request, 'index.html')
+    category = Categories.objects.all()
+    context ={
+        'category':category
+    }
+    return render (request, 'index.html', context)
     
 
 @login_required()
@@ -54,6 +59,7 @@ def blog(request):
 
 def error_404(request, exception):
     render(request, ('Pages/404.html'))
+    
 def error_500(request):
     render(request, ('Pages/500.html'))
 
@@ -82,7 +88,6 @@ def register(request):
         form = SignUpForm(request.POST)
         if form.is_valid():
             user = form.save()
-            # messages.success(request, 'User created successfully. You will be redirected to the login page shortly.')
             return HttpResponseRedirect('?registered=True')
         else:
            print(form.errors)

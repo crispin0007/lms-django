@@ -7,6 +7,14 @@ class User(AbstractUser):
     is_instructor = models.BooleanField('Is instructor', default=False)
     is_student = models.BooleanField('Is student', default=True)
 
+
+class Categories (models.Model):
+    icon = models.CharField(max_length=200, null=True)
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
 class Course(models.Model):
     title = models.CharField(max_length=100)
     slug = models.SlugField(unique=True)
