@@ -7,7 +7,7 @@
       class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
       aria-hidden="true"
       id="iconSidenav"></i>
-    <a class="navbar-brand m-0" href="analytics.html" target="_blank">
+    <a class="navbar-brand m-0" href="{% url 'dashboard' %}" target="_blank">
       <img
         src="{% static 'img/logo-ct.png' %}"
         class="navbar-brand-img h-100"
@@ -30,7 +30,7 @@
           aria-controls="ProfileNav"
           role="button"
           aria-expanded="false">
-          <img src="{% static 'img/team-3.jpg' %}" class="avatar" />
+          <img src="{{ MEDIA_URL }}{{user.profile_image.url}}" class="{{ user.username }}" />
           <span class="nav-link-text ms-2 ps-1">{{ user.username }}</span>
         </a>
         <div class="collapse" id="ProfileNav" style>

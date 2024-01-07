@@ -2,7 +2,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
-class User(AbstractUser):
+class User(AbstractUser):    
+    profile_image = models.ImageField(upload_to="Images/profile")
     is_manager = models.BooleanField('Is manager', default=False)
     is_instructor = models.BooleanField('Is instructor', default=False)
     is_student = models.BooleanField('Is student', default=True)
@@ -11,13 +12,12 @@ class User(AbstractUser):
 class Categories (models.Model):
     icon = models.CharField(max_length=200, null=True)
     name = models.CharField(max_length=100)
-
     def __str__(self):
         return self.name
 
 class Instructor(models.Model):
     name = models.CharField(max_length=100, null=True)
-    instructor_image = models.ImageField(upload_to="Images/Instructors")
+    instructor_cover = models.ImageField(upload_to="Images/Instructors")
     instructor_bio = models.TextField()
 
     def __str__(self):
