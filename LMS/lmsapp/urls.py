@@ -5,12 +5,14 @@ from django.contrib.auth.views import LogoutView
 urlpatterns = [
     path('logout/', LogoutView.as_view(), name='logout'),
     path('', views.home , name="home"),
-    path('login/', views.login_view , name="login"),
+    path('accounts/login/', views.login_view , name="login"),
     path('register/', views.register , name="register"),
     path('dashboard/', views.dashboard , name="dashboard"),
     path('profile/', views.profile , name="profile"),
    
     path('checkout/', views.checkout , name="checkout"),
+    path('course_details/', views.coursedetails , name="coursedetails"),
+    path('blog/', views.blog , name="blog"),
 
     # ==========students urls========
     path('mylearning', views.mylearning , name="mylearning"),

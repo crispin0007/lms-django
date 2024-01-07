@@ -11,7 +11,7 @@
       sizes="76x76"
       href="{% static 'img/apple-icon.png' %}" />
     <link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}" />
-    <title>Dashboard | SkyLearner</title>
+    <title>{%block title%}Dashboard | SkyLearner{% endblock %}</title> 
 
     {% include 'components/css.html'%}
   </head>

@@ -46,6 +46,12 @@ def checkout(request):
 def becomeinstructor(request):
     return render (request, 'Student/becomeinstructor.html')
 
+def coursedetails(request):
+    return render(request, ('Pages/course_detail.html'))
+
+def blog(request):
+    return render(request, ('Pages/blog.html'))
+
 def login_view(request):
     form = LoginForm(request.POST or None)
     msg = None
