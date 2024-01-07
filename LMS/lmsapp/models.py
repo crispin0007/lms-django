@@ -7,6 +7,7 @@ class User(AbstractUser):
     is_manager = models.BooleanField('Is manager', default=False)
     is_instructor = models.BooleanField('Is instructor', default=False)
     is_student = models.BooleanField('Is student', default=True)
+    user_bio = models.TextField(default=" ")
 
 
 class Categories (models.Model):

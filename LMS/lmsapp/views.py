@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from lmsapp.models import Categories
+from lmsapp.models import User
 # Create your views here.
 
 def home(request):
@@ -94,6 +95,26 @@ def register(request):
     else:
         form = SignUpForm()
     return render(request, 'Pages/register.html', {'form': form, 'success_msg': success_msg})
+
+def update_profile(request):
+    if request.method == "POST":
+        first_name = request.POST.get('firstname')
+        last_name = request.POST.get('lastname')
+        email = request.POST.get('email')
+        user_bio = request.POST.get('user_bio')
+        user_id = request.user.id
+
+        user = User.objects.get(id=user_id)
+        user.first_name = first_name
+        user.last_name = last_name
+        user.email = email
+        user.user_bio = user_bio
+        user.save()
+        return HttpResponseRedirect('?update=True')
+        success_msg = "User Updated successfully"
+        # return redirect('settings')
+
+
 
 
 

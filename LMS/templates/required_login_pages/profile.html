@@ -72,11 +72,11 @@
           <p class="text-uppercase text-sm">User Information</p>
           <div class="row">
             <div class="col-md-6">
-              <div class="form-group">
+              <div class="form form-group">
                 <label for="example-text-input" class="form-control-label"
                   >Username</label
                 >
-                <input class="form-control" type="text" value="{{ user.username }}" />
+                <input class="form-control" type="text" value="{{ user.username }}" readonly />
               </div>
             </div>
             <div class="col-md-6">
@@ -87,7 +87,7 @@
                 <input
                   class="form-control"
                   type="email"
-                  value="{{ user.email}}" />
+                  value="{{ user.email}}" readonly />
               </div>
             </div>
             <div class="col-md-6">
@@ -95,7 +95,7 @@
                 <label for="example-text-input" class="form-control-label"
                   >First name</label
                 >
-                <input class="form-control" type="text" value="{{user.first_name}}" />
+                <input class="form-control" type="text" value="{{user.first_name}}" readonly />
               </div>
             </div>
             <div class="col-md-6">
@@ -103,7 +103,7 @@
                 <label for="example-text-input" class="form-control-label"
                   >Last name</label
                 >
-                <input class="form-control" type="text" value="{{user.last_name}}" />
+                <input class="form-control" type="text" value="{{user.last_name}}" readonly />
               </div>
             </div>
           </div>
@@ -117,10 +117,15 @@
                 <input
                   class="form-control"
                   type="text"
-                  value="A beautiful Dashboard for Bootstrap 5. It is Free and Open Source." />
+                  value="{{user.bio}}" readonly />
               </div>
             </div>
           </div>
+          <a
+              href="{% url 'settings' %}"
+              class="btn btn-sm btn-info mb-0 d-none d-lg-block"
+              >Edit Profile</a
+            >
         </div>
       </div>
     </div>

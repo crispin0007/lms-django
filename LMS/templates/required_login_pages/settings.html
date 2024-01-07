@@ -60,7 +60,7 @@
           <div class="col-sm-auto col-4">
             <div class="avatar avatar-xl position-relative">
               <img
-                src="{% static 'img/bruce-mars.jpg' %}"
+                src="{{ MEDIA_URL }}{{user.profile_image.url}}"
                 alt="bruce"
                 class="w-100 rounded-circle shadow-sm" />
             </div>
@@ -69,7 +69,7 @@
             <div class="h-100">
               <h5 class="mb-1 font-weight-bolder">{{ user.username }}</h5>
               <p class="mb-0 font-weight-normal text-sm">
-                CEO / Co-Founder
+                Student
               </p>
             </div>
           </div>
@@ -80,6 +80,17 @@
         <div class="card-header">
           <h5>Basic Info</h5>
         </div>
+        {% if 'update=True' in request.get_full_path %}
+            <ul class="messages" style="list-style-type: none; padding: 0; margin: 0;">                        
+                <li>
+                    <div class="alert alert-success text-white" role="alert">
+                    {{ success_msg }}
+                    </div>
+                </li>                        
+            </ul>
+        {% endif  %}
+        <form  method='post' action="{% url 'update_profile' %}">
+          {% csrf_token %}
         <div class="card-body pt-0">
           <div class="row">
             <div class="col-6">
@@ -87,8 +98,7 @@
                 <label>First Name</label>
                 <input
                   type="text"
-                  class="form-control"
-                  placeholder="Alec" />
+                  class="form-control" value="{{user.first_name}}" name="firstname" />
               </div>
             </div>
             <div class="col-6">
@@ -96,52 +106,37 @@
                 <label>Last Name</label>
                 <input
                   type="text"
-                  class="form-control"
-                  placeholder="Thompson" />
+                  class="form-control" value="{{user.last_name}}" name="lastname" />
               </div>
             </div>
           </div>
           <div class="row mt-4">
-            <div class="col-6">
+            <div class="col">
               <div class="input-group input-group-static">
                 <label>Email</label>
                 <input
                   type="email"
-                  class="form-control"
-                  placeholder="example@email.com" />
+                  class="form-control" value="{{user.email}}" name="email" />
               </div>
             </div>
           </div>
           <div class="row mt-4">
-            <div class="col-6">
+            <div class="col">
               <div class="input-group input-group-static">
-                <label>Your location</label>
+                <label>Your Bio</label>
                 <input
                   type="text"
                   class="form-control"
-                  placeholder="Sydney, A" />
+                  value="{{user.user_bio}}" name="user_bio" />
               </div>
             </div>
-            <div class="col-6">
-              <div class="input-group input-group-static">
-                <label>Phone Number</label>
-                <input
-                  type="number"
-                  class="form-control"
-                  placeholder="+40 735 631 620" />
-              </div>
-            </div>
+           
           </div>
+          <hr>
+          Choose Profile Picture: 
+          <input type="file" id="img" name="profile_image" accept="image/*"> 
           <div class="row">
-            <div class="col-md-6">
-              <label class="form-label mt-4">Skills</label>
-              <input
-                class="form-control"
-                id="choices-skills"
-                type="text"
-                value="vuejs, angular, react"
-                placeholder="Enter something" />
-            </div>
+            
             <div class="col-md-6">
               <button class="btn bg-gradient-success btn-sm float-end mt-6 mb-0">
                 Update Profile
@@ -151,7 +146,7 @@
           
         </div>
       </div>
-
+    </form>
       <div class="card mt-4" id="password">
         <div class="card-header">
           <h5>Change Password</h5>
