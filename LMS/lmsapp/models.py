@@ -15,31 +15,33 @@ class Categories (models.Model):
     def __str__(self):
         return self.name
 
+class Instructor(models.Model):
+    name = models.CharField(max_length=100, null=True)
+    instructor_image = models.ImageField(upload_to="Images/Instructors")
+    instructor_bio = models.TextField()
+
+    def __str__(self):
+        return self.name
+
+
 class Course(models.Model):
-    title = models.CharField(max_length=100)
-    slug = models.SlugField(unique=True)
+    STATUS = (
+        ('PUBLISH','PUBLISH'),
+        ('DRAFT', 'DRAFT'),
+    )
+    title = models.CharField(max_length=500)
+    date = models.DateField(auto_now_add=True)
+    featured_image = models.ImageField(upload_to="Images/Featured_Image/featured_img",null=True)
+    instructor = models.ForeignKey(Instructor,on_delete=models.CASCADE,null=True)
+    category = models.ForeignKey(Categories,on_delete=models.CASCADE)
+    featured_video = models.CharField(max_length=300,null=True)
+    slug = models.SlugField(default='', max_length=500, null=True, blank=True)
+    status = models.CharField(choices=STATUS,max_length=100,null=True)
     description = models.TextField()
-    # instructor = models.ForeignKey('Instructor', on_delete=models.CASCADE)
-    category = models.CharField(max_length=50)
-    subcategory = models.CharField(max_length=50, blank=True, null=True)
-    level = models.CharField(max_length=20)
-    language = models.CharField(max_length=20)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
-    discounted_price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
-    enrollment_limit = models.PositiveIntegerField()
-    prerequisites = models.TextField()
-    skills_taught = models.TextField()
-    course_duration = models.PositiveIntegerField()
-    lectures = models.PositiveIntegerField()
-    total_students_enrolled = models.PositiveIntegerField()
-    rating = models.DecimalField(max_digits=3, decimal_places=2)
-    thumbnail = models.ImageField(upload_to='static/course_thumbnails/')
-    syllabus = models.TextField()
-    requirements = models.TextField()
-    target_audience = models.TextField()
-    publish_date = models.DateField()
-    last_updated_date = models.DateField()
-    promotional_video = models.URLField()
+    price = models.IntegerField(null=True,default=0)
+    discount = models.IntegerField(null=True)
 
     def __str__(self):
         return self.title
+
+  
