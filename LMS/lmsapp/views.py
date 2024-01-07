@@ -52,6 +52,11 @@ def coursedetails(request):
 def blog(request):
     return render(request, ('Pages/blog.html'))
 
+def error_404(request, exception):
+    render(request, ('Pages/404.html'))
+def error_500(request):
+    render(request, ('Pages/500.html'))
+
 def login_view(request):
     form = LoginForm(request.POST or None)
     msg = None
