@@ -5,7 +5,12 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from lmsapp.models import Categories
 from lmsapp.models import User
+from lmsapp.utils import send_email_token
+from django.core.mail import send_mail
+from django.conf import settings
+import uuid
 # Create your views here.
+
 
 def home(request):
     category = Categories.objects.all()
@@ -93,7 +98,11 @@ def register(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
+            email = request.POST.get('email')
             user = form.save()
+            email_token = str(user.email_token)
+            send_email_token(email, email_token)
+            
             return HttpResponseRedirect('?registered=True')
         else:
            print(form.errors)
@@ -101,14 +110,29 @@ def register(request):
         form = SignUpForm()
     return render(request, 'Pages/register.html', {'form': form, 'success_msg': success_msg})
 
+def verify(request, token):
+    try:
+        profile = User.objects.get(email_token=token)
+        if not profile.is_verified:
+            profile.is_verified = True
+            profile.is_student = True
+            profile.save()
+            login(request, profile)
+            return render(request, 'index.html')
+        else:
+            return render(request, 'index.html')
+    except User.DoesNotExist:
+        return HttpResponse('not working')
+
 def update_profile(request):
+    success_msg = "User Updated successfully"
     if request.method == "POST":
+        user_id = request.user.id
         first_name = request.POST.get('firstname')
         last_name = request.POST.get('lastname')
         email = request.POST.get('email')
         user_bio = request.POST.get('user_bio')
-        user_id = request.user.id
-
+        
         user = User.objects.get(id=user_id)
         user.first_name = first_name
         user.last_name = last_name
@@ -116,8 +140,8 @@ def update_profile(request):
         user.user_bio = user_bio
         user.save()
         return HttpResponseRedirect('?update=True')
-        success_msg = "User Updated successfully"
-        # return redirect('settings')
+        
+    return render (request, 'required_login_pages/settings.html')
 
 
 

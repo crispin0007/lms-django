@@ -10,8 +10,8 @@ urlpatterns = [
     path('accounts/login/', views.login_view , name="login"),
     path('register/', views.register , name="register"),
     path('dashboard/', views.dashboard , name="dashboard"),
-    path('profile/', views.profile , name="profile"),
-   
+    path('verify/<str:token>', views.verify , name="verify"),
+    path('profile/', views.profile , name="profile"),   
     path('checkout/', views.checkout , name="checkout"),
     path('course_details/', views.coursedetails , name="coursedetails"),
     path('blog/', views.blog , name="blog"),
@@ -26,4 +26,5 @@ urlpatterns = [
     path('wishlists', views.wishlists , name="wishlists"),
     path('becomeinstructor', views.becomeinstructor , name="becomeinstructor"),
     # path('purchase', views.purchase , name="purchase"),
+
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

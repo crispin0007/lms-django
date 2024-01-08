@@ -81,14 +81,27 @@
           <h5>Basic Info</h5>
         </div>
         {% if 'update=True' in request.get_full_path %}
-            <ul class="messages" style="list-style-type: none; padding: 0; margin: 0;">                        
-                <li>
-                    <div class="alert alert-success text-white" role="alert">
-                    {{ success_msg }}
-                    </div>
-                </li>                        
-            </ul>
-        {% endif  %}
+          <ul class="messages" style="list-style-type: none; padding: 0; margin: 0;">                        
+              <li>
+                  <div id="successMessage" class="alert alert-success text-white" role="alert">
+                      Profile Updated Successfully
+                  </div>
+              </li>                        
+          </ul>
+
+          <script>
+              // Add a script to hide the success message after 3 seconds
+              document.addEventListener('DOMContentLoaded', function () {
+                  var successMessage = document.getElementById('successMessage');
+                  if (successMessage) {
+                      setTimeout(function () {
+                          successMessage.style.display = 'none';
+                      }, 3000); // 3000 milliseconds = 3 seconds
+                  }
+              });
+          </script>
+        {% endif %}
+
         <form  method='post' action="{% url 'update_profile' %}">
           {% csrf_token %}
         <div class="card-body pt-0">
@@ -111,13 +124,25 @@
             </div>
           </div>
           <div class="row mt-4">
-            <div class="col">
+            <div class="col-10">
               <div class="input-group input-group-static">
                 <label>Email</label>
                 <input
                   type="email"
                   class="form-control" value="{{user.email}}" name="email" />
               </div>
+            </div>
+            <div class="col-2">
+              <div class="input-group input-group-static">
+                {% if user.is_verified == True %}
+                    <div class="alert alert-success text-white" role="alert">
+                        Verified
+                    </div>
+                {% elif user.is_verified == False %}
+                    <div class="alert alert-danger text-white" role="alert">
+                        Not Verified
+                    </div>
+                {% endif %}
             </div>
           </div>
           <div class="row mt-4">

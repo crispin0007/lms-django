@@ -26,28 +26,20 @@
           </div>
           <span class="mb-0 text-muted" style="position: fixed; top: 2px; right: 0; z-index: 1000; margin-top: 10px; margin-right: 10px;">
             {% if 'registered=True' in request.get_full_path %}
-            {% comment %} {% if messages %} {% endcomment %}
-                {% comment %} {% if message.tags %} {% endcomment %}
                     <ul class="messages" style="list-style-type: none; padding: 0; margin: 0;">
-                        {% comment %} {% for message in messages %} {% endcomment %}
                             <li>
-                                <div class="alert alert-success text-white" role="alert">
-                                {% comment %} <div class="{{ message.tags }} alert alert-success text-white" role="alert"> {% endcomment %}
+                                <div class="alert alert-success text-white" role="alert"> 
                                     {{ success_msg }}
                                 </div>
                             </li>
-                        {% comment %} {% endfor %} {% endcomment %}
                     </ul>
-                {% comment %} {% endif %} {% endcomment %}
-        
-                {% comment %} {% if 'registered=True' in request.get_full_path %} {% endcomment %}
+                
                     <script type="text/javascript">
                         setTimeout(function() {
                             window.location.href = "{% url 'login' %}";
                         }, 5000);
                     </script>
                 {% endif %}
-            {% comment %} {% endif %} {% endcomment %}
         </span>
         
           <div class="card-body pb-3">

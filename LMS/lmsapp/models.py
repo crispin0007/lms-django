@@ -1,14 +1,15 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-
+import uuid
 # Create your models here.
 class User(AbstractUser):    
-    profile_image = models.ImageField(upload_to="Images/profile")
+    profile_image = models.ImageField(upload_to="Images/profile", null=True, blank=True, default='')
     is_manager = models.BooleanField('Is manager', default=False)
     is_instructor = models.BooleanField('Is instructor', default=False)
     is_student = models.BooleanField('Is student', default=True)
-    user_bio = models.TextField(default=" ")
-
+    user_bio = models.TextField(default='', max_length=200, null=True, blank=True)
+    email_token = models.UUIDField(default=uuid.uuid4, editable=False)
+    is_verified = models.BooleanField(default=False)
 
 class Categories (models.Model):
     icon = models.CharField(max_length=200, null=True)
