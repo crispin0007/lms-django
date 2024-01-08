@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from lmsapp import views
 from django.contrib.auth.views import LogoutView
 from django.conf import settings
@@ -26,5 +26,7 @@ urlpatterns = [
     path('wishlists', views.wishlists , name="wishlists"),
     path('becomeinstructor', views.becomeinstructor , name="becomeinstructor"),
     # path('purchase', views.purchase , name="purchase"),
+
+    path('auth/', include('social_django.urls', namespace='social')),
 
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
