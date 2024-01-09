@@ -175,56 +175,69 @@
   <div class="container">
     <h3 class="my-5">Recommended Course</h3>
     <div class="row">
+      {% for i in course%}
       <div class="col-lg-3 col-md-4 col-sm-6 mb-4 mt-3 mb-3">
+        <a href="#">
         <div class="card" data-animation="true">
           <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
             <a class="d-block blur-shadow-image">
               <img
-                src="https://img-c.udemycdn.com/course/240x135/4406786_4821_2.jpg"
-                alt="img-blur-shadow"
+                src="{{i.featured_image.url}}"
+                alt="{{i.title}}"
                 class="img-fluid shadow border-radius-lg" />
             </a>
             <div
               class="colored-shadow"
               style="
-                background-image: url('https://img-c.udemycdn.com/course/240x135/4406786_4821_2.jpg');
+                background-image: url('{{i.featured_image.url}}');
               "></div>
           </div>
           <div class="card-body text-center">
-            <div class="d-flex mt-n6 mx-auto">
-              <a
+            <div class="d-flex mt-n6 text-center">
+              {% comment %} <a
                 class="btn btn-link text-primary ms-auto border-0"
                 data-bs-toggle="tooltip"
                 data-bs-placement="bottom"
                 title="Refresh">
                 <i class="material-icons text-lg">refresh</i>
-              </a>
-              <button
-                class="btn btn-link text-info me-auto border-0"
+              </a> {% endcomment %}
+              <a class="btn btn-success" href="">Enroll Now</a>
+              <a
+                class="btn btn-outline-danger text-info border-0"
                 data-bs-toggle="tooltip"
                 data-bs-placement="bottom"
-                title="Edit">
-                <i class="material-icons text-lg">edit</i>
-              </button>
+                title="Add to Wishlists">
+                <i class="material-icons text-lg">shopping_basket</i>
+            </a>
+              <a
+                class="btn btn-outline-danger text-info border-0"
+                data-bs-toggle="tooltip"
+                data-bs-placement="bottom"
+                title="Add to Cart">
+                <i class="material-icons text-lg">shopping_basket</i>
+            </a>
             </div>
             <h5 class="font-weight-normal mt-3">
-              <a href="javascript:;">The Complete Python Bootcamp From Zero to Hero in Python</a>
+              <a href="javascript:;">{{i.title}}</a>
             </h5>
             <p class="mb-0">
-              Master Python by building 100 projects in 100 days. Learn data science, automation, build websites, games and apps!
+              {{i.description}}
             </p>
           </div>
           <hr class="dark horizontal my-0" />
           <div class="card-footer d-flex">
-            <p class="font-weight-normal my-auto">Rs.499</p>
+            <p class="font-weight-normal my-auto">Rs. {{i.price}}</p>
             <i
               class="material-icons position-relative ms-auto text-lg me-1 my-auto"
-              >place</i
+              >account_circle</i
             >
-            <p class="text-sm my-auto">Instructor Name</p>
+            <p class="text-sm my-auto">{{i.instructor}}</p>
           </div>
         </div>
+      </a>
       </div>
+    
+      {% endfor %}
     </div>
   </div>
   {% endif %} {% comment %} ===================end of continue
@@ -261,56 +274,69 @@
   <div class="container my-5">
     <h3 class="my-4">Trending Course</h3>
     <div class="row">
+      {% for i in course%}
       <div class="col-lg-3 col-md-4 col-sm-6 mb-4 mt-3 mb-3">
+        <a href="#">
         <div class="card" data-animation="true">
           <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
             <a class="d-block blur-shadow-image">
               <img
-                src="https://img-c.udemycdn.com/course/240x135/4406786_4821_2.jpg"
-                alt="img-blur-shadow"
+                src="{{i.featured_image.url}}"
+                alt="{{i.title}}"
                 class="img-fluid shadow border-radius-lg" />
             </a>
             <div
               class="colored-shadow"
               style="
-                background-image: url('https://img-c.udemycdn.com/course/240x135/4406786_4821_2.jpg');
+                background-image: url('{{i.featured_image.url}}');
               "></div>
           </div>
           <div class="card-body text-center">
-            <div class="d-flex mt-n6 mx-auto">
-              <a
+            <div class="d-flex mt-n6 text-center">
+              {% comment %} <a
                 class="btn btn-link text-primary ms-auto border-0"
                 data-bs-toggle="tooltip"
                 data-bs-placement="bottom"
                 title="Refresh">
                 <i class="material-icons text-lg">refresh</i>
-              </a>
-              <button
-                class="btn btn-link text-info me-auto border-0"
+              </a> {% endcomment %}
+              <a class="btn btn-success" href="">Enroll Now</a>
+              <a
+                class="btn btn-outline-danger text-info border-0"
                 data-bs-toggle="tooltip"
                 data-bs-placement="bottom"
-                title="Edit">
-                <i class="material-icons text-lg">edit</i>
-              </button>
+                title="Add to Wishlists">
+                <i class="material-icons text-lg">shopping_basket</i>
+            </a>
+              <a
+                class="btn btn-outline-danger text-info border-0"
+                data-bs-toggle="tooltip"
+                data-bs-placement="bottom"
+                title="Add to Cart">
+                <i class="material-icons text-lg">shopping_basket</i>
+            </a>
             </div>
             <h5 class="font-weight-normal mt-3">
-              <a href="javascript:;">The Complete Python Bootcamp From Zero to Hero in Python</a>
+              <a href="javascript:;">{{i.title}}</a>
             </h5>
             <p class="mb-0">
-              Master Python by building 100 projects in 100 days. Learn data science, automation, build websites, games and apps!
+              {{i.description}}
             </p>
           </div>
           <hr class="dark horizontal my-0" />
           <div class="card-footer d-flex">
-            <p class="font-weight-normal my-auto">Rs.499</p>
+            <p class="font-weight-normal my-auto">Rs. {{i.price}}</p>
             <i
               class="material-icons position-relative ms-auto text-lg me-1 my-auto"
-              >place</i
+              >account_circle</i
             >
-            <p class="text-sm my-auto">Instructor Name</p>
+            <p class="text-sm my-auto">{{i.instructor}}</p>
           </div>
         </div>
+      </a>
       </div>
+    
+      {% endfor %}
     </div>
   </div>
 
