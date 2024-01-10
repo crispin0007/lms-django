@@ -177,7 +177,7 @@
     <div class="row">
       {% for i in course%}
       <div class="col-lg-3 col-md-4 col-sm-6 mb-4 mt-3 mb-3">
-        <a href="#">
+        <a href="{{i.course_url}}">
         <div class="card" data-animation="true">
           <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
             <a class="d-block blur-shadow-image">
@@ -194,14 +194,7 @@
           </div>
           <div class="card-body text-center">
             <div class="d-flex mt-n6 text-center">
-              {% comment %} <a
-                class="btn btn-link text-primary ms-auto border-0"
-                data-bs-toggle="tooltip"
-                data-bs-placement="bottom"
-                title="Refresh">
-                <i class="material-icons text-lg">refresh</i>
-              </a> {% endcomment %}
-              <a class="btn btn-success" href="">Enroll Now</a>
+              <a class="btn btn-success" href="{{i.course_url}}">Enroll Now</a>
               <a
                 class="btn btn-outline-danger text-info border-0"
                 data-bs-toggle="tooltip"
@@ -218,10 +211,10 @@
             </a>
             </div>
             <h5 class="font-weight-normal mt-3">
-              <a href="javascript:;">{{i.title}}</a>
+              <a href="{{i.course_url}}">{{i.title |truncatewords:5}}</a>
             </h5>
             <p class="mb-0">
-              {{i.description}}
+              {{i.description |truncatewords:10}}
             </p>
           </div>
           <hr class="dark horizontal my-0" />
@@ -261,8 +254,8 @@
               Master Python by building 100 projects in 100 days. Learn data science, automation, build websites, games and apps!
             </p>
             <p class="font-weight-normal my-auto">Rs.499</p>
-            <a class="btn btn-primary my-3" href="{% url 'checkout' %}">Buy Now</a>
-            <a class="btn btn-success my-3" href="{% url 'checkout' %}">Add to Cart</a>
+            <a class="btn btn-primary my-3" href="{{i.checkout_url}}">Buy Now</a>
+            <a class="btn btn-success my-3" href="{{i.checkout_url}}">Add to Cart</a>
           </div>
         </div>
       </div>
@@ -276,7 +269,7 @@
     <div class="row">
       {% for i in course%}
       <div class="col-lg-3 col-md-4 col-sm-6 mb-4 mt-3 mb-3">
-        <a href="#">
+        <a href="{{i.course_url}}">
         <div class="card" data-animation="true">
           <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
             <a class="d-block blur-shadow-image">
@@ -293,19 +286,12 @@
           </div>
           <div class="card-body text-center">
             <div class="d-flex mt-n6 text-center">
-              {% comment %} <a
-                class="btn btn-link text-primary ms-auto border-0"
-                data-bs-toggle="tooltip"
-                data-bs-placement="bottom"
-                title="Refresh">
-                <i class="material-icons text-lg">refresh</i>
-              </a> {% endcomment %}
-              <a class="btn btn-success" href="">Enroll Now</a>
+              <a class="btn btn-success" href="{{i.course_url}}">Enroll Now</a>
               <a
                 class="btn btn-outline-danger text-info border-0"
                 data-bs-toggle="tooltip"
                 data-bs-placement="bottom"
-                title="Add to Wishlists">
+                title="Add to Wishlists" href="{{i.cart_url}}">
                 <i class="material-icons text-lg">shopping_basket</i>
             </a>
               <a
@@ -317,10 +303,10 @@
             </a>
             </div>
             <h5 class="font-weight-normal mt-3">
-              <a href="javascript:;">{{i.title}}</a>
+              <a href="{{i.course_url}}">{{i.title}}</a>
             </h5>
             <p class="mb-0">
-              {{i.description}}
+              {{i.description |truncatewords:10}}
             </p>
           </div>
           <hr class="dark horizontal my-0" />

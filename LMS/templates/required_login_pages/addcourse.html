@@ -1,0 +1,69 @@
+{% extends 'components/dashboard/base.html'%} {%block title%}Add Course |
+Skylearner {% endblock %} {% block sub_title %}
+<h6 class="font-weight-bolder mb-0"> Add New Course</h6>
+{% endblock %} {% load static %} 
+{% block content %}
+<form method="post">
+    <div class='row'>
+        <div class='col-8'>
+  <div class="form-group">
+    <label for="title">Course Title</label>
+    <input
+      class="form-control form-control-lg border"
+      type="text"
+      placeholder=""
+      id="title" value="" />
+    <label for="slug">Slug</label>
+    <input
+      class="form-control form-control-lg border"
+      type="text"
+      placeholder=""
+      id="slug" value="Slug Will Automatically Added"
+      readonly />
+    <div class="row">
+        <div class="col">
+            <label for="price">Original Price</label>
+            <input
+              type="text"
+              class="form-control form-control-lg border"
+              id="price" value="{{course.price}}"/>
+          </div>
+          <div class="col">
+            <label for="dpercent">Discount %</label>
+            <input
+              type="text"
+              class="form-control form-control-lg border"
+              id="dpercent" value="{{course.discount}}" />
+          </div>
+      <div class="col">
+        <label for="inputState">Category</label>
+        <select id="inputState" class="form-control form-control-lg border">
+            {% for i in category%}
+                <option>{{ i.name }}</option>
+            {% endfor%}
+        </select>
+      </div>
+    </div>
+    <label for="exampleFormControlTextarea1">Course Description</label>
+    <textarea class="form-control form-control-lg border" id="exampleFormControlTextarea1" rows="10"></textarea>
+  </div>
+</form>
+</div>
+<div class="col-4">
+    <hr class="dark horizontal my-1" />
+    <label for="image" class="mt-5">Choose Featured Image</label>
+    <input type="file" class="form-control-file" id="image" />
+</div>
+</div>
+
+
+<hr class="dark horizontal my-3" />
+<div class="card-footer d-flex">
+  <a href="" class="btn btn-danger btn-lg mx-auto">Save As Draft</a>
+
+  <a class="btn btn-success mx-auto btn-lg">Publish Course</a>
+
+  <p class="text-sm my-auto">{{i.instructor}}</p>
+</div>
+
+{% endblock %}

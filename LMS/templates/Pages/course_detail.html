@@ -9,9 +9,78 @@
   <div class="wrapper">
     <div class="container">
         {% comment %} =================start code from here=============== {% endcomment %}
+        <div class="row">
+          <div class="col-8">
+            <h3>{{course.title}}</h3>
+            <hr class="dark horizontal my-0" />
+            <img src="{{course.featured_image.url}}" class="img-fluid" alt="Wild Landscape" />
+            
+            <hr class="dark horizontal my-1" />
+            <h3>About Course</h3>
+            <p>{{course.description | safe}} </p>
+            <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+              Read More
+            </a>
+            <div class="collapse" id="collapseExample">
+              <div class="card card-body">
+                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil 
+                  anim keffiyeh 
+                helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+              </div>
+            </div>
+            
+            <hr class="dark horizontal my-1" />
+            <h3>Curriculum</h3>
+            <p>This is the Curriculum of course </p>
+          </div>
 
-    </div>
-
+          {% comment %} second side {% endcomment %}
+          <div class="col-4 mt-5">
+            <div class="card" data-animation="false">
+              <div
+                class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                <a class="d-block blur-shadow-image">
+                  <img
+                    src="{% static 'img/products/product-3-min.jpg' %}"
+                    alt="img-blur-shadow"
+                    class="img-fluid shadow border-radius-lg" />
+                </a>
+                <div
+                  class="colored-shadow"
+                  style="
+                    background-image: url('{% static 'img/products/product-3-min.jpg' %}
+                  "></div>
+              </div>
+              <div class="card-body text-center">
+                <h3>Price: </h3><h1>{{course.price}}</h1>               
+              </div>
+              <hr class="dark horizontal my-0" />
+              <div class="card-footer d-flex mx-auto">
+                <a class="btn btn-lg btn-success me-auto" href="{{i.cart_url}}">Buy Now</a>
+                <a class="btn btn-lg btn-info">Add to Cart</a>
+              </div>
+              
+              {% comment %} =============== {% endcomment %}
+              <div class="card mb-3 p-3" style="max-width: 540px;">
+                <div class="row g-0">
+                  <div class="col-md-4">
+                    <img 
+                      src="https://mdbcdn.b-cdn.net/wp-content/uploads/2020/06/vertical.webp"
+                      alt="Trendy Pants and Shoes"
+                      class="img-fluid rounded-start" style="height:100px; width:100px;"
+                    />
+                  </div>
+                  <div class="col-md-8">
+                    <div class="card-body">
+                      <h5 class="card-title text-left">{{course.instructor}}</h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     {% endblock %}
   </div>
 </main>

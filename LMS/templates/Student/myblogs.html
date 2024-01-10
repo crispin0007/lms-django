@@ -1,0 +1,83 @@
+
+{% extends 'components/dashboard/base.html'%}
+{%block title%}Learning | Skylearner {% endblock %}
+{% block sub_title %}<h6 class="font-weight-bolder mb-0">My Blogs</h6>{% endblock %}
+{% load static %}
+
+{% block content %}
+
+<a class="btn btn-primary btn-lg" href="{% url 'addblog' %}">Create New Blog <a> 
+<div class="row">
+  <div class="col-lg-12 position-relative z-index-2">
+    <div class="row mt-5">
+        {% for i in blog %}
+        {% if i.user.username == user.username %}
+        <div class="col-lg-4 mt-5 mt-lg-0">
+          <div class="card mt-5" data-animation="true">
+            <div
+              class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+              <a class="d-block blur-shadow-image">
+                {% if i.status == 'PUBLISH' %}
+                <span class="badge rounded-pill badge-success position-absolute">{{i.status}}</span>
+                {% elif i.status == 'DRAFT' %}
+                <span class="badge rounded-pill badge-danger position-absolute">{{i.status}}</span>
+                {% elif i.status == 'PENDING' %}
+                <span class="badge rounded-pill badge-warning position-absolute">{{i.status}}</span>
+                {% endif %}
+                <img
+                  src="{{ i.featured_image.url }}"
+                  alt="img-blur-shadow"
+                  class="img-fluid shadow border-radius-lg" />
+              </a>
+              
+              <div
+                class="colored-shadow"
+                style="
+                  background-image: url('{{ i.featured_image.url }}
+                "></div>
+            </div>
+            <div class="card-body text-center">
+              
+              <div class="d-flex mt-n6 mx-auto">
+                <a
+                  class="btn btn-link text-primary ms-auto border-0"
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="bottom"
+                  title="Refresh">
+                  <i class="material-icons text-lg">refresh</i>
+                </a>
+                <button
+                  class="btn btn-link text-info me-auto border-0"
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="bottom"
+                  title="Edit">
+                  <i class="material-icons text-lg">edit</i>
+                </button>
+              </div>
+              <h5 class="font-weight-normal mt-3">
+                <a href="javascript:;">{{ i.title }}</a>
+              </h5>
+              <p class="mb-0">
+                {{i.description}}
+              </p>
+            </div>
+            <hr class="dark horizontal my-0" />
+            <div class="card-footer d-flex">
+              <a href ="{{i.edit_blog_url}}" class="btn btn-outline-danger btn-sm'">Edit Course</a>
+              {% if i.status == 'DRAFT' %}
+              <a class="btn btn-outline-success btn-sm mx-auto">Publish Course</a>
+              {% endif%}
+              <i
+                class="material-icons position-relative ms-auto text-lg me-1 my-auto"
+                >account_circle</i
+              >
+              <p class="text-sm my-auto">{{i.user}}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+      </div>
+  </div>
+</div>
+{% endblock %}

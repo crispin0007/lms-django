@@ -1,0 +1,68 @@
+{% extends 'components/dashboard/base.html'%} {%block title%}Learning |
+Skylearner {% endblock %} {% block sub_title %}
+<h6 class="font-weight-bolder mb-0">Edit Course</h6>
+{% endblock %} {% load static %} {% block content %}
+<form method="post">
+    <div class='row'>
+        <div class='col-8'>
+  <div class="form-group">
+    <label for="title">Course Title</label>
+    <input
+      class="form-control form-control-lg border"
+      type="text"
+      placeholder=""
+      id="title" value="{{course.title}}" />
+    <label for="slug">Slug</label>
+    <input
+      class="form-control form-control-lg border"
+      type="text"
+      placeholder=""
+      id="slug" value="{{course.slug}}"
+      readonly />
+    <div class="row">
+      <div class="col">
+        <label for="price">Original Price</label>
+        <input
+          type="text"
+          class="form-control form-control-lg border"
+          id="price" value="{{course.price}}"/>
+      </div>
+      <div class="col">
+        <label for="dpercent">Discount %</label>
+        <input
+          type="text"
+          class="form-control form-control-lg border"
+          id="dpercent" value="{{course.discount}}" />
+      </div>
+      <div class="col">
+        <label for="inputState">Category</label>
+        <select id="inputState" class="form-control form-control-lg border">
+            {% for i in category %}
+                <option {% if i.name == course.category %}selected{% endif %}>{{ i.name }}</option>
+            {% endfor %}
+        </select>
+      </div>
+    </div>
+    <label for="exampleFormControlTextarea1">Course Description</label>
+    <textarea class="form-control form-control-lg border" id="exampleFormControlTextarea1" rows="10">{{course.description}}</textarea>
+  </div>
+</form>
+</div>
+<div class="col-4"><img src="{{course.featured_image.url}}" class="img-fluid" alt="Wild Landscape" />
+    <hr class="dark horizontal my-1" />
+    <label for="image" class="mt-5">Choose Image</label>
+    <input type="file" class="form-control-file" id="image" />
+</div>
+</div>
+
+
+<hr class="dark horizontal my-3" />
+<div class="card-footer d-flex">
+  <a href="" class="btn btn-danger btn-lg mx-auto">Save As Draft</a>
+
+  <a class="btn btn-success mx-auto btn-lg">Publish Course</a>
+
+  <p class="text-sm my-auto">{{i.instructor}}</p>
+</div>
+
+{% endblock %}

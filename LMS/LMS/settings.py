@@ -40,6 +40,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'lmsapp.apps.LmsappConfig',
     'social_django',
+    'django_otp',
+    'django_otp.plugins.otp_static',
+    'django_otp.plugins.otp_totp',
+    'two_factor',
+    'ckeditor',
+
 ]
 
 MIDDLEWARE = [
@@ -48,9 +54,11 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django_otp.middleware.OTPMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'social_django.middleware.SocialAuthExceptionMiddleware',
+    
 ]
 
 ROOT_URLCONF = 'LMS.urls'
@@ -148,8 +156,6 @@ AUTHENTICATION_BACKENDS =[
     'django.contrib.auth.backends.ModelBackend'
 ]
 
-LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'home'
 LOGOUT_URL = 'logout'
 LOGOUT_REDIRECT_URL = 'login'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
@@ -161,4 +167,8 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_EXTRA_DATA = ['email', 'picture']
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '1094911057716-biu22c84jbks4shkhleq24kg529utihv.apps.googleusercontent.com'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
 SOCIAL_AUTH_GOOGLE_OAUTH2_REDIRECT_URI = 'http://127.0.0.1:8000/auth/complete/google-oauth2/'
+
+#2FA
+LOGIN_URL = 'login'
+# LOGIN_REDIRECT_URL = 'two_factor:profile'
 

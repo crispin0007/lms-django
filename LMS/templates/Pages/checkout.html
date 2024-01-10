@@ -21,32 +21,19 @@
                     <div class="media align-items-center mb-3">
                       <div class="col-md-5 col-6">
                         <img
-                          src="../assets/img/pages/gucci.png"
+                          src="{{course.featured_image.url}}"
                           alt="Rounded image"
                           class="img-fluid" />
                       </div>
                       <div class="media-body">
-                        <h2 class="h6">Shorts</h2>
-                        <small class="d-block opacity-8">Small</small>
+                        <h2 class="h6">{{course.title}}</h2>
+                        
                       </div>
                       <div class="media-body text-right">
-                        <span>$29</span>
+                        <span>Rs. {{course.price}}</span>
                       </div>
                     </div>
-                    <div class="media align-items-center">
-                      <div class="col-md-5 col-6">
-                        <img
-                          src="../assets/img/pages/jacket.png"
-                          alt="Rounded image"
-                          class="img-fluid" />
-                      </div>
-                      <div class="media-body">
-                        <h2 class="h6 mb-0">Jacket</h2>
-                      </div>
-                      <div class="media-body text-right">
-                        <span>$999</span>
-                      </div>
-                    </div>
+                    
                     <hr class="line-info mb-3" />
                     <form class="code-validate">
                       <label>Discount</label>
@@ -71,12 +58,7 @@
                         <span>$1038</span>
                       </div>
                     </div>
-                    <div class="media align-items-center">
-                      <h3 class="h6 opacity-8 mr-3">Shipping</h3>
-                      <div class="media-body text-right">
-                        <span>$5.8</span>
-                      </div>
-                    </div>
+                    
                     <hr class="line-info mb-3" />
                     <div class="media align-items-center">
                       <h3 class="h6">Total</h3>
@@ -104,7 +86,7 @@
                         type="text"
                         class="form-control"
                         name="firstName"
-                        placeholder="Cristopher"
+                        value = "{{user.first_name}}"
                         aria-label="Cristopher"
                         required />
                     </div>
@@ -117,7 +99,7 @@
                         type="text"
                         class="form-control"
                         name="lastName"
-                        placeholder="Thompson"
+                        value="{{user.last_name}}"
                         aria-label="Thompson"
                         required />
                     </div>
@@ -134,7 +116,7 @@
                           type="email"
                           class="form-control"
                           name="emailAddress"
-                          placeholder="thompson@gmail.com"
+                          value="{{user.email}}"
                           aria-label="thompson@gmail.com"
                           required />
                       </div>
@@ -157,7 +139,7 @@
                     <a
                       class="btn btn-lg text-white"
                       data-toggle="tab"
-                      href="#link1"
+                      href=""
                       role="tablist" style="background-color:#5d2e8e;">
 
                       Khalti
@@ -176,7 +158,7 @@
                       
                       <div
                         class="d-flex justify-content-between align-items-center p-5">
-                        <a href="{% url 'mycart' %}"
+                        <a href=""
                           ><span class="fas fa-angle-left mr-2"></span> Return
                           to cart</a
                         >
