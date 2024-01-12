@@ -378,11 +378,12 @@ def approve_instructor(request, user_id):
 
     if request.method == 'POST':
         instructor.status = 'INSTRUCTOR'
-        is_instructor = True
+        instructor.is_instructor = True
+        instructor.is_student = False
         instructor.save()
         return redirect('list_instructor')
 
-    return render(request, 'Manager/Approval/Instructor.html', {'instructor': instructor})
+    return render(request, 'Manager/Approval/instructor.html', {'instructor': instructor})
 # ===============unpublish==================
 def unpublish_course(request, course_id):
     course = get_object_or_404(Course, id=course_id)
@@ -403,6 +404,20 @@ def unpublish_blog(request, blog_id):
         return redirect('list_blog')
 
     return render(request, 'Manager/Approval/blog.html', {'blog': blog})
+
+def unapprove_instructor(request, user_id):
+    instructor = get_object_or_404(User, id=user_id)
+
+    if request.method == 'POST':
+        instructor.status = 'STUDENT'
+        instructor.is_instructor = False
+        instructor.is_student = True
+        instructor.save()
+        return redirect('list_instructor')
+
+    return render(request, 'Manager/Approval/instructor.html', {'instructor': instructor})
+
+# ================list============
 def list_course (request):
     course = Course.objects.all()
     context = {
