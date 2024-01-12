@@ -24,7 +24,13 @@ urlpatterns = [
     path('mycourses/', views.mycourses , name="mycourses"),
     path('messages/', views.messages , name="messages"),
     path('notifications/', views.notifications , name="notifications"),
+
+    # update urls
     path('update_profile/', views.update_profile, name='update_profile'),
+    # path('update_course/', views.update_course, name='update_course'),
+    # path('update_blog/', views.update_blog, name='update_blog'),
+
+
     path('cart/<slug:slug>/', views.cart , name="cart"),
     path('settings/', views.settings , name="settings"),
     path('wishlists/', views.wishlists , name="wishlists"),
@@ -37,4 +43,14 @@ urlpatterns = [
 
     path('auth/', include('social_django.urls', namespace='social')),
 
+    # Approval
+    path('approval_course/', views.approval_course , name="approval_course"),
+    path('approval_blog/', views.approval_blog , name="approval_blog"),
+    path('approval_instructor/', views.approval_instructor , name="approval_instructor"),
+
+    # Lists
+    path('list_course/', views.list_course , name="list_course"),
+    path('list_blog/', views.list_blog , name="list_blog"),
+    path('list_instructor/', views.list_instructor , name="list_instructor"),
+    path('list_student/', views.list_student , name="list_student"),
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

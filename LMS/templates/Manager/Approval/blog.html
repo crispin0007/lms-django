@@ -1,0 +1,178 @@
+{% extends 'components/dashboard/base.html'%} 
+{%block title%}Blog | Skylearner {% endblock %}
+{% block sub_title %}<h6 class="font-weight-bolder mb-0">My Courses</h6>{% endblock %}
+{% load static %}
+ 
+{%block content%}
+<h1>Blog List</h1>
+{% if user.is_manager %}
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Published</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Pending</button>
+    </li>
+  </ul>
+  <div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+        <div class="row">
+            <div class="col-lg-12 position-relative z-index-2">
+              <div class="row mt-5">
+                {% for i in blog %}
+                   {%if i.status == "PUBLISH"%}
+                  <div class="col-lg-4 mt-5 mt-lg-0">
+                    <div class="card mt-5" data-animation="true">
+                      
+                      <div
+                        class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                        
+                        <a class="d-block blur-shadow-image">
+                          
+                          <span class="badge rounded-pill badge-success position-absolute">{{i.status}}</span>
+                          
+                          <img
+                            src="{{ i.featured_image.url }}"
+                            alt="img-blur-shadow"
+                            class="img-fluid shadow border-radius-lg" />
+                        </a>
+                        <div
+                          class="colored-shadow"
+                          style="
+                            background-image: url('{{ i.featured_image.url }}
+                          "></div>
+                      </div>
+                      <div class="card-body text-center">
+                        
+                        <div class="d-flex mt-n6 mx-auto">
+                          <a
+                            class="btn btn-link text-primary ms-auto border-0"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="bottom"
+                            title="Refresh">
+                            <i class="material-icons text-lg">refresh</i>
+                          </a>
+                          <button
+                            class="btn btn-link text-info me-auto border-0"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="bottom"
+                            title="Edit">
+                            <i class="material-icons text-lg">edit</i>
+                          </button>
+                        </div>
+                        <h5 class="font-weight-normal mt-3">
+                          <a href="javascript:;">{{ i.title }}</a>
+                        </h5>
+                        <p class="mb-0">
+                          {{i.description | truncatewords:20 |safe}}
+                        </p>
+                      </div>
+                      <hr class="dark horizontal my-0" />
+                      <div class="card-footer d-flex">
+                        
+                        <a class="btn btn-success btn-sm mx-auto">View</a>
+                        <a class="btn btn-warning btn-sm mx-auto">Edit</a>
+                        <a class="btn btn-danger btn-sm mx-auto">Delete</a>
+                        <i
+                          class="material-icons position-relative ms-auto text-lg me-1 my-auto"
+                          >account_circle</i
+                        >
+                        <p class="text-sm my-auto">{{i.user}}</p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {% endif %}
+                  
+                  {% endfor %}
+                </div>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+        <div class="row">
+            <div class="col-lg-12 position-relative z-index-2">
+              <div class="row mt-5">
+                {% for i in blog %}
+                   {%if i.status == "PENDING"%}
+                  <div class="col-lg-4 mt-5 mt-lg-0">
+                    <div class="card mt-5" data-animation="true">
+                      
+                      <div
+                        class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                        
+                        <a class="d-block blur-shadow-image">
+                          
+                          <span class="badge rounded-pill badge-warning position-absolute">{{i.status}}</span>
+                          
+                          <img
+                            src="{{ i.featured_image.url }}"
+                            alt="img-blur-shadow"
+                            class="img-fluid shadow border-radius-lg" />
+                        </a>
+                        <div
+                          class="colored-shadow"
+                          style="
+                            background-image: url('{{ i.featured_image.url }}
+                          "></div>
+                      </div>
+                      <div class="card-body text-center">
+                        
+                        <div class="d-flex mt-n6 mx-auto">
+                          <a
+                            class="btn btn-link text-primary ms-auto border-0"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="bottom"
+                            title="Refresh">
+                            <i class="material-icons text-lg">refresh</i>
+                          </a>
+                          <button
+                            class="btn btn-link text-info me-auto border-0"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="bottom"
+                            title="Edit">
+                            <i class="material-icons text-lg">edit</i>
+                          </button>
+                        </div>
+                        <h5 class="font-weight-normal mt-3">
+                          <a href="javascript:;">{{ i.title }}</a>
+                        </h5>
+                        <p class="mb-0">
+                          {{i.description | truncatewords:20 | safe}}
+                        </p>
+                      </div>
+                      <hr class="dark horizontal my-0" />
+                      <div class="card-footer d-flex">
+                        
+                        <a class="btn btn-success btn-sm mx-auto">View</a>
+                        <a class="btn btn-warning btn-sm mx-auto">Edit</a>
+                        <a class="btn btn-danger btn-sm mx-auto">Delete</a>
+                        <a class="btn btn-success btn-sm mx-auto">Publish</a>
+                       
+                      </div>
+                      <div class="card-footer d-flex">
+                      <i
+                      class="material-icons position-relative text-lg me-1"
+                      >account_circle</i
+                    >
+                    <p class="text-sm ">{{i.user}}</p>
+                      </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {% endif %}
+                  
+                 
+                  
+                  {% endfor %}
+                </div>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+
+{% endif %}
+{% endblock %}

@@ -2,7 +2,7 @@
 Skylearner {% endblock %} {% block sub_title %}
 <h6 class="font-weight-bolder mb-0">Edit Course</h6>
 {% endblock %} {% load static %} {% block content %}
-<form method="post">
+<form method="post" action="{% url 'update_course'%}" >
     <div class='row'>
         <div class='col-8'>
   <div class="form-group">
@@ -11,7 +11,7 @@ Skylearner {% endblock %} {% block sub_title %}
       class="form-control form-control-lg border"
       type="text"
       placeholder=""
-      id="title" value="{{course.title}}" />
+      id="title" value="{{course.title}}" name="title"/>
     <label for="slug">Slug</label>
     <input
       class="form-control form-control-lg border"
@@ -25,14 +25,14 @@ Skylearner {% endblock %} {% block sub_title %}
         <input
           type="text"
           class="form-control form-control-lg border"
-          id="price" value="{{course.price}}"/>
+          id="price" value="{{course.price}}" name="original_price"/>
       </div>
       <div class="col">
         <label for="dpercent">Discount %</label>
         <input
           type="text"
           class="form-control form-control-lg border"
-          id="dpercent" value="{{course.discount}}" />
+          id="dpercent" value="{{course.discount}}" name="discount_price" />
       </div>
       <div class="col">
         <label for="inputState">Category</label>
@@ -44,14 +44,15 @@ Skylearner {% endblock %} {% block sub_title %}
       </div>
     </div>
     <label for="exampleFormControlTextarea1">Course Description</label>
-    <textarea class="form-control form-control-lg border" id="exampleFormControlTextarea1" rows="10">{{course.description}}</textarea>
+    <textarea class="form-control form-control-lg border" id="exampleFormControlTextarea1" 
+    rows="10" name="description">{{course.description}}</textarea>
   </div>
 </form>
 </div>
 <div class="col-4"><img src="{{course.featured_image.url}}" class="img-fluid" alt="Wild Landscape" />
     <hr class="dark horizontal my-1" />
     <label for="image" class="mt-5">Choose Image</label>
-    <input type="file" class="form-control-file" id="image" />
+    <input type="file" class="form-control-file" id="image" name="featured_image" />
 </div>
 </div>
 

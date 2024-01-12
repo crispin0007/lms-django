@@ -220,6 +220,8 @@ def verify(request, token):
     except User.DoesNotExist:
         return HttpResponse('not working')
 
+
+# ==================update==================
 @login_required
 def update_profile(request):
     success_msg = "User Updated successfully"
@@ -240,6 +242,84 @@ def update_profile(request):
         
     return render (request, 'required_login_pages/settings.html')
 
+@login_required
+def update_course(request):
+    success_msg = "Course Updated successfully"
+    if request.method == "POST":
+        user_id = request.user.id
+        first_name = request.POST.get('firstname')
+        last_name = request.POST.get('lastname')
+        email = request.POST.get('email')
+        user_bio = request.POST.get('user_bio')
+        
+        user = User.objects.get(id=user_id)
+        user.first_name = first_name
+        user.last_name = last_name
+        user.email = email
+        user.user_bio = user_bio
+        user.save()
+        return HttpResponseRedirect('?update=True')
+        
+    return render (request, 'Student/mycourses.html')
+
+@login_required
+def update_blog(request):
+    success_msg = "Blog Updated successfully"
+    if request.method == "POST":
+        user_id = request.user.id
+        first_name = request.POST.get('firstname')
+        last_name = request.POST.get('lastname')
+        email = request.POST.get('email')
+        user_bio = request.POST.get('user_bio')
+        
+        user = User.objects.get(id=user_id)
+        user.first_name = first_name
+        user.last_name = last_name
+        user.email = email
+        user.user_bio = user_bio
+        user.save()
+        return HttpResponseRedirect('?update=True')
+        
+    return render (request, 'Student/myblogs.html')
 
 
+# ============Approval==============
+def approval_course (request):
+    course = Course.objects.all()
+    context = {
+        'course' : course
+    }
+    return render(request, 'Manager/Approval/course.html',context)
+
+def approval_blog (request):
+    blog = Blog.objects.all()
+    context = {
+        'blog' : blog
+    }
+    return render(request, 'Manager/Approval/blog.html', context)
+
+def approval_instructor (request):
+    return render(request, 'Manager/Approval/instructor.html')
+
+
+# ============lists==============
+def list_course (request):
+    course = Course.objects.all()
+    context = {
+        'course' : course
+    }
+    return render(request, 'Manager/List/course.html',context)
+
+def list_blog (request):
+    blog = Blog.objects.all()
+    context = {
+        'blog' : blog
+    }
+    return render(request, 'Manager/List/blog.html', context)
+
+def list_instructor (request):
+    return render(request, 'Manager/List/instructor.html')
+
+def list_student (request):
+    return render(request, 'Manager/List/instructor.html')
 

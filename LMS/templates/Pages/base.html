@@ -1,13 +1,32 @@
 {% load static %}
 
-<title>{%block title%}Home | SkyLearner{% endblock %}</title> 
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link
+      rel="apple-touch-icon"
+      sizes="76x76"
+      href="{% static 'img/apple-icon.png'%}" />
+    <link rel="icon" type="image/png" href="{% static 'img/favicon.png'%}"/>
+    
+   <title>{%block title%}SkyLearner{% endblock %}</title>
+    
+    {% include 'components/css.html'%}
+      
+        
+  </head>
+  <body class="bg-gray-200">
 {% include 'components/navbar.html'%}
-
 {% block content %}
 
 {% endblock %}
-    
+
 {% include 'components/footer.html'%}
+{% comment %} {% include 'components/dashboard/chat.html'%} {% endcomment %}
 {% include 'components/js.html'%}
 </body>
 </html>
