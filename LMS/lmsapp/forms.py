@@ -68,7 +68,4 @@ class UserProfileForm(forms.ModelForm):
         fields = ['first_name', 'last_name', 'email', 'user_bio']
 
 
-class CourseForm(forms.ModelForm):
-    class Meta:
-        model = Course
-        fields = ['title', 'price', 'discount', 'description']
+

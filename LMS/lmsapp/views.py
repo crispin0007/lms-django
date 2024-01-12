@@ -251,40 +251,63 @@ def update_profile(request):
         
     return render (request, 'required_login_pages/settings.html')
 
+
 @login_required
 def update_course(request, course_id):
-    success_msg = "Course updated successfully"
     course = get_object_or_404(Course, id=course_id)
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        category_name = request.POST.get('category')
+        description = request.POST.get('description')
+        price = request.POST.get('price')
+        discount = request.POST.get('discount')
+        featured_image = request.FILES.get('featured_image')
 
-    if request.method == "POST":
-        form = CourseForm(request.POST, instance=course)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('?update=True')
+        category_instance = Categories.objects.get(name=category_name)
+
+        course.title = title
+        course.category = category_instance
+        course.description = description
+        course.price = price
+        course.discount = discount
+
+        if featured_image:
+            course.featured_image = featured_image
+
+        course.save()
+
+        return redirect('list_course')
     else:
-        form = CourseForm(instance=course)
+        return HttpResponseBadRequest("Invalid request method")
 
-    return render(request, 'Manager/List/course.html', {'form': form, 'course': course, 'success_msg': success_msg})
+    return render(request, 'Manager/dashboard.html', {'course': course})
 
-@login_required
-def update_blog(request):
-    success_msg = "Blog Updated successfully"
-    if request.method == "POST":
-        user_id = request.user.id
-        first_name = request.POST.get('firstname')
-        last_name = request.POST.get('lastname')
-        email = request.POST.get('email')
-        user_bio = request.POST.get('user_bio')
-        
-        user = User.objects.get(id=user_id)
-        user.first_name = first_name
-        user.last_name = last_name
-        user.email = email
-        user.user_bio = user_bio
-        user.save()
-        return HttpResponseRedirect('?update=True')
-        
-    return render (request, 'Student/myblogs.html')
+def update_blog(request, blog_id):
+    blog = get_object_or_404(Blog, id=blog_id)
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        category_name = request.POST.get('category')
+        description = request.POST.get('description')
+        featured_image = request.FILES.get('featured_image')
+
+        category_instance = Categories.objects.get(name=category_name)
+
+        blog.title = title
+        blog.category = category_instance
+        blog.description = description
+
+
+        if featured_image:
+            blog.featured_image = featured_image
+
+        blog.save()
+
+        return redirect('list_blog')
+    else:
+        return HttpResponseBadRequest("Invalid request method")
+
+    return render(request, 'Manager/dashboard.html', {'blog': blog})
+
 
 
 # ============Approval==============
@@ -309,8 +332,66 @@ def approval_instructor (request):
     }
     return render(request, 'Manager/Approval/instructor.html',context)
 
+# ===============delete===============
+def delete_course(request, course_id):
+    course = get_object_or_404(Course, id=course_id)
 
+    if request.method == 'POST':
+        course.delete()
+        return redirect('list_course')
+
+    return render(request, 'Manager/Approval/course.html', {'course': course})
+
+def delete_blog(request, blog_id):
+    blog = get_object_or_404(Blog, id=blog_id)
+
+    if request.method == 'POST':
+        blog.delete()
+        return redirect('list_blog')
+
+    return render(request, 'Manager/Approval/blog.html', {'blog': blog})
+
+# ===============publish ==================
 # ============lists==============
+def publish_course(request, course_id):
+    course = get_object_or_404(Course, id=course_id)
+
+    if request.method == 'POST':
+        course.status = 'PUBLISH'
+        course.save()
+        return redirect('list_course')
+
+    return render(request, 'Manager/Approval/course.html', {'course': course})
+
+def publish_blog(request, blog_id):
+    blog = get_object_or_404(Blog, id=blog_id)
+
+    if request.method == 'POST':
+        blog.status = 'PUBLISH'
+        blog.save()
+        return redirect('list_blog')
+
+    return render(request, 'Manager/Approval/blog.html', {'blog': blog})
+# ===============unpublish==================
+def unpublish_course(request, course_id):
+    course = get_object_or_404(Course, id=course_id)
+
+    if request.method == 'POST':
+        course.status = 'PENDING'
+        course.save()
+        return redirect('list_course')
+
+    return render(request, 'Manager/Approval/course.html', {'course': course})
+
+def unpublish_blog(request, blog_id):
+    blog = get_object_or_404(Blog, id=blog_id)
+
+    if request.method == 'POST':
+        blog.status = 'PENDING'
+        blog.save()
+        return redirect('list_blog')
+
+    return render(request, 'Manager/Approval/blog.html', {'blog': blog})
 def list_course (request):
     course = Course.objects.all()
     context = {

@@ -2,9 +2,8 @@
 Skylearner {% endblock %} {% block sub_title %}
 <h6 class="font-weight-bolder mb-0">Edit Course</h6>
 {% endblock %} {% load static %} {% block content %}
-<form method="post" enctype="multipart/form-data" >
+<form method="post"  action="{% url 'update_course' course.id %}" enctype="multipart/form-data" >
   {% csrf_token %}
-  {{ form.as_p }}
     <div class='row'>
         <div class='col-8'>
   <div class="form-group">
@@ -34,16 +33,17 @@ Skylearner {% endblock %} {% block sub_title %}
         <input
           type="text"
           class="form-control form-control-lg border"
-          id="dpercent" value="{{course.discount}}" name="price" />
+          id="dpercent" value="{{course.discount}}" name="discount" />
       </div>
       <div class="col">
         <label for="inputState">Category</label>
-        <select id="inputState" class="form-control form-control-lg border">
-            {% for i in category %}
-                <option {% if i.name == course.category %}selected{% endif %}>{{ i.name }}</option>
+        <select id="inputState" class="form-control form-control-lg border" name="category">
+            {% for category_instance in category %}
+                <option {% if category_instance.name == course.category %}selected{% endif %}
+                        value="{{ category_instance.name }}">{{ category_instance.name }}</option>
             {% endfor %}
         </select>
-      </div>
+    </div>
     </div>
     <label for="exampleFormControlTextarea1">Course Description</label>
     <textarea class="form-control form-control-lg border" id="exampleFormControlTextarea1" 
@@ -61,7 +61,7 @@ Skylearner {% endblock %} {% block sub_title %}
 
 <hr class="dark horizontal my-3" />
 <div class="card-footer d-flex">
-  <button type="submit" class="btn btn-danger btn-lg mx-auto">Save As Draft</button>
+  <button type="submit" class="btn btn-danger btn-lg mx-auto" >Save As Draft</button>
 
   <a class="btn btn-success mx-auto btn-lg">Publish Course</a>
 

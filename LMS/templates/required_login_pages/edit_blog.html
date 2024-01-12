@@ -2,7 +2,8 @@
 Skylearner {% endblock %} {% block sub_title %}
 <h6 class="font-weight-bolder mb-0">Edit Blog</h6>
 {% endblock %} {% load static %} {% block content %}
-<form method="post">
+<form method="post"  action="{% url 'update_blog' blog.id %}" enctype="multipart/form-data" >
+  {% csrf_token %}
     <div class='row'>
         <div class='col-8'>
   <div class="form-group">
@@ -10,8 +11,7 @@ Skylearner {% endblock %} {% block sub_title %}
     <input
       class="form-control form-control-lg border"
       type="text"
-      placeholder=""
-      id="title" value="{{blog.title}}" />
+      id="title" value="{{blog.title}}" name="title" />
     <label for="slug">Slug</label>
     <input
       class="form-control form-control-lg border"
@@ -22,33 +22,32 @@ Skylearner {% endblock %} {% block sub_title %}
     <div class="row">
       <div class="col">
         <label for="inputState">Category</label>
-        <select id="inputState" class="form-control form-control-lg border">
-            {% for i in category %}
-                <option {% if i.name == blog.category %}selected{% endif %}>{{ i.name }}</option>
+        <select id="inputState" class="form-control form-control-lg border" name="category">
+            {% for category_instance in category %}
+                <option {% if category_instance.name == blog.category %}selected{% endif %}
+                        value="{{ category_instance.name }}">{{ category_instance.name }}</option>
             {% endfor %}
         </select>
-      </div>
-    </div>
+    </div>    </div>
     <label for="exampleFormControlTextarea1">Blog Description</label>
-    <textarea class="form-control form-control-lg border" id="exampleFormControlTextarea1" rows="10">{{blog.description}}</textarea>
+    <textarea class="form-control form-control-lg border" id="exampleFormControlTextarea1" name="description" rows="10">{{blog.description}}</textarea>
   </div>
-</form>
+
 </div>
 <div class="col-4"><img src="{{blog.featured_image.url}}" class="img-fluid" alt="Wild Landscape" />
     <hr class="dark horizontal my-1" />
     <label for="image" class="mt-5">Choose Image</label>
-    <input type="file" class="form-control-file" id="image" />
+    <input type="file" class="form-control-file" id="image" name="featured_image" />
 </div>
 </div>
-
 
 <hr class="dark horizontal my-3" />
 <div class="card-footer d-flex">
-  <a href="" class="btn btn-danger btn-lg mx-auto">Save As Draft</a>
+  <button type="submit" class="btn btn-danger btn-lg mx-auto">Save As Draft</button>
 
   <a class="btn btn-success mx-auto btn-lg">Publish Blog</a>
 
   <p class="text-sm my-auto">{{i.instructor}}</p>
 </div>
-
+</form>
 {% endblock %}
