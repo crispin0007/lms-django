@@ -8,21 +8,26 @@
       <div class="card z-index-2">
         <div
           class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
-          <div class="bg-gradient-dark shadow-dark border-radius-lg py-3 pe-1">
+          <div class="bg-gradient-danger shadow-dark border-radius-lg py-3 pe-1">
             <h4 class="text-white m-3 p-3 text-center">Become Instructor</h4>
           </div>
         </div>
         <div class="card-body d-flex justify-content-center">
-                  
+          {% if user.status == 'PENDING'%}      
+          <button type="button" class="btn bg-gradient-warning btn-lg mt-1 mx-auto">
+            Already Applied For Instructor
+          </button>
+          {% else%}
           <button type="button" class="btn bg-gradient-success btn-lg mt-1 mx-auto" data-bs-toggle="modal" data-bs-target="#publish_modal">
             Apply For Instructor
           </button>
+          {% endif %}
           {% comment %} ===modal {% endcomment %}
           <div class="modal fade" id="publish_modal" tabindex="-1" role="dialog" aria-labelledby="publish_modalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="publish_modalLabel">Delete Course</h5>
+                  <h5 class="modal-title" id="publish_modalLabel">Apply For Instructor</h5>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
@@ -49,5 +54,5 @@
 
   
 </div>
-
+{% endif %}
 {% endblock %}
