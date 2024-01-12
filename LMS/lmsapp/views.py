@@ -417,6 +417,19 @@ def unapprove_instructor(request, user_id):
 
     return render(request, 'Manager/Approval/instructor.html', {'instructor': instructor})
 
+def request_instructor(request, user_id):
+    student = get_object_or_404(User, id=user_id)
+
+    if request.method == 'POST':
+        student.status = 'STUDENT'
+        student.is_student = True
+        student.status = 'PENDING'
+        student.save()
+        return redirect('becomeinstructor')
+
+    return render(request, 'Student/dashboard.html', {'student': student})
+
+
 # ================list============
 def list_course (request):
     course = Course.objects.all()

@@ -47,6 +47,7 @@ urlpatterns = [
     path('publish_blog/<int:blog_id>', views.publish_blog, name='publish_blog'),
     path('unpublish_blog/<int:blog_id>', views.unpublish_blog, name='unpublish_blog'),
     path('unapprove_instructor/<int:user_id>', views.unapprove_instructor, name='unapprove_instructor'),
+    path('request_instructor/<int:user_id>', views.request_instructor, name='request_instructor'),
     
 
 

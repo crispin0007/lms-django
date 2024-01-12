@@ -72,19 +72,19 @@
                         
                         <a class="btn btn-success btn-sm mx-auto" href="{{i.edit_blog_url}}">View</a>
                         <a class="btn btn-success btn-sm mx-auto" href="{{i.edit_blog_url}}">Edit</a>
-                        <button type="button" class="btn bg-gradient-primary mx-auto" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        <button type="button" class="btn bg-gradient-primary mx-auto" data-bs-toggle="modal" data-bs-target="#blog1">
                           Delete
                         </button>
-                        <button type="button" class="btn bg-gradient-warning mx-auto" data-bs-toggle="modal" data-bs-target="#publish_modal">
+                        <button type="button" class="btn bg-gradient-warning mx-auto" data-bs-toggle="modal" data-bs-target="#blog2">
                           Unpublish
                         </button>
                         
                         <!-- Modal -->
-                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="blog1" tabindex="-1" role="dialog" aria-labelledby="blog1Label" aria-hidden="true">
                           <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                               <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Delete Blog</h5>
+                                <h5 class="modal-title" id="blog1Label">Delete Blog</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                                   <span aria-hidden="true">&times;</span>
                                 </button>
@@ -104,11 +104,11 @@
                           </div>
                         </div>
                         {% comment %} ====modal=== {% endcomment %}
-                        <div class="modal fade" id="publish_modal" tabindex="-1" role="dialog" aria-labelledby="publish_modalLabel" aria-hidden="true">
+                        <div class="modal fade" id="blog2" tabindex="-1" role="dialog" aria-labelledby="blog2Label" aria-hidden="true">
                           <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                               <div class="modal-header">
-                                <h5 class="modal-title" id="publish_modalLabel">Delete Course</h5>
+                                <h5 class="modal-title" id="blog2Label">Delete Course</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                                   <span aria-hidden="true">&times;</span>
                                 </button>
