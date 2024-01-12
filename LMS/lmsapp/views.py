@@ -372,6 +372,17 @@ def publish_blog(request, blog_id):
         return redirect('list_blog')
 
     return render(request, 'Manager/Approval/blog.html', {'blog': blog})
+
+def approve_instructor(request, user_id):
+    instructor = get_object_or_404(User, id=user_id)
+
+    if request.method == 'POST':
+        instructor.status = 'INSTRUCTOR'
+        is_instructor = True
+        instructor.save()
+        return redirect('list_instructor')
+
+    return render(request, 'Manager/Approval/Instructor.html', {'instructor': instructor})
 # ===============unpublish==================
 def unpublish_course(request, course_id):
     course = get_object_or_404(Course, id=course_id)

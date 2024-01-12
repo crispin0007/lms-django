@@ -6,83 +6,191 @@
 {%block content%}
 <h1>Instructor List</h1>
 {% if user.is_manager %}
-
-<div class="row">
-  {% for i in ins_list %}
-  {% if i.is_instructor %}
-  {% if i.is_verified_instructor %}
-  <div class="col-md-3 mt-3">
-    <div class="card card-profile">
-      <img
-        src="{% static 'img/team-1.jpg' %}"
-        alt="Image placeholder"
-        class="card-img-top" />
-      <div class="row justify-content-center">
-        <div class="col-4 col-lg-4 order-lg-2">
-          <div class="mt-n4 mt-lg-n6 mb-4 mb-lg-0">
-            <a href="javascript:;">
-              <img
-                src="{{ MEDIA_URL }}{{i.profile_image.url}}"
-                class="rounded-circle img-fluid border border-2 border-white" />
-            </a>
-          </div>
-        </div>
-      </div>
-      <h6 class="text-center">@{{i.username}}</h6>
-      <h6 class="text-center text-muted">{{i.get_full_name}}</h6>
-      <div class="card-header text-center border-0 pt-0 pt-lg-2 pb-4 pb-lg-3">
-        <div class="d-flex justify-content-between">
-          <a
-            href="{{i.account_detail_url}}"
-            class="btn btn-sm btn-info mb-0 d-none d-lg-block"
-            >View Profile</a
-          >
-          <a
-            href="javascript:;"
-            class="btn btn-sm btn-info mb-0 d-block d-lg-none"
-            ><i class="ni ni-collection"></i
-          ></a>
-          <a
-            href="javascript:;"
-            class="btn btn-sm btn-dark float-right mb-0 d-none d-lg-block"
-            >Message</a
-          >
-          <a
-            href="javascript:;"
-            class="btn btn-sm btn-dark float-right mb-0 d-block d-lg-none"
-            ><i class="ni ni-email-83"></i
-          ></a>
-        </div>
-      </div>
-      <div class="card-body pt-0">
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+  
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Approved</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link " id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Pending</button>
+    </li>
+    
+  </ul>
+  <div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active " id="home" role="tabpanel" aria-labelledby="home-tab">
         <div class="row">
-          <div class="col">
-            <div class="d-flex justify-content-center">
-              <div class="d-grid text-center">
-                <span class="text-lg font-weight-bolder">22</span>
-                <span class="text-sm opacity-8">Total Course</span>
+          {% for i in ins_list %}
+          {% if i.is_instructor %}
+          {% if i.status == 'INSTRUCTOR'%}
+          <div class="col-md-3 mt-3">
+            <div class="card card-profile">
+              <img
+                src="{% static 'img/team-1.jpg' %}"
+                alt="Image placeholder"
+                class="card-img-top" />
+              <div class="row justify-content-center">
+                <div class="col-4 col-lg-4 order-lg-2">
+                  <div class="mt-n4 mt-lg-n6 mb-4 mb-lg-0">
+                    <a href="javascript:;">
+                      <img
+                        src="{{ MEDIA_URL }}{{i.profile_image.url}}"
+                        class="rounded-circle img-fluid border border-2 border-white" />
+                    </a>
+                  </div>
+                </div>
               </div>
-              <div class="d-grid text-center mx-4">
-                <span class="text-lg font-weight-bolder">10</span>
-                <span class="text-sm opacity-8">Total Students</span>
+              <h6 class="text-center">@{{i.username}}</h6>
+              <h6 class="text-center text-muted">{{i.get_full_name}}</h6>
+              <div class="card-header text-center border-0 pt-0 pt-lg-2 pb-4 pb-lg-3">
+                <div class="d-flex justify-content-between">
+                  <a
+                    href="{{i.account_detail_url}}"
+                    class="btn btn-sm btn-info mb-0 d-none d-lg-block"
+                    >View Profile</a
+                  >
+                  <a
+                    href="javascript:;"
+                    class="btn btn-sm btn-info mb-0 d-block d-lg-none"
+                    ><i class="ni ni-collection"></i
+                  ></a>
+                  <a
+                    href="javascript:;"
+                    class="btn btn-sm btn-dark float-right mb-0 d-none d-lg-block"
+                    >Message</a
+                  >
+                  <a
+                    href="javascript:;"
+                    class="btn btn-sm btn-dark float-right mb-0 d-block d-lg-none"
+                    ><i class="ni ni-email-83"></i
+                  ></a>
+                </div>
               </div>
-              <div class="d-grid text-center">
-                <span class="text-lg font-weight-bolder">89</span>
-                <span class="text-sm opacity-8">Feedbacks</span>
+              <div class="card-body pt-0">
+                <div class="row">
+                  <div class="col">
+                    <div class="d-flex justify-content-center">
+                      <div class="d-grid text-center">
+                        <span class="text-lg font-weight-bolder">22</span>
+                        <span class="text-sm opacity-8">Total Course</span>
+                      </div>
+                      <div class="d-grid text-center mx-4">
+                        <span class="text-lg font-weight-bolder">10</span>
+                        <span class="text-sm opacity-8">Total Students</span>
+                      </div>
+                      <div class="d-grid text-center">
+                        <span class="text-lg font-weight-bolder">89</span>
+                        <span class="text-sm opacity-8">Feedbacks</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
+          {% endif %}
+          {% endif %}
+          {% endfor %}
+          </div>
         </div>
-      </div>
+    </div>
+    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+        <div class="row">
+          {% for i in ins_list %}
+          {% if i.is_instructor %}
+          {% if i.status == 'PENDING'%}
+          <div class="col-md-3 mt-3">
+            <div class="card card-profile">
+              <img
+                src="{% static 'img/team-1.jpg' %}"
+                alt="Image placeholder"
+                class="card-img-top" />
+              <div class="row justify-content-center">
+                <div class="col-4 col-lg-4 order-lg-2">
+                  <div class="mt-n4 mt-lg-n6 mb-4 mb-lg-0">
+                    <a href="javascript:;">
+                      <img
+                        src="{{ MEDIA_URL }}{{i.profile_image.url}}"
+                        class="rounded-circle img-fluid border border-2 border-white" />
+                    </a>
+                  </div>
+                  
+                </div>
+                
+              </div>
+              <h6 class="text-center">@{{i.username}}</h6>
+              <h6 class="text-center text-muted">{{i.get_full_name}}</h6>
+              <div class="card-header text-center border-0 pt-0 pt-lg-2 pb-4 pb-lg-3">
+                <div class="d-flex justify-content-between">
+                  <a
+                    href="{{i.account_detail_url}}"
+                    class="btn btn-sm btn-info mb-0 d-none d-lg-block"
+                    >View Profile</a
+                  >
+                  <a
+                    href="javascript:;"
+                    class="btn btn-sm btn-dark float-right mb-0 d-none d-lg-block"
+                    >Message</a
+                  >
+                  
+                  
+                </div>
+                <button type="button" class="btn bg-gradient-success mx-auto my-1" data-bs-toggle="modal" data-bs-target="#publish_modal">
+                  Approve
+                </button>
+                {% comment %} ===modal {% endcomment %}
+                <div class="modal fade" id="publish_modal" tabindex="-1" role="dialog" aria-labelledby="publish_modalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="publish_modalLabel">Delete Course</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <p>Are you sure want to Approve Instructor?</p>
+                        <strong>{{i.username}}</strong>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn bg-gradient-danger" data-bs-dismiss="modal">Close</button>
+                        <form method="post" action="{% url 'approve_instructor' i.id %}">
+                          {% csrf_token %}
+                        <button type="submit" class="btn bg-gradient-success" data-bs-dismiss="modal">Yes</button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body pt-0">
+                <div class="row">
+                  <div class="col">
+                    <div class="d-flex justify-content-center">
+                      <div class="d-grid text-center">
+                        <span class="text-lg font-weight-bolder">22</span>
+                        <span class="text-sm opacity-8">Total Course</span>
+                      </div>
+                      <div class="d-grid text-center mx-4">
+                        <span class="text-lg font-weight-bolder">10</span>
+                        <span class="text-sm opacity-8">Total Students</span>
+                      </div>
+                      <div class="d-grid text-center">
+                        <span class="text-lg font-weight-bolder">89</span>
+                        <span class="text-sm opacity-8">Feedbacks</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endif %}
+          {% endif %}
+          {% endfor %}
+          </div>
+        </div>
     </div>
   </div>
-  {% endif %}
-  {% endif %}
-  {% endfor %}
-  </div>
-</div>
-    
-    
 
 {% endif %}
 {% endblock %}

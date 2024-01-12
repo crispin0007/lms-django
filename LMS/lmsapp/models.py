@@ -8,7 +8,12 @@ from ckeditor.fields import RichTextField
 
 
 # Create your models here.
-class User(AbstractUser):    
+class User(AbstractUser): 
+    STATUS = (
+        ('STUDENT','STUDNET'),        
+        ('PENDING', 'PENDING'),
+        ('INSTRUCTOR', 'INSTRUCTOR'),
+    )   
     profile_image = models.ImageField(upload_to="Images/profile", null=True, blank=True, default='img/team-1.jpg')
     is_manager = models.BooleanField('Is manager', default=False)
     is_instructor = models.BooleanField('Is instructor', default=False)
@@ -16,9 +21,8 @@ class User(AbstractUser):
     user_bio = models.TextField(default='', max_length=200, null=True, blank=True)
     email_token = models.UUIDField(default=uuid.uuid4, editable=False)
     is_verified = models.BooleanField(default=False)
-    is_verified_instructor = models.BooleanField(default=False)
-    not_is_verified_instructor = models.BooleanField(default=True)
     slug = models.SlugField(default='', max_length=500, null=True, blank=True)
+    status = models.CharField(choices=STATUS,max_length=100,null=True, default="STUDENT")
 
     def account_detail_url(self):
         from django.urls import reverse

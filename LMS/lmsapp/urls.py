@@ -43,6 +43,7 @@ urlpatterns = [
     #publish urls
     path('publish_course/<int:course_id>', views.publish_course, name='publish_course'),
     path('unpublish_course/<int:course_id>', views.unpublish_course, name='unpublish_course'),
+    path('approve_instructor/<int:user_id>', views.approve_instructor, name='approve_instructor'),
     path('publish_blog/<int:blog_id>', views.publish_blog, name='publish_blog'),
     path('unpublish_blog/<int:blog_id>', views.unpublish_blog, name='unpublish_blog'),
     
