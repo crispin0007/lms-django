@@ -31,6 +31,15 @@ def course_details(request, slug):
     }
     return render (request, 'Pages/course_detail.html', context)
 
+@login_required
+def account_details(request, slug):
+    acc_detail = get_object_or_404(User, slug=slug)
+
+    context = {
+        'acc_detail': acc_detail
+    }
+    return render (request, 'Manager/user_profile.html', context)
+
 @login_required()
 def dashboard(request):         
     user = request.user
@@ -243,24 +252,19 @@ def update_profile(request):
     return render (request, 'required_login_pages/settings.html')
 
 @login_required
-def update_course(request):
-    success_msg = "Course Updated successfully"
+def update_course(request, course_id):
+    success_msg = "Course updated successfully"
+    course = get_object_or_404(Course, id=course_id)
+
     if request.method == "POST":
-        user_id = request.user.id
-        first_name = request.POST.get('firstname')
-        last_name = request.POST.get('lastname')
-        email = request.POST.get('email')
-        user_bio = request.POST.get('user_bio')
-        
-        user = User.objects.get(id=user_id)
-        user.first_name = first_name
-        user.last_name = last_name
-        user.email = email
-        user.user_bio = user_bio
-        user.save()
-        return HttpResponseRedirect('?update=True')
-        
-    return render (request, 'Student/mycourses.html')
+        form = CourseForm(request.POST, instance=course)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('?update=True')
+    else:
+        form = CourseForm(instance=course)
+
+    return render(request, 'Manager/List/course.html', {'form': form, 'course': course, 'success_msg': success_msg})
 
 @login_required
 def update_blog(request):
@@ -299,7 +303,11 @@ def approval_blog (request):
     return render(request, 'Manager/Approval/blog.html', context)
 
 def approval_instructor (request):
-    return render(request, 'Manager/Approval/instructor.html')
+    ins_list = User.objects.all()
+    context = {
+        'ins_list' : ins_list
+    }
+    return render(request, 'Manager/Approval/instructor.html',context)
 
 
 # ============lists==============
@@ -318,8 +326,26 @@ def list_blog (request):
     return render(request, 'Manager/List/blog.html', context)
 
 def list_instructor (request):
-    return render(request, 'Manager/List/instructor.html')
+    ins_list = User.objects.all()
+    context = {
+        'ins_list' : ins_list
+    }
+    return render(request, 'Manager/List/instructor.html', context)
 
 def list_student (request):
-    return render(request, 'Manager/List/instructor.html')
+    std_list = User.objects.all()
+    context = {
+        'std_list' : std_list
+    }
+    return render(request, 'Manager/List/student.html',context)
+
+# ================income================
+def total_income(request):
+    return render(request, 'Manager/income.html')
+
+def all_feedbacks(request):
+    return render(request, 'Manager/feedback.html')
+
+def top_course(request):
+    return render(request, 'Manager/top_course.html')
 

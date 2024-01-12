@@ -1,16 +1,15 @@
 {% extends 'components/dashboard/base.html'%} 
-{%block title%}Instructor| Skylearner {% endblock %}
-{% block sub_title %}<h6 class="font-weight-bolder mb-0">Instructors</h6>{% endblock %}
+{%block title%}Students| Skylearner {% endblock %}
+{% block sub_title %}<h6 class="font-weight-bolder mb-0">Students</h6>{% endblock %}
 {% load static %}
  
 {%block content%}
-<h1>Instructor List</h1>
+<h1>Student List</h1>
 {% if user.is_manager %}
 
 <div class="row">
-  {% for i in ins_list %}
-  {% if i.is_instructor %}
-  {% if i.is_verified_instructor %}
+  {% for i in std_list %}
+  {% if i.is_student %}
   <div class="col-md-3 mt-3">
     <div class="card card-profile">
       <img
@@ -76,7 +75,6 @@
       </div>
     </div>
   </div>
-  {% endif %}
   {% endif %}
   {% endfor %}
   </div>

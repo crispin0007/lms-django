@@ -14,20 +14,25 @@ urlpatterns = [
     path('dashboard/', views.dashboard , name="dashboard"),
     path('verify/<str:token>', views.verify , name="verify"),
     path('profile/', views.profile , name="profile"),   
-    path('checkout/<slug:slug>/', views.checkout , name="checkout"),
-    path('course_details/<slug:slug>/', views.course_details , name="coursedetails"),
+    path('checkout/<slug:slug>/', views.checkout , name="checkout"),    
     path('blog/', views.blog , name="blog"),
-    path('edit_course/<slug:slug>/', views.edit_course , name="editcourse"),
-    path('edit_blog/<slug:slug>/', views.edit_blog , name="editblog"),
+    
 
     # ==========students urls========
     path('mycourses/', views.mycourses , name="mycourses"),
     path('messages/', views.messages , name="messages"),
     path('notifications/', views.notifications , name="notifications"),
 
+    #details with slug url
+    path('course_details/<slug:slug>/', views.course_details , name="coursedetails"),
+    path('blog_details/<slug:slug>/', views.course_details , name="blogdetails"),
+    path('edit_course/<slug:slug>/', views.edit_course , name="editcourse"),
+    path('accounts/details/<slug:slug>/', views.account_details , name="accdetails"),
+    path('edit_blog/<slug:slug>/', views.edit_blog , name="editblog"),
+
     # update urls
     path('update_profile/', views.update_profile, name='update_profile'),
-    # path('update_course/', views.update_course, name='update_course'),
+    path('update_course/', views.update_course, name='update_course'),
     # path('update_blog/', views.update_blog, name='update_blog'),
 
 
@@ -53,4 +58,13 @@ urlpatterns = [
     path('list_blog/', views.list_blog , name="list_blog"),
     path('list_instructor/', views.list_instructor , name="list_instructor"),
     path('list_student/', views.list_student , name="list_student"),
+
+    # Income
+    path('total_income/', views.total_income , name="total_income"),
+    path('all_feedbacks/', views.all_feedbacks , name="all_feedbacks"),
+    path('top_course/', views.top_course , name="top_course"),
+
+    #function_urls
+    
+
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

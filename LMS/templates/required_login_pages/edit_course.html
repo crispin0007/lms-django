@@ -2,11 +2,13 @@
 Skylearner {% endblock %} {% block sub_title %}
 <h6 class="font-weight-bolder mb-0">Edit Course</h6>
 {% endblock %} {% load static %} {% block content %}
-<form method="post" action="{% url 'update_course'%}" >
+<form method="post" enctype="multipart/form-data" >
+  {% csrf_token %}
+  {{ form.as_p }}
     <div class='row'>
         <div class='col-8'>
   <div class="form-group">
-    <label for="title">Course Title</label>
+    <label for="title">Course Title:</label>
     <input
       class="form-control form-control-lg border"
       type="text"
@@ -25,14 +27,14 @@ Skylearner {% endblock %} {% block sub_title %}
         <input
           type="text"
           class="form-control form-control-lg border"
-          id="price" value="{{course.price}}" name="original_price"/>
+          id="price" value="{{course.price}}" name="price"/>
       </div>
       <div class="col">
         <label for="dpercent">Discount %</label>
         <input
           type="text"
           class="form-control form-control-lg border"
-          id="dpercent" value="{{course.discount}}" name="discount_price" />
+          id="dpercent" value="{{course.discount}}" name="price" />
       </div>
       <div class="col">
         <label for="inputState">Category</label>
@@ -47,7 +49,7 @@ Skylearner {% endblock %} {% block sub_title %}
     <textarea class="form-control form-control-lg border" id="exampleFormControlTextarea1" 
     rows="10" name="description">{{course.description}}</textarea>
   </div>
-</form>
+
 </div>
 <div class="col-4"><img src="{{course.featured_image.url}}" class="img-fluid" alt="Wild Landscape" />
     <hr class="dark horizontal my-1" />
@@ -59,11 +61,11 @@ Skylearner {% endblock %} {% block sub_title %}
 
 <hr class="dark horizontal my-3" />
 <div class="card-footer d-flex">
-  <a href="" class="btn btn-danger btn-lg mx-auto">Save As Draft</a>
+  <button type="submit" class="btn btn-danger btn-lg mx-auto">Save As Draft</button>
 
   <a class="btn btn-success mx-auto btn-lg">Publish Course</a>
 
   <p class="text-sm my-auto">{{i.instructor}}</p>
 </div>
-
+</form>
 {% endblock %}

@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import User
+from .models import User, Course, Blog
 
 class LoginForm(forms.Form):
     username = forms.CharField(
@@ -64,5 +64,11 @@ class SignUpForm(UserCreationForm):
 
 class UserProfileForm(forms.ModelForm):
     class Meta:
-        model = User
+        model = User 
         fields = ['first_name', 'last_name', 'email', 'user_bio']
+
+
+class CourseForm(forms.ModelForm):
+    class Meta:
+        model = Course
+        fields = ['title', 'price', 'discount', 'description']
