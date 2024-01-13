@@ -97,6 +97,7 @@ urlpatterns = [
     path('top_course/', views.top_course , name="top_course"),
 
      path('test/', views.test , name="test"),
+     path('khalti-response/', views.khalti_response , name="khalti-response"),
     #function_urls
 
 

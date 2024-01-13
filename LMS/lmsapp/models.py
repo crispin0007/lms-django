@@ -162,3 +162,14 @@ class Video(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class DigitalProduct(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product_name = models.CharField(max_length=255)
+    transaction_id = models.CharField(max_length=255)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    mobile = models.CharField(max_length=15, default="980000000")  
+
+    def __str__(self):
+        return f'{self.user.username} - {self.product_name} - Transaction ID: {self.transaction_id}'

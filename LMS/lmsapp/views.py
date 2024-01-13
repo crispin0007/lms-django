@@ -13,6 +13,7 @@ from django.http import JsonResponse
 import requests
 import json
 from django.core.exceptions import ValidationError
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 
@@ -659,3 +660,34 @@ def add_chapter(request, lesson_id):
 
 def test(request):
     return render(request, 'Student/learning_area.html')
+
+@csrf_exempt
+@login_required
+def khalti_response(request):
+    if request.method == 'POST':
+        # Parse the JSON data from the request body
+        data = json.loads(request.body)
+
+        # Extract relevant information from the Khalti payload
+        user = request.user
+        product_name = data.get('product_name')
+        transaction_id = data.get('idx')
+        amount = data.get('amount')
+        mobile = data.get('mobile')
+
+        # Save the payment information to the database
+        digital_product = DigitalProduct.objects.create(
+            user=user,
+            product_name=product_name,
+            transaction_id=transaction_id,
+            amount=amount,
+            mobile=mobile,
+            # Add other fields as needed
+        )
+        digital_product.save()
+
+        # Return a success response
+        return JsonResponse({'status': 'success'})
+
+    # If the request method is not POST, return an error response
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method'})

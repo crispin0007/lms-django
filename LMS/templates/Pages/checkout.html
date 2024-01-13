@@ -1,6 +1,7 @@
 {% extends "Pages/base.html" %} {% load static %} 
 {%block title%}Checkout | Skylearner {% endblock %}
 {% block content%}
+<script src="https://khalti.s3.ap-south-1.amazonaws.com/KPG/dist/2020.12.17.0.0.0/khalti-checkout.iffe.js"></script>
 <div
     class="page-header align-items-start min-height-300 m-3 border-radius-xl"
     style="
@@ -73,35 +74,22 @@
           </div>
           <div class="col-lg-8">
             <div class="card px-4">
-              <form class="js-validate">
+              <form class="js-validate" method="post" action="">
+                {% csrf_token %}
+                <input type="hidden" name="order_name" value="{{ course.title }}">
+                <input type="hidden" name="order_amount" value="{{ course.price }}">
+                <input type="hidden" name="order_id" value="Order01">
+                <input type="hidden" name="website_url" value="https://127.0.0.1:8000/">
+                <input type="hidden" name="return_url" value="http://127.0.0.1:8000/">
                 <div class="container">
                   <h3 class="title mt-3">Billing address</h3>
                   <div class="row">
-                    <div class="col-md-6">
+                    <div class="col">
                       <label class="labels">
-                        First name
+                        Full Name
                         <span class="text-danger">*</span>
                       </label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        name="firstName"
-                        value = "{{user.first_name}}"
-                        aria-label="Cristopher"
-                        required />
-                    </div>
-                    <div class="col-md-6">
-                      <label class="labels">
-                        Last name
-                        <span class="text-danger">*</span>
-                      </label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        name="lastName"
-                        value="{{user.last_name}}"
-                        aria-label="Thompson"
-                        required />
+                      <input type="text" class="form-control border" name="firstName" aria-label="Cristopher" required />
                     </div>
                   </div>
                   <br />
@@ -113,78 +101,98 @@
                           <span class="text-danger">*</span>
                         </label>
                         <input
-                          type="email"
-                          class="form-control"
-                          name="emailAddress"
-                          value="{{user.email}}"
-                          aria-label="thompson@gmail.com"
-                          required />
+                          type="email" class="form-control border"  name="email" value="{{user.email}}" aria-label="thompson@gmail.com" required />
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="js-form-message">
                         <label class="labels"> Phone </label>
                         <input
-                          type="text"
-                          class="form-control"
-                          placeholder="+4 (0762) 230991"
-                          aria-label="+4 (0762) 230991" />
+                          type="text" class="form-control border" name="number" placeholder="+977-980000000" />
                       </div>
                     </div>
                   </div>
                   <br />
-                  
-                  </div>
-                  <h4 class="title">Payment method</h4>
-                    <a
-                      class="btn btn-lg text-white"
-                      data-toggle="tab"
-                      href=""
-                      role="tablist" style="background-color:#5d2e8e;">
-
-                      Khalti
-                    </a>
-                    <a
-                      class="btn btn-lg btn-success"
-                      data-toggle="tab"
-                      href="#link2"
-                      role="tablist">
-                      Esewa
-                    </a>
-                 
-                  <div class="tab-content tab-space">
-                    <div id="link1" class="tab-pane active">
-                      
-                      
-                      <div
-                        class="d-flex justify-content-between align-items-center p-5">
-                        <a href=""
-                          ><span class="fas fa-angle-left mr-2"></span> Return
-                          to cart</a
-                        >
-                      </div>
-                    </div>
-                    <div id="link2" class="tab-pane">
-                      <h5 class="text-white">Send payment to:</h5>
-                      <input
-                        type="text"
-                        class="form-control"
-                        placeholder="Name or email"
-                        required />
-                      <br />
-                      <button type="submit" class="btn btn-info btn-sm">
-                        Pay with PayPal
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </form>
+                <h4 class="title">Payment method</h4>
+                <button type="submit" class="btn btn-lg text-white" style="background-color:#5d2e8e;">Khalti</button>
+                <button type="button" id="payment-button" class="btn btn-lg btn-success">Esewa</button>
+            </form>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <script>
+      // JavaScript in your template
+var config = {
+  "publicKey": "test_public_key_78b8040d116f46c0932da1040b770347",
+  "productIdentity": "{{course.id}}",
+  "productName": "{{course.title}}",
+  "productUrl": "http://127.0.0.1:8000/",
+  "paymentPreference": [
+    "KHALTI",
+    "EBANKING",
+    "MOBILE_BANKING",
+    "CONNECT_IPS",
+    "SCT",
+  ],
+  "eventHandler": {
+    onSuccess(payload) {
+      // hit merchant api for initiating verification
+      console.log(payload);
+      savePaymentResponse(payload); // Call the function to save the response
+    },
+    onError(error) {
+      console.log(error);
+    },
+    onClose() {
+      console.log('widget is closing');
+    }
+  }
+};
 
+var checkout = new KhaltiCheckout(config);
+var btn = document.getElementById("payment-button");
+btn.onclick = function () {
+  amount = Math.round({{course.price}} * 100);
+  checkout.show({amount: amount});
+}
+
+function savePaymentResponse(payload) {
+  fetch('/khalti-response/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRFToken': getCookie('csrftoken'),  // Include CSRF token if using CSRF protection
+    },
+    body: JSON.stringify({
+      user: '{{ user.username }}',
+      product_name: payload.product_name,
+      payload: payload,
+    }),
+  })
+    .then(response => response.json())
+    .then(data => console.log('Payment response saved:', data))
+    .catch(error => console.error('Error saving payment response:', error));
+}
+// Function to get CSRF token from cookies
+function getCookie(name) {
+  var cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+    var cookies = document.cookie.split(';');
+    for (var i = 0; i < cookies.length; i++) {
+      var cookie = cookies[i].trim();
+      if (cookie.substring(0, name.length + 1) === (name + '=')) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
+
+  </script>
+  
     {% endblock %}
   </div>
 </main>
