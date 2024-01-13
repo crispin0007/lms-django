@@ -69,6 +69,12 @@ urlpatterns = [
 
     path('blog_status_function/<int:blog_id>/', views.blog_status_function, name='blog_status_function'),
     path('course_status_function/<int:course_id>/', views.course_status_function, name='course_status_function'),
+
+    #lesson urls
+    path('add_lesson/<int:course_id>', views.add_lesson, name='add_lesson'),
+    path('add_lesson_name/<int:course_id>', views.add_lesson_name, name='add_lesson_name'),
+    path('add_lesson_name/<int:course_id>', views.add_lesson_name, name='add_lesson_name'),
+    path('add_chapter/<int:lesson_id>', views.add_chapter, name='add_chapter'),
     #social Login
     path('auth/', include('social_django.urls', namespace='social')),
 

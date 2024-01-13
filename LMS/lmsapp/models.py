@@ -72,6 +72,10 @@ class Course(models.Model):
         from django.urls import reverse
         return reverse("editcourse", kwargs={'slug': self.slug})
 
+    def add_lesson_url(self): 
+        from django.urls import reverse
+        return reverse("add_lesson", kwargs={'slug': self.slug})
+
     
 
 
@@ -147,8 +151,8 @@ class Lesson(models.Model):
         return self.name + " - " + self.course.title 
 
 class Video(models.Model):
-    serial_nember = models.IntegerField(null=True)
-    thumbnail = models.ImageField(upload_to="Media/Lesson", null=True)
+    serial_number = models.IntegerField(null=True)
+    thumbnail = models.ImageField(upload_to="Images/Lesson", null=True)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE)
     title = models.CharField(max_length = 100)

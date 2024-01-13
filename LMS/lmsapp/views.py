@@ -3,14 +3,17 @@ from .forms import LoginForm, SignUpForm
 from django.contrib.auth import authenticate, login 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from lmsapp.models import Categories, Course, User, Blog
+from lmsapp.models import Categories, Course, User, Blog, Lesson, Video
 from lmsapp.utils import send_email_token
 from django.core.mail import send_mail
 from django.conf import settings
 import uuid
+from django.urls import reverse
 from django.http import JsonResponse
 import requests
 import json
+from django.core.exceptions import ValidationError
+
 # Create your views here.
 
 
@@ -454,7 +457,7 @@ def create_course(request):
             status=status   
         )
 
-        return redirect('mycourses')
+        return redirect('add_lesson', course_id=new_course.id)
 
     categories = Categories.objects.all()
 
@@ -555,4 +558,73 @@ def all_feedbacks(request):
 
 def top_course(request):
     return render(request, 'Manager/top_course.html')
+
+
+
+# lessons veiws
+
+def add_lesson(request, course_id):
+    course = get_object_or_404(Course, id=course_id)
+    lessons = course.lesson_set.all() 
+    return render(request, 'required_login_pages/add_lesson.html', {'course': course, 'lessons': lessons})
+
+def add_lesson_name(request, course_id):
+    course = get_object_or_404(Course, id=course_id)
+
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        new_lesson = Lesson.objects.create(
+            name=title,
+            course=course
+        )
+        redirect_url = reverse('add_lesson', kwargs={'course_id': course.id})
+
+        return redirect(redirect_url)
+
+    return render(request, 'Student/mycourses.html')
+
+def add_chapter(request, lesson_id):
+    lesson = get_object_or_404(Lesson, id=lesson_id)
+    print(request.POST)
+    print(request.FILES)
+
+    if request.method == 'POST':  
+        course_id = request.POST.get('course_id')  
+        course_title = lesson.course  
+        serial_number = request.POST.get('serial')
+        title = request.POST.get('title')
+        video_url = request.POST.get('url')
+        thumbnail = request.FILES.get('Thumbnail')
+        preview = request.POST.get('exampleCheck1', False)
+        
+        try:
+            time_duration = float(request.POST.get('time_duration', 0.0))
+        except ValueError:
+            time_duration = 0.0
+
+        video = Video(
+            serial_number=serial_number,
+            title=title,
+            video_url=video_url,
+            thumbnail=thumbnail,
+            preview=preview,
+            time_duration=2 ,
+            lesson=lesson,
+            course=course_title,
+            course_id=course_id
+            
+        )
+        print(serial_number, title, video_url, video.thumbnail.url, preview, lesson, course_id)
+        try:
+            video.full_clean() 
+            video.save()
+            return redirect('add_lesson', course_id=course_id) 
+        except ValidationError as e:
+            error_message = ', '.join(e.messages)
+            print(error_message)
+            return redirect('add_lesson', course_id=course_id)
+
+    return render(request, 'Student/mycourses.html', {'lesson': lesson})
+
+
 

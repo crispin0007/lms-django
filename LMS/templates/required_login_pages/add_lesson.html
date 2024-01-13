@@ -1,0 +1,115 @@
+{% extends 'components/dashboard/base.html'%} {%block title%}Add Lesson |
+Skylearner {% endblock %} {% block sub_title %}
+<h6 class="font-weight-bolder mb-0">Add Lesson</h6>
+{% endblock %} {% load static %} {% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Course name: {{course.title}} </h1>
+    <div class="row">
+        <div class="col">
+           <h3> Add Lesson</h3>
+           <button type="button" class="btn bg-gradient-success mx-auto btn-lg" data-bs-toggle="modal" data-bs-target="#course_modal">
+            Add Lessons
+          </button>
+          <ul class="list-group">
+            
+            {% for i in lessons %}
+            {% comment %} {% if not i%} {% endcomment %}
+            <li class="list-group-item ">Lesson Name: <strong>{{i.name}}</strong> 
+                <button type="button" class="btn bg-gradient-danger mx-auto" data-bs-toggle="modal" data-bs-target="#lesson_modal_{{ i.id }}">
+                    Add Chapters
+                  </button>
+            </li>
+
+
+            <div class="modal fade" id="lesson_modal_{{ i.id }}" tabindex="-1" role="dialog" aria-labelledby="lesson_modal_{{ i.id }}Label" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="lesson_modal_{{ i.id }}Label">{{i.name}}</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <form method="post" action="{% url 'add_chapter' lesson_id=i.id %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                    <div class="modal-body">
+                        <label for="title">Course Title:</label>
+                        <input class="form-control form-control-lg border" type="text"
+                           value="{{course.title}}" name="course_title" readonly/>
+                        
+                        <input class="form-control form-control-lg border" type="hidden" value="{{course.id}}" name="course_id"/>
+                        <label for="title">Lesson Title:</label>
+                        <input class="form-control form-control-lg border" type="text"
+                           value="{{i.name}}" readonly/>
+                        <label for="serial">Serial Number:</label>
+                        <input class="form-control form-control-lg border" type="text"
+                          id="serial" name="serial"/>
+                           <label for="title">Chapter Title:</label>
+                        <input class="form-control form-control-lg border" type="text"
+                          id="title" name="title"/>
+                          <label for="url">Video URL:</label>
+                        <input class="form-control form-control-lg border" type="text"
+                          id="url" name="url"/>
+                          <label for="Thumbnail">Thumbnail</label>
+                         <input type="file" class="form-control-file" id="Thumbnail" name="Thumbnail">
+                         <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                            <label class="form-check-label" for="exampleCheck1">Preview</label>
+                          </div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn bg-gradient-success" data-bs-dismiss="modal">Close</button>
+                    
+                    <button type="submit" class="btn bg-gradient-danger" data-bs-dismiss="modal">Yes</button>
+                    </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            
+
+              {% comment %} {% endif %} {% endcomment %}
+            {% endfor %}
+            
+          </ul>
+          {% comment %} ==========Modal for Lesson============ {% endcomment %}
+          <div class="modal fade" id="course_modal" tabindex="-1" role="dialog" aria-labelledby="course_modalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="course_modalLabel">Add Lesson</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                
+                <form method="post" action="{% url 'add_lesson_name' course_id=course.id %}">
+                    {% csrf_token %}
+                <div class="modal-body">
+                    <label for="title">Course Title:</label>
+                    <input class="form-control form-control-lg border" type="text" value="{{course.title}}" readonly/>
+                    <label for="title">Lesson Title:</label>
+                    <input class="form-control form-control-lg border" type="text"
+                      id="title" name="title"/>
+                </div>
+                <div class="modal-footer">
+                        <button type="submit" class="btn bg-gradient-success" data-bs-dismiss="modal">Yes</button>
+                    </form>
+                  <button type="button" class="btn bg-gradient-danger" data-bs-dismiss="modal">Close</button>
+                  
+                </div>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+        
+          
+          {% comment %} ==========Modal for Chapter============ {% endcomment %}
+          
+
+   
+  
+  {% endblock%}
+</div>
