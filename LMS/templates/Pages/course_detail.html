@@ -17,22 +17,78 @@
             
             <hr class="dark horizontal my-1" />
             <h3>About Course</h3>
-            <p>{{course.description | safe }} </p>
-            <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-              Read More
-            </a>
-            <div class="collapse" id="collapseExample">
-              <div class="card card-body">
-                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil 
-                  anim keffiyeh 
-                helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+            <p>{{ course.description | safe | truncatewords_html:200 }}</p>
+            <p>{{ course.description | safe | slice:"200:" }}</p>
+
+            {% comment %} ================ {% endcomment %}
+            <style>
+              .collapsible {
+                background-color: #4169e1;
+                color: white;
+                cursor: pointer;
+                width: 100%;
+                border: none;
+                text-align: left;
+                outline: none;
+                font-size: 15px;
+              }
+              
+              .active, .collapsible:hover {
+                background-color: #555;
+              }
+              
+              .content {                
+                display: none;
+                overflow: hidden;
+                background-color: #f1f1f1;
+              }
+              </style>
+              <button type="button" class="collapsible btn btn-primary btn-lg">Read More</button>
+              <div class="content">
+                <p></p>
               </div>
-            </div>
-            
+            {% comment %} ==================== {% endcomment %}
             <hr class="dark horizontal my-1" />
             <h3>Curriculum</h3>
-            <p>This is the Curriculum of course </p>
+            {% for i in lesson %}
+            <button type="button" class="collapsible btn btn-primary btn-lg">Section {{ i.name }}</button>
+            <div class="content">
+              {% for j in i.video_set.all %}
+              <div class="card mb-1 p-0" style="max-width: 100%; max-height:50px;">
+                <div class="row no-gutters">
+                  <div class="col-md-4">
+                    <img src="{{j.thumbnail.url}}" class="card-img" alt="..." style="max-width: 40px; max-height:40px;">
+                  </div>
+                  <div class="col-md-8 mx-auto">
+                    <div class="card-body">
+                      <h5 class="card-title text-left">{{j.title}}</h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+                <hr>
+                <!-- Display other video information as needed -->
+              {% endfor %}
+            </div>
+          {% endfor %}
+          
           </div>
+          <script>
+            var coll = document.getElementsByClassName("collapsible");
+            var i;
+
+            for (i = 0; i < coll.length; i++) {
+              coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                  content.style.display = "none";
+                } else {
+                  content.style.display = "block";
+                }
+              });
+            }
+            </script>
 
           {% comment %} second side {% endcomment %}
           <div class="col-4 mt-5">

@@ -28,9 +28,12 @@ def home(request):
     
 def course_details(request, slug):
     course = get_object_or_404(Course, slug=slug)
-
+    lesson = Lesson.objects.filter(course=course)
+    video = Video.objects.filter(course=course)
     context = {
-        'course': course
+        'course': course,
+        'lesson' : lesson,
+        'video':video,
     }
     return render (request, 'Pages/course_detail.html', context)
 
