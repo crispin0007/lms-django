@@ -286,6 +286,7 @@ def update_course(request, course_id):
 
     return render(request, 'Manager/dashboard.html', {'course': course})
 
+@login_required
 def update_blog(request, blog_id):
     blog = get_object_or_404(Blog, id=blog_id)
     if request.method == 'POST':
@@ -315,13 +316,14 @@ def update_blog(request, blog_id):
 
 
 # ============Approval==============
+@login_required
 def approval_course (request):
     course = Course.objects.all()
     context = {
         'course' : course
     }
     return render(request, 'Manager/Approval/course.html',context)
-
+@login_required
 def approval_blog (request):
     blog = Blog.objects.all()
     context = {
@@ -329,6 +331,7 @@ def approval_blog (request):
     }
     return render(request, 'Manager/Approval/blog.html', context)
 
+@login_required
 def approval_instructor (request):
     ins_list = User.objects.all()
     context = {
@@ -337,6 +340,7 @@ def approval_instructor (request):
     return render(request, 'Manager/Approval/instructor.html',context)
 
 # ===============delete===============
+@login_required
 def delete_course(request, course_id):
     course = get_object_or_404(Course, id=course_id)
 
@@ -346,6 +350,7 @@ def delete_course(request, course_id):
 
     return render(request, 'Manager/Approval/course.html', {'course': course})
 
+@login_required
 def delete_blog(request, blog_id):
     blog = get_object_or_404(Blog, id=blog_id)
 
@@ -357,6 +362,7 @@ def delete_blog(request, blog_id):
 
 # ===============publish ==================
 # ============lists==============
+@login_required
 def publish_course(request, course_id):
     course = get_object_or_404(Course, id=course_id)
 
@@ -367,6 +373,7 @@ def publish_course(request, course_id):
 
     return render(request, 'Manager/Approval/course.html', {'course': course})
 
+@login_required
 def publish_blog(request, blog_id):
     blog = get_object_or_404(Blog, id=blog_id)
 
@@ -377,6 +384,7 @@ def publish_blog(request, blog_id):
 
     return render(request, 'Manager/Approval/blog.html', {'blog': blog})
 
+@login_required
 def approve_instructor(request, user_id):
     instructor = get_object_or_404(User, id=user_id)
 
@@ -389,6 +397,7 @@ def approve_instructor(request, user_id):
 
     return render(request, 'Manager/Approval/instructor.html', {'instructor': instructor})
 # ===============unpublish==================
+@login_required
 def unpublish_course(request, course_id):
     course = get_object_or_404(Course, id=course_id)
 
@@ -399,6 +408,7 @@ def unpublish_course(request, course_id):
 
     return render(request, 'Manager/Approval/course.html', {'course': course})
 
+@login_required
 def unpublish_blog(request, blog_id):
     blog = get_object_or_404(Blog, id=blog_id)
 
@@ -409,6 +419,7 @@ def unpublish_blog(request, blog_id):
 
     return render(request, 'Manager/Approval/blog.html', {'blog': blog})
 
+@login_required
 def unapprove_instructor(request, user_id):
     instructor = get_object_or_404(User, id=user_id)
 
@@ -421,6 +432,7 @@ def unapprove_instructor(request, user_id):
 
     return render(request, 'Manager/Approval/instructor.html', {'instructor': instructor})
 
+@login_required
 def request_instructor(request, user_id):
     student = get_object_or_404(User, id=user_id)
 
@@ -433,7 +445,7 @@ def request_instructor(request, user_id):
 
     return render(request, 'Student/dashboard.html', {'student': student})
 
-#adding items
+@login_required
 def create_course(request):
     if request.method == 'POST':
         title = request.POST.get('title')
@@ -464,6 +476,7 @@ def create_course(request):
 
     return render(request, 'Student/courses.html', {'categories': categories})
 
+@login_required
 def create_blog(request):
     if request.method == 'POST':
         title = request.POST.get('title')
@@ -490,7 +503,7 @@ def create_blog(request):
 
     return render(request, 'Student/myblogs.html', {'categories': categories})
 
-
+@login_required
 def blog_status_function(request, blog_id):
     blog = get_object_or_404(Blog, id=blog_id)
     if request.method == 'POST':
@@ -506,6 +519,7 @@ def blog_status_function(request, blog_id):
             return redirect('myblogs') 
     return redirect('myblogs')
 
+@login_required
 def course_status_function(request, course_id):
     course = get_object_or_404(Course, id=course_id)
     if request.method == 'POST':
@@ -522,6 +536,8 @@ def course_status_function(request, course_id):
     return redirect('mycourses')
 
 # ================list============
+
+@login_required
 def list_course (request):
     course = Course.objects.all()
     context = {
@@ -529,6 +545,8 @@ def list_course (request):
     }
     return render(request, 'Manager/List/course.html',context)
 
+
+@login_required
 def list_blog (request):
     blog = Blog.objects.all()
     context = {
@@ -536,6 +554,8 @@ def list_blog (request):
     }
     return render(request, 'Manager/List/blog.html', context)
 
+
+@login_required
 def list_instructor (request):
     ins_list = User.objects.all()
     context = {
@@ -543,6 +563,8 @@ def list_instructor (request):
     }
     return render(request, 'Manager/List/instructor.html', context)
 
+
+@login_required
 def list_student (request):
     std_list = User.objects.all()
     context = {
@@ -551,12 +573,18 @@ def list_student (request):
     return render(request, 'Manager/List/student.html',context)
 
 # ================income================
+
+@login_required
 def total_income(request):
     return render(request, 'Manager/income.html')
 
+
+@login_required
 def all_feedbacks(request):
     return render(request, 'Manager/feedback.html')
 
+
+@login_required
 def top_course(request):
     return render(request, 'Manager/top_course.html')
 
@@ -564,11 +592,14 @@ def top_course(request):
 
 # lessons veiws
 
+@login_required
 def add_lesson(request, course_id):
     course = get_object_or_404(Course, id=course_id)
     lessons = course.lesson_set.all() 
     return render(request, 'required_login_pages/add_lesson.html', {'course': course, 'lessons': lessons})
 
+
+@login_required
 def add_lesson_name(request, course_id):
     course = get_object_or_404(Course, id=course_id)
 
@@ -584,6 +615,8 @@ def add_lesson_name(request, course_id):
 
     return render(request, 'Student/mycourses.html')
 
+
+@login_required
 def add_chapter(request, lesson_id):
     lesson = get_object_or_404(Lesson, id=lesson_id)
 
@@ -624,3 +657,5 @@ def add_chapter(request, lesson_id):
 
 
 
+def test(request):
+    return render(request, 'Student/learning_area.html')

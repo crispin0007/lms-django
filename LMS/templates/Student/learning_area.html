@@ -1,8 +1,103 @@
-{% extends 'components/dashboard/base.html'%}
-{%block title%}Course Name | Skylearner {% endblock %}
-{% block sub_title %}<h6 class="font-weight-bolder mb-0">My Learning</h6>{% endblock %}
-{% load static %}
+{% extends 'components/dashboard/base.html'%} {%block title%}Course Name |
+Skylearner {% endblock %} {% block sub_title %}
+<h6 class="font-weight-bolder mb-0">My Learning</h6>
+{% endblock %} {% load static %} {%block content%}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-9">
+      <div class="embed-responsive embed-responsive-16by9" style>
+        <iframe
+          width="100%"
+          height="500"
+          src="https://www.youtube.com/embed/VtB_gMFr_jw?si=yzS3VhlRvsVu9i2f"
+          title="YouTube video player"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen></iframe>
+      </div>
+      <nav>
+        <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+          <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Home</button>
+          <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Profile</button>
+          <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</button>
+          <button class="nav-link" id="nav-resources-tab" data-bs-toggle="tab" data-bs-target="#nav-resources" type="button" role="tab" aria-controls="nav-resources" aria-selected="false">Resources</button>
+        </div>
+      </nav>
+      <div class="tab-content" id="nav-tabContent">
+        <div class="container overflow-auto vh-100 bg-light m-2 p-2 tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">Home</div>
+        <div class="container overflow-auto vh-100 bg-light m-2 p-2 tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">Profile</div>
+        <div class="container overflow-auto vh-100 bg-light m-2 p-2 tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">Contact</div>
+        <div class="container overflow-auto vh-100 bg-light m-2 p-2 tab-pane fade" id="nav-resources" role="tabpanel" aria-labelledby="nav-resources-tab">Resources</div>
+      </div>
+    </div>
+    <div class="col-3 bg-dark text-white overflow-auto vh-100">
+        <style>
+            .collapsible {
+              background-color: #4169e1;
+              color: white;
+              cursor: pointer;
+              width: 100%;
+              border: none;
+              text-align: left;
+              outline: none;
+              font-size: 15px;
+            }
+            
+            .active, .collapsible:hover {
+              background-color: #555;
+            }
+            
+            .content {                
+              display: none;
+              overflow: hidden;
+              background-color: #f1f1f1;
+            }
+            </style>
+            
+          {% comment %} ==================== {% endcomment %}
+          <hr class="dark horizontal my-1" />
+          <h3 class="text-white text-center">Curriculum</h3>
+          <hr class="light horizontal my-1" />
+          {% for i in lesson %}
+          <button type="button" class="collapsible btn btn-primary btn-lg">Section {{ i.name }}</button>
+          <div class="content">
+            {% for j in i.video_set.all %}
+            <div class="card mb-1 p-0" style="max-width: 100%; max-height:50px;">
+              <div class="row no-gutters">
+                <div class="col-md-4">
+                  <img src="{{j.thumbnail.url}}" class="card-img" alt="..." style="max-width: 40px; max-height:40px;">
+                </div>
+                <div class="col-md-8 mx-auto">
+                  <div class="card-body">
+                    <h5 class="card-title text-left">{{j.title}}</h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+              <hr>
+              <!-- Display other video information as needed -->
+            {% endfor %}
+          </div>
+        {% endfor %}
+        
+        </div>
+        <script>
+          var coll = document.getElementsByClassName("collapsible");
+          var i;
 
-{%block content%}
-
+          for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+              this.classList.toggle("active");
+              var content = this.nextElementSibling;
+              if (content.style.display === "block") {
+                content.style.display = "none";
+              } else {
+                content.style.display = "block";
+              }
+            });
+          }
+          </script>
+    </div>
+  </div>
+</div>
 {% endblock%}

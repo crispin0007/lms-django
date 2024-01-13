@@ -22,6 +22,8 @@ urlpatterns = [
     path('messages/', views.messages , name="messages"),
     path('notifications/', views.notifications , name="notifications"),
 
+   
+
     #details with slug url
     path('course_details/<slug:slug>/', views.course_details , name="coursedetails"),
     path('blog_details/<slug:slug>/', views.course_details , name="blogdetails"),
@@ -94,6 +96,7 @@ urlpatterns = [
     path('all_feedbacks/', views.all_feedbacks , name="all_feedbacks"),
     path('top_course/', views.top_course , name="top_course"),
 
+     path('test/', views.test , name="test"),
     #function_urls
 
 
