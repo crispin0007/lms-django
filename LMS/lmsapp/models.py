@@ -154,7 +154,7 @@ class Video(models.Model):
     title = models.CharField(max_length = 100)
     video_url = models.CharField(max_length= 200)
     time_duration = models.FloatField(null=True)
-    preview = models.BooleanField(default=False)
+    preview = models.BooleanField(default=False) 
 
     def __str__(self):
         return self.title

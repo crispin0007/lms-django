@@ -302,7 +302,7 @@ def update_blog(request, blog_id):
 
         blog.save()
 
-        return redirect('list_blog')
+        return redirect('myblogs')
     else:
         return HttpResponseBadRequest("Invalid request method")
 
@@ -424,11 +424,98 @@ def request_instructor(request, user_id):
         student.status = 'STUDENT'
         student.is_student = True
         student.status = 'PENDING'
-        student.save()
+        student.save()  
         return redirect('becomeinstructor')
 
     return render(request, 'Student/dashboard.html', {'student': student})
 
+#adding items
+def create_course(request):
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        description = request.POST.get('description')
+        category_id = request.POST.get('category')
+        featured_image = request.FILES.get('featured_image')
+        price = request.POST.get('price')
+        discount = request.POST.get('discount')
+        status = request.POST.get('status', 'DRAFT')
+
+        if status == 'PUBLISH':
+            status = 'PENDING'
+
+        new_course = Course.objects.create(
+            title=title,
+            instructor=request.user,
+            category=Categories.objects.get(id=category_id),
+            description=description,
+            price=price,
+            discount=discount,
+            featured_image=featured_image,
+            status=status   
+        )
+
+        return redirect('mycourses')
+
+    categories = Categories.objects.all()
+
+    return render(request, 'Student/courses.html', {'categories': categories})
+
+def create_blog(request):
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        description = request.POST.get('description')
+        category_id = request.POST.get('category')
+        featured_image = request.FILES.get('featured_image')
+        status = request.POST.get('status', 'DRAFT')
+
+        if status == 'PUBLISH':
+            status = 'PENDING'
+
+        new_blog = Blog.objects.create(
+            title=title,
+            user=request.user,
+            category=Categories.objects.get(id=category_id),
+            description=description,
+            featured_image=featured_image,
+            status=status   
+        )
+
+        return redirect('myblogs')
+
+    categories = Categories.objects.all()
+
+    return render(request, 'Student/myblogs.html', {'categories': categories})
+
+
+def blog_status_function(request, blog_id):
+    blog = get_object_or_404(Blog, id=blog_id)
+    if request.method == 'POST':
+        new_status = request.POST.get('new_status')
+
+        if new_status in ['DRAFT', 'PUBLISH', 'PENDING']:
+            if new_status == 'PUBLISH':
+                new_status = 'PENDING'
+            blog.status = new_status
+            blog.save()
+        elif new_status == 'DELETE':
+            blog.delete()
+            return redirect('myblogs') 
+    return redirect('myblogs')
+
+def course_status_function(request, course_id):
+    course = get_object_or_404(Course, id=course_id)
+    if request.method == 'POST':
+        new_status = request.POST.get('new_status')
+
+        if new_status in ['DRAFT', 'PUBLISH', 'PENDING']:
+            if new_status == 'PUBLISH':
+                new_status = 'PENDING'
+            course.status = new_status
+            course.save()
+        elif new_status == 'DELETE':
+            course.delete()
+            return redirect('mycourses') 
+    return redirect('mycourses')
 
 # ================list============
 def list_course (request):

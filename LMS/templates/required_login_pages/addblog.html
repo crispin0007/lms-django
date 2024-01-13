@@ -4,7 +4,55 @@ Skylearner {% endblock %} {% block sub_title %}
 {% endblock %} {% load static %} 
 {% block content %}
 
-<form method="post">
+<form method="post" action="{% url 'create_blog' %}" enctype="multipart/form-data" id="blogForm">
+  {% csrf_token %}
+  <div class='row'>
+    <div class='col-8'>
+      <div class="form-group">
+        <label for="title">Blog Title</label>
+        <input class="form-control form-control-lg border" type="text" placeholder="" id="title" name="title" />
+        <label for="slug">Slug</label>
+        <input class="form-control form-control-lg border" type="text" placeholder="" id="slug" value="Slug Will Automatically Added" readonly />
+        <div class="row">
+          <div class="col">
+            <label for="inputState">Category</label>
+            <select id="inputState" class="form-control form-control-lg border" name="category">
+              {% for i in category %}
+                <option value="{{ i.id }}">{{ i.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+        <label for="exampleFormControlTextarea1">Blog Descriptions</label>
+        <textarea class="form-control form-control-lg border" id="exampleFormControlTextarea1" rows="10" name="description" required></textarea>
+      </div>
+    </div>
+    <div class="col-4">
+      <hr class="dark horizontal my-1" />
+      <label for="id_featured_image" class="mt-5">Choose Featured Image</label>
+      <input type="file" class="form-control-file" id="id_featured_image" name="featured_image" />
+    </div>
+  </div>
+  <hr class="dark horizontal my-3" />
+  <div class="card-footer d-flex">
+    <button type="button" class="btn btn-warning btn-lg mx-auto" onclick="setBlogStatus('DRAFT')">Save as Draft</button>
+    <button type="button" class="btn btn-success btn-lg mx-auto" onclick="setBlogStatus('PUBLISH')">Publish</button>
+    <input type="hidden" id="blogStatus" name="status" value="DRAFT">
+  </div>
+</form>
+
+<script>
+  function setBlogStatus(status) {
+      document.getElementById('blogStatus').value = status;
+      document.getElementById('blogForm').submit();
+  }
+</script>
+
+
+
+
+{% comment %} <form method="post" method="post" action="{% url 'create_blog' %}" enctype="multipart/form-data">
+  {% csrf_token %}
     <div class='row'>
         <div class='col-8'>
   <div class="form-group">
@@ -13,7 +61,7 @@ Skylearner {% endblock %} {% block sub_title %}
       class="form-control form-control-lg border"
       type="text"
       placeholder=""
-      id="title" value="" />
+      id="title" name="title" />
     <label for="slug">Slug</label>
     <input
       class="form-control form-control-lg border"
@@ -24,32 +72,40 @@ Skylearner {% endblock %} {% block sub_title %}
     <div class="row">
       <div class="col">
         <label for="inputState">Category</label>
-        <select id="inputState" class="form-control form-control-lg border">
-            {% for i in category%}
-                <option>{{ i.name }}</option>
-            {% endfor%}
+        <select id="inputState" class="form-control form-control-lg border" name="category">
+            {% for i in category %}
+                <option value="{{ i.id }}">{{ i.name }}</option>
+            {% endfor %}
         </select>
       </div>
     </div>
-    <label for="exampleFormControlTextarea1">Blog Description</label>
-    <textarea class="form-control form-control-lg border" id="exampleFormControlTextarea1" rows="10"></textarea>
+  </script>
+    <label for="exampleFormControlTextarea1">Blog Descriptions</label>
+    <textarea class="form-control form-control-lg border" id="exampleFormControlTextarea1" rows="10" name="description" required></textarea>
+    
   </div>
-</form>
+
 </div>
 <div class="col-4">
     <hr class="dark horizontal my-1" />
-    <label for="image" class="mt-5">Choose Featured Image</label>
-    <input type="file" class="form-control-file" id="image" />
+    <label for="id_featured_image" class="mt-5">Choose Featured Image</label>
+    <input type="file" class="form-control-file" id="id_featured_image" name="featured_image" />
 </div>
 </div>
 
 
 <hr class="dark horizontal my-3" />
 <div class="card-footer d-flex">
-  <a href="" class="btn btn-danger btn-lg mx-auto">Save As Draft</a>
+  <button type="button" class="btn btn-warning btn-lg mx-auto" onclick="setBlogStatus('DRAFT')">Save as Draft</button>
+  <button type="button" class="btn btn-success btn-lg mx-auto" onclick="setBlogStatus('PUBLISH')">Publish</button>
 
-  <a class="btn btn-success mx-auto btn-lg">Publish Blog</a>
-
-  <p class="text-sm my-auto">{{i.instructor}}</p>
+  <input type="hidden" id="blogStatus" name="status" value="DRAFT">
 </div>
+</form>
+<script>
+  function setBlogStatus(status) {
+      document.getElementById('blogStatus').value = status;
+      document.getElementById('blogForm').submit();
+  }
+</script> {% endcomment %}
 {% endblock %}

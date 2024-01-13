@@ -3,7 +3,8 @@ Skylearner {% endblock %} {% block sub_title %}
 <h6 class="font-weight-bolder mb-0"> Add New Course</h6>
 {% endblock %} {% load static %} 
 {% block content %}
-<form method="post">
+<form method="post"action="{% url 'create_course' %}" enctype="multipart/form-data" id="courseForm">
+  {% csrf_token %}
     <div class='row'>
         <div class='col-8'>
   <div class="form-group">
@@ -12,7 +13,7 @@ Skylearner {% endblock %} {% block sub_title %}
       class="form-control form-control-lg border"
       type="text"
       placeholder=""
-      id="title" value="" />
+      id="title" name="title" />
     <label for="slug">Slug</label>
     <input
       class="form-control form-control-lg border"
@@ -26,28 +27,28 @@ Skylearner {% endblock %} {% block sub_title %}
             <input
               type="text"
               class="form-control form-control-lg border"
-              id="price" value="{{course.price}}"/>
+              id="price" name="price"/>
           </div>
           <div class="col">
             <label for="dpercent">Discount %</label>
             <input
               type="text"
               class="form-control form-control-lg border"
-              id="dpercent" value="{{course.discount}}" />
+              id="dpercent" name="discount" />
           </div>
       <div class="col">
         <label for="inputState">Category</label>
-        <select id="inputState" class="form-control form-control-lg border">
-            {% for i in category%}
-                <option>{{ i.name }}</option>
-            {% endfor%}
+        <select id="inputState" class="form-control form-control-lg border" name="category">
+          {% for i in category %}
+            <option value="{{ i.id }}">{{ i.name }}</option>
+          {% endfor %}
         </select>
       </div>
     </div>
     <label for="exampleFormControlTextarea1">Course Description</label>
-    <textarea class="form-control form-control-lg border" id="exampleFormControlTextarea1" rows="10"></textarea>
+    <textarea class="form-control form-control-lg border" id="exampleFormControlTextarea1" rows="10" name="description" required></textarea>
   </div>
-</form>
+
 </div>
 <div class="col-4">
     <hr class="dark horizontal my-1" />
@@ -59,11 +60,15 @@ Skylearner {% endblock %} {% block sub_title %}
 
 <hr class="dark horizontal my-3" />
 <div class="card-footer d-flex">
-  <a href="" class="btn btn-danger btn-lg mx-auto">Save As Draft</a>
-
-  <a class="btn btn-success mx-auto btn-lg">Publish Course</a>
-
-  <p class="text-sm my-auto">{{i.instructor}}</p>
+  <button type="button" class="btn btn-warning btn-lg mx-auto" onclick="setBlogStatus('DRAFT')">Save as Draft</button>
+  <button type="button" class="btn btn-success btn-lg mx-auto" onclick="setBlogStatus('PUBLISH')">Publish</button>
+  <input type="hidden" id="blogStatus" name="status" value="DRAFT">
 </div>
-
+</form>
+<script>
+  function setBlogStatus(status) {
+      document.getElementById('blogStatus').value = status;
+      document.getElementById('courseForm').submit();
+  }
+</script>
 {% endblock %}

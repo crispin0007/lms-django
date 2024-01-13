@@ -19,7 +19,6 @@ urlpatterns = [
     
 
     # ==========students urls========
-    path('mycourses/', views.mycourses , name="mycourses"),
     path('messages/', views.messages , name="messages"),
     path('notifications/', views.notifications , name="notifications"),
 
@@ -57,10 +56,20 @@ urlpatterns = [
     path('becomeinstructor/', views.becomeinstructor , name="becomeinstructor"),
     path('purchasehistory/', views.purchasehistory , name="purchasehistory"),
     path('myfeedbacks/', views.myfeedbacks , name="myfeedbacks"),
-    path('addcourse/', views.addcourse , name="addcourse"),
+
+    #new item adding
+    path('addcourse/', views.addcourse , name="addcourse"),  
     path('addblog/', views.addblog , name="addblog"),
     path('myblogs/', views.myblogs , name="myblogs"),
+    path('mycourses/', views.mycourses , name="mycourses"),
 
+    #new blog course adding urls
+    path('create_course/', views.create_course , name="create_course"),  
+    path('create_blog/', views.create_blog , name="create_blog"),
+
+    path('blog_status_function/<int:blog_id>/', views.blog_status_function, name='blog_status_function'),
+    path('course_status_function/<int:course_id>/', views.course_status_function, name='course_status_function'),
+    #social Login
     path('auth/', include('social_django.urls', namespace='social')),
 
     # Approval

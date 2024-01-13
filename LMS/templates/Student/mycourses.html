@@ -60,22 +60,32 @@
                 <a href="javascript:;">{{ i.title }}</a>
               </h5>
               <p class="mb-0">
-                {{i.description}}
+                {{i.description | safe | truncatewords:20}}
               </p>
             </div>
             <hr class="dark horizontal my-0" />
             <div class="card-footer d-flex">
-              <a href ="{{i.edit_course_url}}" class="btn btn-outline-danger btn-sm'">Edit Course</a>
-              {% if i.status == 'DRAFT' %}
-              <a class="btn btn-outline-success btn-sm mx-auto">Publish Course</a>
-              {% endif%}
-              <i
-                class="material-icons position-relative ms-auto text-lg me-1 my-auto"
-                >account_circle</i
-              >
-              <p class="text-sm my-auto">{{i.instructor}}</p>
-            </div>
+              <a href ="{{i.edit_blog_url}}" class="btn btn-warning btn-sm m-auto">Edit</a>
+              <form method="post" action="{% url 'course_status_function' course_id=i.id %}">
+                {% csrf_token %}
+                {% if i.status == 'DRAFT' %}
+                    <button type="submit" class="btn btn-success btn-sm m-auto" name="new_status" value="PUBLISH">Publish</button>
+                {% else %}
+                <button type="submit" class="btn btn-info btn-sm m-auto" name="new_status" value="DRAFT">Save Draft</button>
+                {% endif%}
+                <button type="submit" class="btn btn-danger btn-sm m-auto" name="new_status" value="DELETE">Delete</button>
+            </form>
+            
           </div>
+           
+          <div class="card-footer my-0 d-flex">
+            <i
+              class="material-icons position-relative ms-auto text-lg me-1 my-auto"
+              >account_circle</i
+            >
+            <p class="text-sm my-auto">{{i.instructor}}</p>
+          </div>
+        </div>
         </div>
         
         {% endif %}

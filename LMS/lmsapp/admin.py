@@ -11,6 +11,5 @@ class course_admin(admin.ModelAdmin):
 admin.site.register(User)
 admin.site.register(Course, course_admin)
 admin.site.register(Categories)
-# admin.site.register(Instructor)
 admin.site.register(Blog)
 admin.site.register(Lesson)
