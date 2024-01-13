@@ -17,7 +17,7 @@
             
             <hr class="dark horizontal my-1" />
             <h3>About Course</h3>
-            <p>{{course.description | safe}} </p>
+            <p>{{course.description | safe }} </p>
             <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
               Read More
             </a>
@@ -55,9 +55,9 @@
                 <h3>Price: </h3><h1>{{course.price}}</h1>               
               </div>
               <hr class="dark horizontal my-0" />
-              <div class="card-footer d-flex mx-auto">
-                <a class="btn btn-lg btn-success me-auto" href="{{i.cart_url}}">Buy Now</a>
-                <a class="btn btn-lg btn-info">Add to Cart</a>
+              <div class="card-footer d-flex me-uto">
+                <a class="btn btn-lg btn-success mx-auto" href="{{course.cart_url}}">Enroll Now</a>
+                <a class="btn btn-lg btn-info mx-auto">Add to Cart</a>
               </div>
               
               {% comment %} =============== {% endcomment %}
@@ -65,8 +65,8 @@
                 <div class="row g-0">
                   <div class="col-md-4">
                     <img 
-                      src="https://mdbcdn.b-cdn.net/wp-content/uploads/2020/06/vertical.webp"
-                      alt="Trendy Pants and Shoes"
+                      src="{{ MEDIA_URL }}{{acc_detail.profile_image.url}}"
+                      alt="{{course.instructor}}"
                       class="img-fluid rounded-start" style="height:100px; width:100px;"
                     />
                   </div>

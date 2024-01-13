@@ -70,8 +70,6 @@ def mycourses(request):
 @login_required
 def myblogs(request):
     blog = Blog.objects.all()
-    print(blog)
-    print("hello")
     context = {
         'blog': blog,
     }
@@ -88,10 +86,11 @@ def notifications(request):
 @login_required
 def cart(request, slug):
     course = Course.objects.all()
-    if course.exists():
-        course=course.first()
-    else:
-        return redirect ('index.html')
+    try:
+        course = Course.objects.get(slug=slug)
+    except Course.DoesNotExist:
+        return redirect('index.html')
+
     context = {
         'course' : course
     }
@@ -109,17 +108,16 @@ def wishlists(request):
 def checkout(request, slug):
     user = request.user
     course = Course.objects.all()
-    if course.exists():
-        course=course.first()
-    else:
-        return redirect ('index.html')
+    try:
+        course = Course.objects.get(slug=slug)
+    except Course.DoesNotExist:
+        return redirect('index.html')
+
     context = {
         'course' : course
     }
     return render (request, 'Pages/checkout.html',context)
 
-from django.shortcuts import render, get_object_or_404, redirect
-from .models import Course, Blog, Categories
 
 @login_required
 def edit_course(request, slug):
@@ -585,8 +583,6 @@ def add_lesson_name(request, course_id):
 
 def add_chapter(request, lesson_id):
     lesson = get_object_or_404(Lesson, id=lesson_id)
-    print(request.POST)
-    print(request.FILES)
 
     if request.method == 'POST':  
         course_id = request.POST.get('course_id')  
@@ -611,17 +607,14 @@ def add_chapter(request, lesson_id):
             time_duration=2 ,
             lesson=lesson,
             course=course_title,
-            course_id=course_id
-            
+            course_id=course_id            
         )
-        print(serial_number, title, video_url, video.thumbnail.url, preview, lesson, course_id)
         try:
             video.full_clean() 
             video.save()
             return redirect('add_lesson', course_id=course_id) 
         except ValidationError as e:
             error_message = ', '.join(e.messages)
-            print(error_message)
             return redirect('add_lesson', course_id=course_id)
 
     return render(request, 'Student/mycourses.html', {'lesson': lesson})
