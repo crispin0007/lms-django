@@ -41,9 +41,8 @@ INSTALLED_APPS = [
     'lmsapp.apps.LmsappConfig',
     'social_django',
     'django_otp',
-    'django_otp.plugins.otp_static',
     'django_otp.plugins.otp_totp',
-    'two_factor',
+    'django_otp.plugins.otp_static',
     'ckeditor',
     'channels',
 
@@ -126,7 +125,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kathmandu'
 
 USE_I18N = True
 
@@ -179,4 +178,3 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_REDIRECT_URI = 'http://127.0.0.1:8000/auth/complete/go
 #2FA
 LOGIN_URL = 'login'
 # LOGIN_REDIRECT_URL = 'two_factor:profile'
-

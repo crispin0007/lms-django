@@ -3,10 +3,13 @@ from lmsapp import views
 from django.contrib.auth.views import LogoutView
 from django.conf import settings
 from django.conf.urls.static import static
-from two_factor.urls import urlpatterns as tf_urls
+from django.contrib import admin
+
+from django.contrib.auth.models import User
+
 
 urlpatterns = [
-    # path('', include(tf_urls)),
+    
     path('logout/', LogoutView.as_view(), name='logout'),
     path('', views.home , name="home"),
     path('accounts/login/', views.login_view , name="login"),

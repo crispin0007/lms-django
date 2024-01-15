@@ -15,4 +15,3 @@ admin.site.register(Blog)
 admin.site.register(Lesson)
 admin.site.register(DigitalProduct)
 admin.site.register(Message)
-

@@ -197,3 +197,7 @@ class SearchQuery(models.Model):
 
     def __str__(self):
         return self.query
+
+
+
+
