@@ -1,9 +1,9 @@
 from django.shortcuts import render, HttpResponse, redirect, HttpResponseRedirect, get_object_or_404
-from .forms import LoginForm, SignUpForm
+from .forms import LoginForm, SignUpForm, SearchForm
 from django.contrib.auth import authenticate, login 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from lmsapp.models import Categories, Course, User, Blog, Lesson, Video
+from lmsapp.models import Categories, Course, User, Blog, Lesson, Video, Message, DigitalProduct, SearchQuery
 from lmsapp.utils import send_email_token
 from django.core.mail import send_mail
 from django.conf import settings
@@ -14,6 +14,8 @@ import requests
 import json
 from django.core.exceptions import ValidationError
 from django.views.decorators.csrf import csrf_exempt
+from django.db.models import Q  
+
 
 # Create your views here.
 
@@ -21,9 +23,16 @@ from django.views.decorators.csrf import csrf_exempt
 def home(request):
     category = Categories.objects.all()
     course = Course.objects.all()
+    enroll = DigitalProduct.objects.all()
+    username = None
+    if request.user.is_authenticated:
+        username = request.user.username
+
     context ={
         'category':category,
-        'course':course
+        'course':course,
+        'enroll' : enroll,
+        'username' : username,
     }
     return render (request, 'index.html', context)
     
@@ -65,9 +74,13 @@ def profile(request):
 @login_required
 def mycourses(request):
     course = Course.objects.all()
-
+    enroll = DigitalProduct.objects.all()
+    if request.user.is_authenticated:
+        username = request.user.username
     context = {
-        'course' : course
+        'course' : course,
+        'enroll' : enroll,
+        'username' : username,
     }
     return render (request, 'Student/mycourses.html',context)
 
@@ -80,7 +93,7 @@ def myblogs(request):
     return render(request, 'Student/myblogs.html', context)
 
 @login_required
-def messages(request):
+def lalit(request):
     return render (request, 'Student/messages.html')
 
 @login_required
@@ -89,14 +102,18 @@ def notifications(request):
 
 @login_required
 def cart(request, slug):
-    course = Course.objects.all()
+    course = Course.objects.all()    
+    products = DigitalProduct.objects.all()
     try:
         course = Course.objects.get(slug=slug)
     except Course.DoesNotExist:
         return redirect('index.html')
-
+    if request.user.is_authenticated:
+        username = request.user.username
     context = {
-        'course' : course
+        'course' : course,
+        'products' : products,
+        'username' : username
     }
     return render (request, 'Student/mycart.html', context)
 
@@ -658,36 +675,124 @@ def add_chapter(request, lesson_id):
 
 
 
-def test(request):
-    return render(request, 'Student/learning_area.html')
+def learning_area(request, slug):
+    course = Course.objects.all() 
+    context = {
+        'course' : course,
+    }
+    return render(request, 'Student/learning_area.html', context)
 
-@csrf_exempt
-@login_required
+
 def khalti_response(request):
     if request.method == 'POST':
-        # Parse the JSON data from the request body
-        data = json.loads(request.body)
+        try:
+            data = json.loads(request.body)
+        except json.JSONDecodeError:
+            # Handle the error or log it
+            return JsonResponse({'status': 'error'})
 
-        # Extract relevant information from the Khalti payload
-        user = request.user
+        user = request.user 
         product_name = data.get('product_name')
-        transaction_id = data.get('idx')
+        course_name = data.get('course_name')
+        transaction_id = data.get('transaction_id') 
         amount = data.get('amount')
-        mobile = data.get('mobile')
+        mobile = data.get('mobile')  
+        product_identity = data.get('product_identity')  
 
-        # Save the payment information to the database
-        digital_product = DigitalProduct.objects.create(
+        # Save the payment response to the database
+        DigitalProduct.objects.create(
             user=user,
             product_name=product_name,
             transaction_id=transaction_id,
             amount=amount,
             mobile=mobile,
-            # Add other fields as needed
+            product_identity = product_identity,
         )
-        digital_product.save()
 
-        # Return a success response
         return JsonResponse({'status': 'success'})
 
-    # If the request method is not POST, return an error response
-    return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
+    return JsonResponse({'status': 'error'})
+
+
+
+    # ====================message==================
+
+from django.contrib import messages
+
+def send_message(request, receiver_id):
+    if request.method == 'POST':
+        content = request.POST.get('content')
+        sender = request.user  # Assuming you have user authentication in place
+        receiver = User.objects.get(pk=receiver_id)
+
+        # Create and save the message
+        Message.objects.create(sender=sender, receiver=receiver, content=content)
+
+        messages.success(request, 'Message sent successfully!')
+        return redirect('inbox')  # Redirect to the inbox or messages page
+
+    return render(request, 'messages/send_message.html', {'receiver_id': receiver_id})
+
+
+
+
+from django.contrib import messages
+
+@login_required
+def inbox(request):
+    received_messages = Message.objects.filter(receiver=request.user).order_by('-timestamp')
+    sent_messages = Message.objects.filter(sender=request.user).order_by('-timestamp')
+
+    if request.method == 'POST':
+        content = request.POST.get('content')
+        sender = request.user
+
+        potential_recipients = User.objects.exclude(pk=sender.id)
+        receiver_id = request.POST.get('instructor_id')  
+        receiver_id = 31  
+        receiver = User.objects.get(pk=receiver_id)
+        
+        Message.objects.create(sender=sender, receiver=receiver, content=content)
+
+        messages.success(request, 'Message sent successfully!')
+        return redirect('inbox')  
+
+    all_user = User.objects.all()
+    potential_recipients = User.objects.exclude(pk=request.user.id)
+    return render(request, 'messages/inbox.html', {'received_messages': received_messages, 'sent_messages': sent_messages, 'current_user': request.user, 'potential_recipients': potential_recipients,'user_model': all_user})
+
+
+
+# Search 
+def search_query(request):
+    form = SearchForm(request.GET)
+    
+    if form.is_valid():
+        query = form.cleaned_data.get('query', '')
+        if query:
+            SearchQuery.objects.create(query=query)
+
+        courses = Course.objects.filter(Q(title__icontains=query) | Q(description__icontains=query))
+
+        context = {
+            'query': query,
+            'courses': courses,
+            'search_form': form,
+        }
+        return render(request, 'Pages/search_results.html', context)
+
+    # If form is not valid, handle accordingly (e.g., redirect or show an error message)
+    return render(request, 'Pages/search_results.html', {'search_form': form})
+
+# recommend
+def recommended_courses_view(request):
+    recent_searches = SearchQuery.objects.all().order_by('-timestamp')[:5]
+
+    recommended_courses = []
+    for search_query in recent_searches:
+        recommended_courses.extend(Course.get_recommended_courses(search_query.query))
+
+    context = {
+        'recommended_courses': recommended_courses,
+    }
+    return render(request, 'recommended_courses.html', context)

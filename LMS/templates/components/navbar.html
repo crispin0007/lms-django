@@ -69,10 +69,18 @@
             </li>       
                  
              
-            <div class="input-group input-group-outline position-relative"> 
-              <label class="form-label">Search Course</label>
-              <input type="text" class="form-control text-black bg-white rounded" onfocus="focused(this)" onfocusout="defocused(this)" placeholder="Search Course" style="height:50px;">
-            </div>
+            <div class="input-group input-group-outline position-relative">
+             
+              <form method="get" action="{% url 'search_query' %}">
+                {% csrf_token %}
+                <div class="input-group input-group-outline position-relative"> 
+                    <label class="form-label">Search Course</label>
+                    <input type="text" class="form-control text-black bg-white rounded" onfocus="focused(this)" onfocusout="defocused(this)" 
+                    placeholder="Search Course" style="height:100%;" name='query'>
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+              </form></div>
+            
             
             {% comment %} ========== {% endcomment %}
             {% if user.is_authenticated %}
@@ -93,17 +101,6 @@
                   class="btn btn-lg btn-primary mb-1" style="margin-left:5px;"
                   onclick="smoothToPricing('pricing-soft-ui')"
                   >Logout</a
-                >
-              </li>
-              
-            </ul>
-            <ul class="navbar-nav d-lg-block ">
-              <li class="nav-item">
-                <a
-                  href="{% url 'profile' %}"
-                  class="" style="margin-left:5px;"
-                  onclick="smoothToPricing('pricing-soft-ui')"
-                  ><img src="" class="avatar" /></a
                 >
               </li>
               

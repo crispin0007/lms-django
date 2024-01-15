@@ -99,11 +99,12 @@
 
 
 {% if user.is_student %}
-<a class="btn btn-primary btn-lg">Create New Course<a> 
 <div class="row">
   <div class="col-lg-12 position-relative z-index-2">
     <div class="row mt-5">
-      {% for i in course %}
+      {% for i in enroll %}
+      {% if i.user|striptags|lower == username|striptags|lower %}
+      
         <div class="col-lg-4 mt-5 mt-lg-0">
           <div class="card mt-5" data-animation="true">
             <div
@@ -121,42 +122,26 @@
                 "></div>
             </div>
             <div class="card-body text-center">
-              <div class="d-flex mt-n6 mx-auto">
-                <a
-                  class="btn btn-link text-primary ms-auto border-0"
-                  data-bs-toggle="tooltip"
-                  data-bs-placement="bottom"
-                  title="Refresh">
-                  <i class="material-icons text-lg">refresh</i>
-                </a>
-                <button
-                  class="btn btn-link text-info me-auto border-0"
-                  data-bs-toggle="tooltip"
-                  data-bs-placement="bottom"
-                  title="Edit">
-                  <i class="material-icons text-lg">edit</i>
-                </button>
-              </div>
+              
               <h5 class="font-weight-normal mt-3">
-                <a href="javascript:;">Course Name</a>
+                <a href="javascript:;">{{i.course.title}}</a>
               </h5>
               <p class="mb-0">
-                The place is close to Metro Station and bus stop just 2
-                min by walk and near to "Naviglio" where you can enjoy the
-                main night life in Milan.
+                {{i.course.description | safe | truncatewords:50}}
               </p>
             </div>
             <hr class="dark horizontal my-0" />
             <div class="card-footer d-flex">
-              <a class="btn btn-outline-danger">Start Learning</a>
+              <a class="btn btn-outline-danger" href="{{i.course.learning_area_url}}">Start Learning</a>
               <i
                 class="material-icons position-relative ms-auto text-lg me-1 my-auto"
                 >account_circle</i
               >
-              <p class="text-sm my-auto">{{i.instructor}}</p>
+              <p class="text-sm my-auto">{{i.course.instructor}}</p>
             </div>
           </div>
-        </div>        
+        </div>     
+        {% endif%}   
         {% endfor %}
       </div>
   </div>

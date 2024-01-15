@@ -19,7 +19,8 @@ urlpatterns = [
     
 
     # ==========students urls========
-    path('messages/', views.messages , name="messages"),
+    # path('messages/', views.messages, name="messages"),   
+    path('learning_area/<slug:slug>/', views.learning_area, name="learning_area"),
     path('notifications/', views.notifications , name="notifications"),
 
    
@@ -96,9 +97,17 @@ urlpatterns = [
     path('all_feedbacks/', views.all_feedbacks , name="all_feedbacks"),
     path('top_course/', views.top_course , name="top_course"),
 
-     path('test/', views.test , name="test"),
+    #  path('test/', views.test , name="test"),
      path('khalti-response/', views.khalti_response , name="khalti-response"),
     #function_urls
 
+    path('send/<int:receiver_id>/', views.send_message, name='send_message'),
+    path('inbox/', views.inbox, name='inbox'),
 
-] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+
+    path('search/', views.search_query, name='search_query'),
+    path('recommended-courses/', views.recommended_courses_view, name='recommended_courses_view'),
+
+
+] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT) 
+

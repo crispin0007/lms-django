@@ -72,6 +72,10 @@ class Course(models.Model):
         from django.urls import reverse
         return reverse("editcourse", kwargs={'slug': self.slug})
 
+    def learning_area_url(self): 
+        from django.urls import reverse
+        return reverse("learning_area", kwargs={'slug': self.slug})
+
     def add_lesson_url(self): 
         from django.urls import reverse
         return reverse("add_lesson", kwargs={'slug': self.slug})
@@ -166,10 +170,30 @@ class Video(models.Model):
 
 class DigitalProduct(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, null=True)
+    product_identity = models.IntegerField(null=True,default=0)
     product_name = models.CharField(max_length=255)
-    transaction_id = models.CharField(max_length=255)
-    amount = models.DecimalField(max_digits=10, decimal_places=2)
-    mobile = models.CharField(max_length=15, default="980000000")  
+    transaction_id = models.CharField(max_length=255, null=True)
+    amount = models.DecimalField(max_digits=10, decimal_places=2, null=True)
+    mobile = models.CharField(max_length=15, default="980000000", null=True)  
 
     def __str__(self):
         return f'{self.user.username} - {self.product_name} - Transaction ID: {self.transaction_id}'
+
+class Message(models.Model):
+    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sent_messages')
+    receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name='received_messages')
+    timestamp = models.DateTimeField(auto_now_add=True)
+    content = models.TextField()
+
+    def __str__(self):
+        return f"{self.sender.username} to {self.receiver.username} - {self.timestamp}"
+
+
+# Recommendations
+class SearchQuery(models.Model):
+    query = models.CharField(max_length=255)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.query

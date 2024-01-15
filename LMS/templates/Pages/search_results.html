@@ -1,0 +1,48 @@
+{% extends "Pages/base.html" %} {% load static %} {% block content%}
+<div
+    class="page-header align-items-start min-height-100 m-3 border-radius-xl"
+    style="
+      background-image: url('https://images.unsplash.com/photo-1491466424936-e304919aada7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1949&q=80');
+    ">
+    <span class="mask bg-gradient-dark opacity-6"></span>
+  </div>
+  <div class="wrapper">
+    <div class="container">
+        {% comment %} =================start code from here=============== {% endcomment %}
+        <h2 class="text-center">Search Results for "{{ query }}"</h2>
+        <hr>
+        {% if courses %}
+                
+                {% for course in courses %}
+                {% if course.status == 'PUBLISH'%}
+                <div class="row mb-2">
+                    <div class="col-md-4 " class="border">
+                      <img
+                        src="{{course.featured_image.url}}"
+                        class="img-fluid"
+                        alt="Image"  style="height:100%; width: 100%;"/>
+                    </div>
+                    <div class="col-md-8">
+                      <div class="card" style="height: 100%">
+                        <div class="card-body">
+                          <h5 class="card-title">{{ course.title }}</h5>
+                          <p class="card-text">
+                            {{ course.description | safe | truncatewords:50 }}
+                          </p>
+                          <p class="font-weight-normal my-auto">Rs. {{course.price}}</p>
+                          <a class="btn btn-primary my-3" href="{{course.checkout_url}}">Buy Now</a>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+                <hr>
+                {% endif %}
+                {% endfor %}
+            
+        {% else %}
+            <p>No results found.</p>
+        {% endif %}
+      </div>
+    {% endblock %}
+  </div>
+</main>

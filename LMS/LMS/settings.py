@@ -43,8 +43,10 @@ INSTALLED_APPS = [
     'django_otp',
     'django_otp.plugins.otp_static',
     'django_otp.plugins.otp_totp',
-    # 'two_factor',
+    'two_factor',
     'ckeditor',
+    'channels',
+
 
 ]
 
@@ -81,7 +83,13 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'LMS.wsgi.application'
+ASGI_APPLICATION = 'LMS.asgi.application'
 
+CHANNEL_LAYERS = {
+    'default':{
+        'BACKEND':'channels.layers.InMemoryChannelLayer'
+    }
+}
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases

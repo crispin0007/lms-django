@@ -67,3 +67,6 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = User 
         fields = ['first_name', 'last_name', 'email', 'user_bio']
+
+class SearchForm(forms.Form):
+    query = forms.CharField(max_length=100, required=False, label='Search')

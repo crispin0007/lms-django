@@ -1,0 +1,17 @@
+   
+    <form method="post" action="{% url 'send_message' receiver_id %}">
+        {% csrf_token %}
+        <label for="content">Message:</label>
+        <textarea name="content" required></textarea>
+        <br>
+        <button type="submit">Send</button>
+    </form>
+
+    {% if messages %}
+        <div>
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+

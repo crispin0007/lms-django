@@ -1,0 +1,202 @@
+{% extends 'components/dashboard/base.html'%}
+{%block title%}Message | Skylearner {% endblock %}
+{% load static %}
+{%block content%}
+<div class="container-fluid px-2 px-md-4">
+    <div
+      class="page-header min-height-300 border-radius-xl mt-4"
+      style="
+        background-image: url('https://images.unsplash.com/photo-1531512073830-ba890ca4eba2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
+      ">
+      <span class="mask bg-gradient-primary opacity-6"></span>
+    </div>
+    <div class="card card-body mx-3 mx-md-4 mt-n6">
+      <div class="row">
+        <div class="row mt-4">
+          <div class="col-md-5 col-lg-4">
+            <div
+              class="card blur shadow-blur max-height-vh-70 overflow-auto overflow-x-hidden mb-5 mb-lg-0">
+              <div class="card-header p-3">
+                <h6>Instructors</h6>
+              </div>
+              <div class="card-body p-2">
+                {% if current_user.is_student%}
+                {% for instructor in user_model %}
+                {% if instructor.is_instructor%}
+                
+                <a href="javascript:;" class="d-block p-2 rounded border mb-1 user-link" data-username="{{instructor.id}}">
+                  <div class="d-flex p-2">
+                    <img
+                      alt="Image"
+                      src="{{instructor.profile_image.url}}"
+                      class="avatar shadow" />
+                    <div class="ms-3">
+                      <h6 class="mb-0">{{instructor.username}} | {{instructor.id}}</h6>                      
+                    </div>
+                  </div>
+                </a>
+                {%endif%}
+                {% endfor %}
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          <div class="col-md-7 col-lg-8 messageb">
+            <div class="card blur shadow-blur max-height-vh-70">
+              <div
+                class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
+                <div
+                  class="bg-gradient-primary shadow-primary border-radius-lg p-3">
+                  <div class="row">
+                    <div class="col-md-9 col-lg-10">
+                      <div class="d-flex align-items-center">
+                        
+                        <div class="ms-3">
+                          <h6 class="mb-0 d-block text-white">
+                            Message System
+                          </h6>
+                          
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body overflow-auto overflow-x-hidden">
+                <div class="message-container">                
+                </div>
+              </div>
+              <div class="card-footer d-block">
+                <form method="post" action="{% url 'inbox' %}"class="align-items-center">
+                  <div class="input-group input-group-outline d-flex">
+                    <label class="form-label">Type your message</label>
+                    <input
+                      type="text"
+                      class="form-control form-control-lg" name="content" />
+                    <input
+                      type="hidden"
+                      class="form-control form-control-lg" name="instructor_id" />
+                    <button type="submit" class="btn bg-gradient-primary mb-0">
+                      <i class="material-icons">send</i>
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const userLinks = document.querySelectorAll(".user-link");
+    const messageContainer = document.querySelector(".message-container");
+    const instructorIdInput = document.querySelector("input[name='instructor_id']");
+    
+    function updateMessages(messages) {
+        messageContainer.innerHTML = "";
+        messages.forEach((message) => {
+            messageContainer.innerHTML += `
+                <div class="row justify-content-${message.position} mb-4">
+                    <div class="col-auto">
+                        <div class="card ${message.cardClass}">
+                            <div class="card-body py-2 px-3">
+                                <p class="mb-1">${message.content}</p>
+                                <div class="d-flex align-items-center text-sm opacity-6">
+                                    <i class="ni ni-check-bold text-sm me-1"></i>
+                                    <small>${message.time}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+    }
+      const userMessages = {
+        {% if user.is_student %}
+            {% for instructor in user_model %}
+                {{instructor.id}}: [
+                    
+                        {% if received_messages %}
+                            {% for message in received_messages %}
+                                {% if message.sender.username == instructor.username and message.receiver == request.user %}
+                                    {
+                                        content: "{{ message.content }}",
+                                        position: {% if message.sender.username == current_user.username %} "start" {% else %} "end" {% endif %},
+                                        cardClass: "",
+                                        time: "{{ message.sender.username }} {{ message.timestamp }}",
+                                    },
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    
+                        {% if sent_messages %}
+                            {% for sent_message in sent_messages %}
+                                {% if sent_message.sender == request.user and sent_message.receiver.username == instructor.username %}
+                                    {
+                                        content: "{{ sent_message.content }}",
+                                        position: "start",  <!-- Assuming all sent messages have position "start" -->
+                                        cardClass: "",
+                                        time: "{{ sent_message.sender.username }} {{ sent_message.timestamp }}",
+                                    },
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    ],
+                
+            {% endfor %}
+        {% endif %}
+    };
+    function setInitialActiveUser(username, instructorId) {
+      const messages = userMessages[username] || [];
+      updateMessages(messages);
+
+      // Set the value of the hidden input field
+      instructorIdInput.value = instructorId;
+  }
+  
+  userLinks.forEach((link) => {
+      link.addEventListener("click", function (event) {
+          event.preventDefault();
+          const username = link.dataset.username;
+          const instructorId = link.dataset.instructorId; // Assuming you have a data attribute for instructor ID
+          if (userMessages.hasOwnProperty(username)) {
+              setInitialActiveUser(username, instructorId);
+          }
+      });
+  });
+  
+  // Set initial messages for the first user
+  if (userLinks.length > 0) {
+      const firstUsername = userLinks[0].dataset.username;
+      const firstInstructorId = userLinks[0].dataset.instructorId; // Assuming you have a data attribute for instructor ID
+      setInitialActiveUser(firstUsername, firstInstructorId);
+  }
+});
+
+      
+      function setInitialActiveUser() {
+        const defaultUsername = "32";
+        const defaultMessages = userMessages[defaultUsername];
+  
+        if (defaultMessages) {
+          updateMessages(defaultMessages);
+        }
+      }
+      userLinks.forEach((link) => {
+        link.addEventListener("click", function (event) {
+          event.preventDefault();
+          const username = link.dataset.username;
+          if (userMessages.hasOwnProperty(username)) {
+            
+            updateMessages(userMessages[username]);
+          }
+        });
+      });
+      setInitialActiveUser();
+    });
+  </script> 
+{% endblock %}
+

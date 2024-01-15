@@ -35,38 +35,7 @@
                       </div>
                     </div>
                     
-                    <hr class="line-info mb-3" />
-                    <form class="code-validate">
-                      <label>Discount</label>
-                      <div class="input-group">
-                        <input
-                          type="text"
-                          class="form-control"
-                          name="name"
-                          placeholder="Discount Code"
-                          aria-label="Discount" />
-                        <div class="input-group-append">
-                          <button type="submit" class="btn btn-info">
-                            Apply
-                          </button>
-                        </div>
-                      </div>
-                    </form>
-                    <hr class="line-info mb-3" />
-                    <div class="media align-items-center">
-                      <h3 class="h6 opacity-8 mr-3">Subtotal</h3>
-                      <div class="media-body text-right">
-                        <span>$1038</span>
-                      </div>
-                    </div>
                     
-                    <hr class="line-info mb-3" />
-                    <div class="media align-items-center">
-                      <h3 class="h6">Total</h3>
-                      <div class="media-body text-right">
-                        <span class="font-weight-semi-bold">$1045.8</span>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -114,8 +83,8 @@
                   </div>
                   <br />
                 <h4 class="title">Payment method</h4>
-                <button type="submit" class="btn btn-lg text-white" style="background-color:#5d2e8e;">Khalti</button>
-                <button type="button" id="payment-button" class="btn btn-lg btn-success">Esewa</button>
+                <button type="button" id="payment-button" class="btn btn-lg text-white" style="background-color:#5d2e8e;">Khalti</button>
+                {% comment %} <button type="button" id="payment-button" class="btn btn-lg btn-success">Esewa</button> {% endcomment %}
             </form>
             </div>
           </div>
@@ -154,7 +123,7 @@ var config = {
 var checkout = new KhaltiCheckout(config);
 var btn = document.getElementById("payment-button");
 btn.onclick = function () {
-  amount = Math.round({{course.price}} * 100);
+  amount = Math.round("{{course.price}}" * 100);
   checkout.show({amount: amount});
 }
 
@@ -168,7 +137,11 @@ function savePaymentResponse(payload) {
     body: JSON.stringify({
       user: '{{ user.username }}',
       product_name: payload.product_name,
-      payload: payload,
+      transaction_id: payload.idx,
+      amount: payload.amount,
+      mobile: payload.mobile,
+      product_identity : payload.product_identity,
+      course : "{{course.title}}"
     }),
   })
     .then(response => response.json())
