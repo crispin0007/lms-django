@@ -108,7 +108,7 @@ urlpatterns = [
 
 
     path('search/', views.search_query, name='search_query'),
-
+    path('generate-certificate/', views.generate_certificate, name='generate_certificate'),
 
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT) 
 

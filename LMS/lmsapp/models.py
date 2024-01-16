@@ -201,3 +201,8 @@ class SearchQuery(models.Model):
 
 
 
+# ===========certificate:
+class Certificate(models.Model):
+    username = models.CharField(max_length=255)
+    course_name = models.CharField(max_length=255)
+    instructor_name = models.CharField(max_length=255)

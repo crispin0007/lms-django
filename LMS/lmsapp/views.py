@@ -12,6 +12,7 @@ from django.urls import reverse
 from django.http import JsonResponse
 import requests
 import json
+from reportlab.pdfgen import canvas
 
 
 # Create your views here.
@@ -814,3 +815,32 @@ def search_query(request):
         return render(request, 'Pages/search_results.html', context)
 
     return render(request, 'Pages/search_results.html', {'search_form': form})
+
+
+
+# certificate view
+
+def generate_certificate(request):
+    if request.method == 'POST':
+        # Retrieve data from the POST request
+        username = request.POST.get('username', '')
+        course_name = request.POST.get('coursename', '')
+        instructor_name = request.POST.get('instructor', '')
+
+        response = HttpResponse(content_type='application/pdf')
+        response['Content-Disposition'] = f'attachment; filename="{username}_certificate.pdf"'
+
+        # Create PDF content using ReportLab
+        p = canvas.Canvas(response)
+        p.drawString(100, 800, f"Certificate of Completion")
+        p.drawString(100, 750, f"User Name: {username}")
+        p.drawString(100, 730, f"Course Name: {course_name}")
+        p.drawString(100, 710, f"Instructor Name: {instructor_name}")
+        # Add other PDF content as needed
+        p.showPage()
+        p.save()
+
+        return response
+
+    # If the request method is not POST, you may want to handle this case or redirect the user.
+    return HttpResponse("Invalid request method.")

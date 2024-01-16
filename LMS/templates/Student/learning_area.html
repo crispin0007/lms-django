@@ -21,12 +21,22 @@ Skylearner {% endblock %} {% block sub_title %}
           <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Home</button>
           <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Description</button>
           <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Quizes/Ressources</button>
+          <button class="nav-link" id="certificate-tab" data-bs-toggle="tab" data-bs-target="#certificate" type="button" role="tab" aria-controls="certificate" aria-selected="false">Certificate</button>
           </div>
       </nav>
       <div class="tab-content" id="nav-tabContent">
         <div class="container overflow-auto vh-100 bg-light m-2 p-2 tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">Home</div>
         <div class="container overflow-auto vh-100 bg-light m-2 p-2 tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">{{course.description | safe }}</div>
         <div class="container overflow-auto vh-100 bg-light m-2 p-2 tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">{% include 'Student/quizes.html' %}</div>
+        <div class="container overflow-auto vh-100 bg-light m-2 p-2 tab-pane fade" id="certificate" role="tabpanel" aria-labelledby="certificate-tab">
+          <form method="post" action="{% url 'generate_certificate' %}">
+            {% csrf_token %}
+            <input type="hidden" value="{{course.title}}" name='coursename'>
+            <input type="hidden" value="{{user.username}}" name='username'>
+            <input type="hidden" value="{{course.instructor}}" name='instructor'>
+            <button type="submit" class="btn btn-primary btn-lg">Generate Certificate</button>
+        </form>
+        </div>
       </div>
     </div>
     <div class="col-3 bg-dark text-white overflow-auto vh-100">

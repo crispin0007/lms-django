@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import User, Course, Blog, Lesson, Video
+from .models import User, Course, Blog, Lesson, Video, Certificate
 from django.forms import inlineformset_factory
 
 class LoginForm(forms.Form):
@@ -70,3 +70,9 @@ class UserProfileForm(forms.ModelForm):
 
 class SearchForm(forms.Form):
     query = forms.CharField(max_length=100, required=False, label='Search')
+
+
+class CertificateForm(forms.ModelForm):
+    class Meta:
+        model = Certificate
+        fields = ['username', 'course_name', 'instructor_name']
