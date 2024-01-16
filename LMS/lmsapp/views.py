@@ -822,7 +822,7 @@ def search_query(request):
 
 def generate_certificate(request):
     if request.method == 'POST':
-        # Retrieve data from the POST request
+       
         username = request.POST.get('username', '')
         course_name = request.POST.get('coursename', '')
         instructor_name = request.POST.get('instructor', '')
@@ -830,17 +830,20 @@ def generate_certificate(request):
         response = HttpResponse(content_type='application/pdf')
         response['Content-Disposition'] = f'attachment; filename="{username}_certificate.pdf"'
 
-        # Create PDF content using ReportLab
+       
         p = canvas.Canvas(response)
-        p.drawString(100, 800, f"Certificate of Completion")
-        p.drawString(100, 750, f"User Name: {username}")
-        p.drawString(100, 730, f"Course Name: {course_name}")
-        p.drawString(100, 710, f"Instructor Name: {instructor_name}")
-        # Add other PDF content as needed
+        message = (
+            f"Certificate of Completion\n\n"
+            f"Congratulations to {username} for successfully completing the course '{course_name}',"
+            f" instructed by {instructor_name}. Your dedication and hard work are truly commendable."
+            f" This certificate acknowledges your commitment to continuous learning and achievement."
+            f" Best wishes on your future endeavors!"
+        )
+
+        p.setFont("Helvetica", 12)
+        p.drawCentredString(300, 600, message)
         p.showPage()
         p.save()
 
         return response
-
-    # If the request method is not POST, you may want to handle this case or redirect the user.
     return HttpResponse("Invalid request method.")
