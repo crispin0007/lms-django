@@ -206,3 +206,14 @@ class Certificate(models.Model):
     username = models.CharField(max_length=255)
     course_name = models.CharField(max_length=255)
     instructor_name = models.CharField(max_length=255)
+
+
+# comment
+class Comment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    course_title = models.CharField(max_length=255)
+    comment = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.course_title} - {self.created_at}"

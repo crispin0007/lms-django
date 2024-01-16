@@ -14,7 +14,6 @@ import requests
 import json
 from reportlab.pdfgen import canvas
 
-
 # Create your views here.
 
 
@@ -822,7 +821,7 @@ def search_query(request):
 
 def generate_certificate(request):
     if request.method == 'POST':
-       
+        
         username = request.POST.get('username', '')
         course_name = request.POST.get('coursename', '')
         instructor_name = request.POST.get('instructor', '')
@@ -830,20 +829,21 @@ def generate_certificate(request):
         response = HttpResponse(content_type='application/pdf')
         response['Content-Disposition'] = f'attachment; filename="{username}_certificate.pdf"'
 
-       
+        
         p = canvas.Canvas(response)
-        message = (
-            f"Certificate of Completion\n\n"
-            f"Congratulations to {username} for successfully completing the course '{course_name}',"
-            f" instructed by {instructor_name}. Your dedication and hard work are truly commendable."
-            f" This certificate acknowledges your commitment to continuous learning and achievement."
-            f" Best wishes on your future endeavors!"
-        )
-
-        p.setFont("Helvetica", 12)
-        p.drawCentredString(300, 600, message)
+        p.drawString(100, 800, f"Sky Learner")
+        p.drawString(100, 750, f"Certificate of Completion")
+        p.drawString(100, 700, f"Congratulations to {username} for successfully completing the ")
+        p.drawString(100, 680, f"{course_name} instructed by {instructor_name}.")
+        p.drawString(100, 650, f"Your dedication and hard work are truly commendable.")
+        p.drawString(100, 630, f"This certificate acknowledges your commitment to continuous ")
+        p.drawString(100, 610, f"learning and achievement. Best wishes on your future endeavors! ")
+      
         p.showPage()
         p.save()
 
         return response
+
     return HttpResponse("Invalid request method.")
+
+# comment
