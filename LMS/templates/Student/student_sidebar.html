@@ -87,29 +87,12 @@
               </a>
             </li>
             <li class="nav-item active">
-              <a class="nav-link text-white" href="{% url 'send_message' receiver_id=user.id %}">
+              <a class="nav-link text-white" href="{% url 'inbox' %}">
                 <i class="material-icons-round opacity-10">message</i>
                 <span class="sidenav-normal ms-2 ps-1"> Messages</span>
               </a>
             </li>
-            <li class="nav-item active">
-              <a class="nav-link text-white" href="{% url 'notifications' %}">
-                <i class="material-icons-round opacity-10">notifications</i>
-                <span class="sidenav-normal ms-2 ps-1"> Notifcations</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-white" href="">
-                <i class="material-icons-round opacity-10">shopping_basket</i>
-                <span class="sidenav-normal ms-2 ps-1"> My Cart </span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-white" href="{% url 'wishlists' %}">
-                <i class="material-icons-round opacity-10 ni-favourite-28"></i>
-                <span class="sidenav-normal ms-2 ps-1"> My Wishlists</span>
-              </a>
-            </li>
+            
             <li class="nav-item">
               <a class="nav-link text-white " href="{% url 'becomeinstructor' %}">
                 <i class="material-icons-round opacity-10"></i>
@@ -126,7 +109,7 @@
               <a class="nav-link text-white " href="{% url 'myblogs' %}">
                 <i class="material-icons-round opacity-10">money</i>
                 <span class="sidenav-normal ms-2 ps-1"> My Blogs</span>
-              </a>
+              </a>      
             </li>
             <li class="nav-item">
               <a class="nav-link text-white " href="{% url 'myfeedbacks' %}">
@@ -134,7 +117,6 @@
                 <span class="sidenav-normal ms-2 ps-1"> My Feedbacks</span>
               </a>
             </li>
-            
           </ul>
         </div>
       </li>    

@@ -175,7 +175,7 @@ class DigitalProduct(models.Model):
     product_name = models.CharField(max_length=255)
     transaction_id = models.CharField(max_length=255, null=True)
     amount = models.DecimalField(max_digits=10, decimal_places=2, null=True)
-    mobile = models.CharField(max_length=15, default="980000000", null=True)  
+    mobile = models.CharField(max_length=15, default="980000000", null=True) 
 
     def __str__(self):
         return f'{self.user.username} - {self.product_name} - Transaction ID: {self.transaction_id}'

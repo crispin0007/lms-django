@@ -111,14 +111,14 @@
               class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
               <a class="d-block blur-shadow-image">
                 <img
-                  src="{% static 'img/products/product-3-min.jpg' %}"
-                  alt="img-blur-shadow"
+                  src="{{i.course.featured_image.url}}"
+                  alt="{{i.course.featured_image.url}}"
                   class="img-fluid shadow border-radius-lg" />
               </a>
               <div
                 class="colored-shadow"
                 style="
-                  background-image: url('{% static 'img/products/product-3-min.jpg' %}
+                  background-image: url('{{i.course.featured_image.url}}')%}
                 "></div>
             </div>
             <div class="card-body text-center">

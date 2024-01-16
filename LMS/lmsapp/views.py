@@ -12,9 +12,6 @@ from django.urls import reverse
 from django.http import JsonResponse
 import requests
 import json
-from django.core.exceptions import ValidationError
-from django.views.decorators.csrf import csrf_exempt
-from django.db.models import Q  
 
 
 # Create your views here.
@@ -59,12 +56,25 @@ def account_details(request, slug):
 @login_required()
 def dashboard(request):         
     user = request.user
+    category = Categories.objects.all()
+    course = Course.objects.all()
+    enroll = DigitalProduct.objects.all()
+    username = None
+    if request.user.is_authenticated:
+        username = request.user.username
+    context ={
+        'category':category,
+        'course':course,
+        'enroll' : enroll,
+        'username' : username,
+    }
+    
     if user.is_manager:
-        return render (request, 'Manager/dashboard.html')
+        return render (request, 'Manager/dashboard.html',context)
     elif user.is_instructor:
-        return render (request, 'Instructor/dashboard.html')
+        return render (request, 'Instructor/dashboard.html',context)
     else:
-        return render (request, 'Student/dashboard.html')
+        return render (request, 'Student/dashboard.html',context)
 
 @login_required
 def profile(request):
@@ -186,7 +196,20 @@ def becomeinstructor(request):
 
 @login_required
 def purchasehistory(request):
-    return render(request, 'Student/purchasehistory.html')
+    user = request.user
+    category = Categories.objects.all()
+    course = Course.objects.all()
+    enroll = DigitalProduct.objects.all()
+    username = None
+    if request.user.is_authenticated:
+        username = request.user.username
+    context ={
+        'category':category,
+        'course':course,
+        'enroll' : enroll,
+        'username' : username,
+    }
+    return render(request, 'Student/purchasehistory.html',context)
 
 @login_required
 def myfeedbacks(request):
@@ -219,7 +242,7 @@ def login_view(request):
             msg = 'Error Validatng Form'
     
     return render(request,'Pages/login.html', {'form': form, 'msg': msg})
-
+  
 def register(request):
     success_msg = "User created successfully. You will be redirected to the login page shortly."
     if request.method == 'POST':
@@ -677,8 +700,17 @@ def add_chapter(request, lesson_id):
 
 def learning_area(request, slug):
     course = Course.objects.all() 
+    try:
+        course = Course.objects.get(slug=slug)
+    except Course.DoesNotExist:
+        return redirect('index.html')
+    lesson = Lesson.objects.filter(course=course)
+    video = Video.objects.filter(course=course)
+    
     context = {
         'course' : course,
+        'lesson':lesson,
+        'video': video,
     }
     return render(request, 'Student/learning_area.html', context)
 
@@ -749,7 +781,7 @@ def inbox(request):
 
         potential_recipients = User.objects.exclude(pk=sender.id)
         receiver_id = request.POST.get('instructor_id')  
-        receiver_id = 31  
+        # receiver_id = 31  
         receiver = User.objects.get(pk=receiver_id)
         
         Message.objects.create(sender=sender, receiver=receiver, content=content)
@@ -766,12 +798,12 @@ def inbox(request):
 # Search 
 def search_query(request):
     form = SearchForm(request.GET)
-    
+    user = request.user
     if form.is_valid():
         query = form.cleaned_data.get('query', '')
         if query:
             SearchQuery.objects.create(query=query)
-
+            SearchHistory.objects.create(user=user, query=query)
         courses = Course.objects.filter(Q(title__icontains=query) | Q(description__icontains=query))
 
         context = {
@@ -781,18 +813,4 @@ def search_query(request):
         }
         return render(request, 'Pages/search_results.html', context)
 
-    # If form is not valid, handle accordingly (e.g., redirect or show an error message)
     return render(request, 'Pages/search_results.html', {'search_form': form})
-
-# recommend
-def recommended_courses_view(request):
-    recent_searches = SearchQuery.objects.all().order_by('-timestamp')[:5]
-
-    recommended_courses = []
-    for search_query in recent_searches:
-        recommended_courses.extend(Course.get_recommended_courses(search_query.query))
-
-    context = {
-        'recommended_courses': recommended_courses,
-    }
-    return render(request, 'recommended_courses.html', context)

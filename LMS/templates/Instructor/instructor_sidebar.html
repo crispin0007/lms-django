@@ -74,22 +74,35 @@
         </a>
         <div class="collapse show" id="dashboardsExamples">
           <ul class="nav">
-            <li class="nav-item active">
-              <a class="nav-link text-white active" href="analytics.html">
-                <span class="sidenav-mini-icon"> A </span>
-                <span class="sidenav-normal ms-2 ps-1"> Analytics </span>
-              </a>
-            </li>
+            
             <li class="nav-item ">
-              <a class="nav-link text-white active" href="{% url 'mycourses' %}">
+              <a class="nav-link text-white " href="{% url 'mycourses' %}">
                 <span class="sidenav-mini-icon"> C </span>
                 <span class="sidenav-normal ms-2 ps-1"> My Courses </span>
               </a>
             </li>
             <li class="nav-item ">
-              <a class="nav-link text-white active" href="{% url 'myblogs' %}">
+              <a class="nav-link text-white " href="{% url 'myblogs' %}">
                 <span class="sidenav-mini-icon"> B </span>
                 <span class="sidenav-normal ms-2 ps-1"> My Blogs </span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white " href="{% url 'purchasehistory' %}">
+                <i class="material-icons-round opacity-10">money</i>
+                <span class="sidenav-normal ms-2 ps-1"> Purchase History</span>
+              </a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link text-white" href="{% url 'inbox' %}">
+                <i class="material-icons-round opacity-10">message</i>
+                <span class="sidenav-normal ms-2 ps-1"> Messages</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white " href="{% url 'myfeedbacks' %}">
+                <i class="material-icons-round opacity-10">money</i>
+                <span class="sidenav-normal ms-2 ps-1"> My Feedbacks</span>
               </a>
             </li>
           </ul>

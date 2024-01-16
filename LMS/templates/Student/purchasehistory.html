@@ -5,4 +5,66 @@
 
 {%block content%}
 
+<div class="container-fluid py-4">
+    {% if user.is_student %}
+    {% for i in enroll %} 
+  {% if i.user|striptags|lower == username|striptags|lower %}
+    <div class="container my-4">
+          <div class="row">
+        <div class="col-md-4">
+          <img
+            src="{{i.course.featured_image.url}}"
+            class="img-fluid"
+            alt="Image" width="100%"/>
+        </div>
+        <div class="col-md-8">
+          <div class="card" style="height: 100%">
+            <div class="card-body">
+              <h5 class="card-title">{{i.course.title}}</h5>
+              <p class="card-text">
+                {{i.course.description | safe |truncatewords:50}}
+              </p>
+              <p class="card-text">
+                INSTRUCTOR: {{i.course.instructor}}
+              </p>
+            </div>
+            <div class="card-footer"><button class="btn btn-primary">Purchased</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    {% endif %}
+      
+      {% endfor %}
+    {%else%}
+    {% for i in enroll %} 
+
+    <div class="container my-4">
+        <div class="row">
+      <div class="col-md-4">
+        <img
+          src="{{i.course.featured_image.url}}"
+          class="img-fluid"
+          alt="Image" width="100%"/>
+      </div>
+      <div class="col-md-8">
+        <div class="card" style="height: 100%">
+          <div class="card-body">
+            <h5 class="card-title">{{i.course.title}}</h5>
+            <p class="card-text">
+              {{i.course.description | safe |truncatewords:50}}
+            </p>
+            <p class="card-text">
+              INSTRUCTOR: {{i.course.instructor}}
+            </p>
+          </div>
+          <div class="card-footer"><button class="btn btn-primary">Purchased</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endfor%}
+    {% endif %}
+  </div>
 {% endblock%}

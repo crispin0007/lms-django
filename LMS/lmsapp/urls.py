@@ -20,7 +20,7 @@ urlpatterns = [
     path('checkout/<slug:slug>/', views.checkout , name="checkout"),    
     path('blog/', views.blog , name="blog"),
     
-
+    
     # ==========students urls========
     # path('messages/', views.messages, name="messages"),   
     path('learning_area/<slug:slug>/', views.learning_area, name="learning_area"),
@@ -53,7 +53,6 @@ urlpatterns = [
     path('unpublish_blog/<int:blog_id>', views.unpublish_blog, name='unpublish_blog'),
     path('unapprove_instructor/<int:user_id>', views.unapprove_instructor, name='unapprove_instructor'),
     path('request_instructor/<int:user_id>', views.request_instructor, name='request_instructor'),
-    
 
 
     path('cart/<slug:slug>/', views.cart , name="cart"),
@@ -109,7 +108,6 @@ urlpatterns = [
 
 
     path('search/', views.search_query, name='search_query'),
-    path('recommended-courses/', views.recommended_courses_view, name='recommended_courses_view'),
 
 
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT) 
